@@ -24,6 +24,7 @@
   ],
   "require": {
     "php": ">=5.4.0",
+    "ext-exif": "*",
     "illuminate/support": ">=4.2.0",
     "intervention/image": "2.*"
   },
@@ -41,5 +42,16 @@
       "Unisharp\\Laravelfilemanager\\": "src/"
     }
   },
-  "bin": ["bin/debug"]
+  "bin": ["bin/debug"],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Unisharp\\Laravelfilemanager\\LaravelFilemanagerServiceProvider",
+        "Intervention\\Image\\ImageServiceProvider"
+      ],
+      "aliases": {
+        "Image": "Intervention\\Image\\Facades\\Image"
+      }
+    }
+  }
 }

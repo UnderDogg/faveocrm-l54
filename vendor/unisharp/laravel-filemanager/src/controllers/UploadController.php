@@ -1,4 +1,6 @@
-<?php namespace Unisharp\Laravelfilemanager\controllers;
+<?php
+
+namespace Unisharp\Laravelfilemanager\controllers;
 
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -7,13 +9,12 @@ use Unisharp\Laravelfilemanager\Events\ImageIsUploading;
 use Unisharp\Laravelfilemanager\Events\ImageWasUploaded;
 
 /**
- * Class UploadController
- * @package Unisharp\Laravelfilemanager\controllers
+ * Class UploadController.
  */
 class UploadController extends LfmController
 {
     /**
-     * Upload an image/file and (for images) create thumbnail
+     * Upload an image/file and (for images) create thumbnail.
      *
      * @param UploadRequest $request
      * @return string
@@ -49,18 +50,19 @@ class UploadController extends LfmController
             return $validation_message;
         }
 
-        $new_filename  = $this->getNewName($file);
+        $new_filename = $this->getNewName($file);
         $new_file_path = parent::getCurrentPath($new_filename);
 
         event(new ImageIsUploading($new_file_path));
         try {
-            if (parent::fileIsImage($file) && !parent::imageShouldNotHaveThumb($file)) {
+            if (parent::fileIsImage($file) && ! parent::imageShouldNotHaveThumb($file)) {
                 Image::make($file->getRealPath())
                     ->orientate() //Apply orientation from exif data
                     ->save($new_file_path, 90);
 
                 $this->makeThumb($new_filename);
-            } else {
+            }
+            {
                 chmod($file->getRealPath(), 0644); // TODO configurable
                 File::move($file->getRealPath(), $new_file_path);
             }
@@ -79,10 +81,11 @@ class UploadController extends LfmController
 
         if (empty($file)) {
             return parent::error('file-empty');
-        } elseif (!$file instanceof UploadedFile) {
+        } elseif (! $file instanceof UploadedFile) {
             return parent::error('instance');
         } elseif ($file->getError() == UPLOAD_ERR_INI_SIZE) {
             $max_size = ini_get('upload_max_filesize');
+
             return parent::error('file-size', ['max' => $max_size]);
         } elseif ($file->getError() != UPLOAD_ERR_OK) {
             return 'File failed to upload. Error code: ' . $file->getError();
@@ -120,7 +123,7 @@ class UploadController extends LfmController
 
     private function getNewName($file)
     {
-        $new_filename = parent::translateFromUtf8(trim(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)));
+        $new_filename = parent::translateFromUtf8(trim($this->_pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)));
 
         if (config('lfm.rename_file') === true) {
             $new_filename = uniqid();
@@ -163,5 +166,20 @@ class UploadController extends LfmController
         if (op) window.close();
         if (o !== false) o.CKEDITOR.tools.callFunction(funcNum, '$file');
         </script>";
+    }
+
+    private function _pathinfo($path, $options = null)
+    {
+        $path = urlencode($path);
+        $parts = is_null($options) ? pathinfo($path) : pathinfo($path, $options);
+        if (is_array($parts)) {
+            foreach ($parts as $field => $value) {
+                $parts[$field] = urldecode($value);
+            }
+        } else {
+            $parts = urldecode($parts);
+        }
+
+        return $parts;
     }
 }

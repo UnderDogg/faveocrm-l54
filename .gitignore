@@ -1,14 +1,22 @@
-# Please try and keep this file organized by alphabetical order. Single files first, then directories.
-.env
-Homestead.yaml
-Homestead.json
+# Please try and keep this file organized by alphabetical order. directories first, then Single files.
+/.idea
+/app/FaveoJob
 /config/lfm.php
 /nbproject/private/
 /node_modules
 /public/error_log
+/public/hot
 /public/lb-faveo/media/
-/public/uploads
 /public/photos/
-/app/FaveoJob
-/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+/public/storage
+/public/uploads
+/storage/*.key
 /storage/app/attachments
+/vendor
+/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+.env
+Homestead.json
+Homestead.yaml
+npm-debug.log
+.vagrant
+/*.lock

@@ -1,50 +1,65 @@
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
+    "keywords": [],
     "license": "MIT",
     "type": "project",
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
     "require": {
-        "laravel/framework": "5.4.*",
-        "laravelcollective/html": "5.*",
-        "vsmoraes/laravel-pdf": "1.0.1",
-        "propaganistas/laravel-phone": "~2.0",
+        "php": ">=5.6.4",
+        "aws/aws-sdk-php": "~3.0",
+        "barryvdh/laravel-debugbar": "^2.2",
+        "brozot/laravel-fcm": "^1.0",
         "bugsnag/bugsnag-laravel": "1.*",
-        "filp/whoops": "~1.0",
-        "thomaswelton/laravel-gravatar": "~1.0",
-        "neitanod/forceutf8": "dev-master",
-        "nicolaslopezj/searchable": "1.*",
         "chumper/datatable": "dev-develop",
         "chumper/zipper": "1.0.x",
-        "tymon/jwt-auth": "0.5.*",
-        "php": ">=5.5.9",
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
         "davibennun/laravel-push-notification": "dev-laravel5",
-        "brozot/laravel-fcm": "^1.0",
-        "barryvdh/laravel-debugbar": "^2.2",
-        "aws/aws-sdk-php": "~3.0",
-        "predis/predis": "~1.0",
-        "mremi/url-shortener": "^1.0",
-        "maatwebsite/excel": "~2.1.0",
-        "laravel/socialite": "3.0.0",
-        "tedivm/fetch": "0.6.*",
-        "unisharp/laravel-filemanager": "^1.6",
-        "unisharp/laravel-ckeditor": "^4.5",
-        "torann/geoip": "^1.0",
-        "yajra/laravel-datatables-oracle": "~6.0",
-        "flowjs/flow-php-server": "^1.0",
         "doctrine/dbal": "^2.5",
-        "laravel/dusk": "^1.1"
+        "filp/whoops": "~1.0",
+        "flowjs/flow-php-server": "^1.0",
+        "laravel/dusk": "^1.1",
+        "laravel/framework": "5.4.*",
+        "laravel/socialite": "3.0.0",
+        "laravelcollective/html": "^5.4",
+        "maatwebsite/excel": "~2.1.0",
+        "mremi/url-shortener": "^1.0",
+        "neitanod/forceutf8": "dev-master",
+        "nicolaslopezj/searchable": "1.*",
+        "predis/predis": "~1.0",
+        "propaganistas/laravel-phone": "~2.0",
+        "rtconner/laravel-tagging": "^2.2",
+        "spatie/laravel-permission": "^2.3",
+        "tedivm/fetch": "0.6.*",
+        "thomaswelton/laravel-gravatar": "^1.0",
+        "torann/geoip": "^1.0",
+        "tymon/jwt-auth": "0.5.*",
+        "unisharp/laravel-ckeditor": "^4.5",
+        "unisharp/laravel-filemanager": "^1.6",
+        "vsmoraes/laravel-pdf": "1.0.1",
+        "watson/bootstrap-form": "^1.0",
+        "yajra/laravel-datatables-oracle": "~6.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0",
+        "fzaninotto/faker": "^1.4",
+        "mockery/mockery": "^0.9",
+        "phpunit/phpunit": "^5.7",
         "phpspec/phpspec": "~2.1",
-        "symfony/dom-crawler": "3.1.*",
+
         "symfony/css-selector": "3.1.*",
-        "fzaninotto/faker": "1.*"
+        "symfony/dom-crawler": "3.1.*"
+    },
+    "extra": {
+      "merge-plugin": {
+        "include": [
+          "Modules/*/composer.json"
+        ]
+      }
     },
     "autoload": {
         "classmap": [
@@ -52,10 +67,14 @@
         ],
         "psr-4": {
             "App\\": "app/",
+      "Modules\\": "Modules/",
             "Tests\\": "tests/"
         }
     },
     "autoload-dev": {
+      "psr-4": {
+        "Tests\\": "tests/"
+      },
         "classmap": [
             "tests/TestCase.php"
         ]
@@ -73,8 +92,5 @@
             "php -r \"copy('.env.example', '.env');\"",
             "php artisan key:generate"
         ]
-    },
-    "config": {
-        "preferred-install": "dist"
     }
 }

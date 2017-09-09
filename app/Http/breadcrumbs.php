@@ -200,9 +200,9 @@ Breadcrumbs::register('statuss.index', function ($breadcrumbs) {
     $breadcrumbs->parent('setting');
     $breadcrumbs->push(Lang::get('lang.status_settings'), route('statuss.index'));
 });
-Breadcrumbs::register('statuss.create', function ($breadcrumbs) {
+Breadcrumbs::register('ticketstatuses.create', function ($breadcrumbs) {
     $breadcrumbs->parent('setting');
-    $breadcrumbs->push('Create Status', route('statuss.create'));
+    $breadcrumbs->push('Create Status', route('ticketstatuses.create'));
 });
 Breadcrumbs::register('status.edit', function ($breadcrumbs) {
     $breadcrumbs->parent('setting');

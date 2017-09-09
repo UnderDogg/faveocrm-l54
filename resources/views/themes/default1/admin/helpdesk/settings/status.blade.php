@@ -20,8 +20,8 @@
 @section('content')
   <div class="box box-primary">
     <div class="box-header with-border">
-      <h3 class="box-title">{!! Lang::get('lang.list_of_status') !!}</h3>
-      <div class="box-tools pull-right">
+      <h3 class="box-title">{!! Lang::get('lang.list_of_statuses') !!}</h3>
+      <div class="box-tools pull-right">hello world a modal finally
         <button class="btn btn-box-tool" data-toggle="modal" data-target="#2create" id="create"
                 title="{!! Lang::get('lang.create') !!}"><i class="fa fa-plus-circle fa-2x"></i></button>
       </div>
@@ -94,7 +94,7 @@
   <div class="modal fade" id="2create">
     <div class="modal-dialog">
       <div class="modal-content">
-        {!! Form::open(['route'=>'statuss.create']) !!}
+        {!! Form::open(['route'=>'ticketstatuses.create']) !!}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
               aria-hidden="true">&times;</span></button>

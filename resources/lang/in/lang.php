@@ -1199,7 +1199,7 @@ return [
     'close-msg3' => 'Pilih status pada saat penutupan tiket.',
     'close-msg4' => 'Kirim email ke pengguna saat tiket ditutup otomatis?',
     'edit_status' => 'Edit status',
-    'list_of_status' => 'Daftar status',
+    'list_of_statuses' => 'Daftar status',
     'status_settings' => 'Pengaturan status',
     'icon_class' => 'Icon class',
     'close_ticket_workflow' => 'Alir kerja tutup tiket',

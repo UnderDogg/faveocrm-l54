@@ -1206,7 +1206,7 @@ return [
     'close-msg3' => 'Seleccione un estado para elegir al cerrar el ticket.',
     'close-msg4' => 'Enviar correo electrónico al usuario al cerrar automáticamente el ticket?',
     'edit_status' => 'Editar estado',
-    'list_of_status' => 'Lista de estado',
+    'list_of_statuses' => 'Lista de estado',
     'status_settings' => 'Configuración de estado',
     'icon_class' => 'Clase de iconos',
     'close_ticket_workflow' => 'Cerrar flujo de trabajo de tickets',

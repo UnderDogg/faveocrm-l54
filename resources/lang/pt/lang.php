@@ -1141,7 +1141,7 @@ return [
     'close-msg3' => 'Selecione um status para finalizar o ticket.',
     'close-msg4' => 'Enviar email para o usuário após finalizar automaticamente o ticket?.',
     'edit_status' => 'Editar Status',
-    'list_of_status' => 'Lista de Status',
+    'list_of_statuses' => 'Lista de Status',
     'status_settings' => 'Configurações de Status',
     'icon_class' => 'Icone da classe',
     'close_ticket_workflow' => 'Fechar Ticket Workflow',

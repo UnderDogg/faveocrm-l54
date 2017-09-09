@@ -1210,7 +1210,7 @@ return [
     'close-msg3' => 'Selecteer een status voor het automatisch sluiten van een ticket.',
     'close-msg4' => 'Verstuur e-mail naar de gebruiker bij het automatisch sluiten van een ticket?.',
     'edit_status' => 'Bewerk status',
-    'list_of_status' => 'Lijst met statussen',
+    'list_of_statuses' => 'Lijst met statussen',
     'status_settings' => 'Status Instellingen',
     'icon_class' => 'Icoon class',
     'close_ticket_workflow' => 'Sluit ticket werkstroom',

@@ -9,15 +9,15 @@
 @stop
 
 @section('PageHeader')
-  <h1>{!! Lang::get('lang.status') !!}</h1>
+  <h1>{!! Lang::get('lang.statuses') !!}</h1>
 @stop
 
 @section('content')
   <div class="box box-primary">
     <div class="box-header with-border">
-      <h3 class="box-title">{!! Lang::get('lang.list_of_status') !!}</h3>
-      <div class="box-tools pull-right">
-        <a href="{!! URL::route('statuss.create') !!}">
+      <h3 class="box-title">{!! Lang::get('lang.list_of_statuses') !!}</h3>
+      <div class="box-tools pull-right">hello world
+        <a href="{!! URL::route('ticketstatuses.create') !!}">
           <button class="btn btn-primary btn-sm" id="create"
                   title="{!! Lang::get('lang.create') !!}">{!! Lang::get('lang.create') !!}</button>
         </a>

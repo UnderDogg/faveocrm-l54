@@ -1147,7 +1147,7 @@ return [
     'close-msg3' => 'Sélectionner un statut à appliquer à la fermeture du ticket.',
     'close-msg4' => 'Envoyer un email à l\'utilisateur à l\'auto fermeture du ticket?',
     'edit_status' => 'Modifier statut',
-    'list_of_status' => 'Liste des statuts',
+    'list_of_statuses' => 'Liste des statuts',
     'status_settings' => 'Paramètres statuts',
     'icon_class' => 'Classe d\'icône',
     'close_ticket_workflow' => 'Workflow fermer le ticket',

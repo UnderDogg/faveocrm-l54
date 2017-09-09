@@ -178,7 +178,7 @@ Route::group(['middleware' => 'redirect'], function () {
         Route::get('setting-status', ['as' => 'statuss.index', 'uses' => 'Admin\helpdesk\SettingsController@getStatuses']); // direct to status setting page
         Route::patch('status-update/{id}', ['as' => 'statuss.update', 'uses' => 'Admin\helpdesk\SettingsController@editStatuses']);
         Route::get('status/edit/{id}', ['as' => 'status.edit', 'uses' => 'Admin\helpdesk\SettingsController@getEditStatuses']);
-        Route::post('status-create', ['as' => 'statuss.create', 'uses' => 'Admin\helpdesk\SettingsController@createStatuses']);
+        Route::post('status-create', ['as' => 'ticketstatuses.create', 'uses' => 'Admin\helpdesk\SettingsController@createStatuses']);
         Route::get('status-delete/{id}', ['as' => 'statuss.delete', 'uses' => 'Admin\helpdesk\SettingsController@deleteStatuses']);
         Route::get('ticket/status/{id}/{state}', ['as' => 'statuss.state', 'uses' => 'Staff\helpdesk\TicketController@updateStatuses']);
         Route::get('getratings', ['as' => 'ratings.index', 'uses' => 'Admin\helpdesk\SettingsController@RatingSettings']);

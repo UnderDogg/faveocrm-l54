@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // controllers
@@ -49,7 +48,6 @@ class GroupController extends Controller
         try {
             $groups = $group->get();
             $departments = $department->pluck('id');
-
             return view('themes.default1.admin.helpdesk.agent.groups.index', compact('departments', 'group_assign_department', 'groups'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', Lang::get('lang.failed_to_load_the_page'));
@@ -83,11 +81,10 @@ class GroupController extends Controller
         try {
             /* Check Whether function success or not */
             $group->fill($request->input())->save();
-
             return redirect('groups')->with('success', Lang::get('lang.group_created_successfully'));
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('groups')->with('fails', Lang::get('lang.group_can_not_create').'<li>'.$e->getMessage().'</li>');
+            return redirect('groups')->with('fails', Lang::get('lang.group_can_not_create') . '<li>' . $e->getMessage() . '</li>');
         }
     }
 
@@ -103,10 +100,9 @@ class GroupController extends Controller
     {
         try {
             $groups = $group->whereId($id)->first();
-
             return view('themes.default1.admin.helpdesk.agent.groups.edit', compact('groups'));
         } catch (Exception $e) {
-            return redirect('groups')->with('fails', Lang::get('lang.group_can_not_update').'<li>'.$e->getMessage().'</li>');
+            return redirect('groups')->with('fails', Lang::get('lang.group_can_not_update') . '<li>' . $e->getMessage() . '</li>');
         }
     }
 
@@ -125,7 +121,7 @@ class GroupController extends Controller
         $var = $group->whereId($id)->first();
         $is_group_assigned = User::select('id')->where('assign_group', '=', $id)->count();
         if ($is_group_assigned >= 1 && $request->input('group_status') == '0') {
-            return redirect('groups')->with('fails', Lang::get('lang.group_can_not_update').'<li>'.Lang::get('lang.can-not-inactive-group').'</li>');
+            return redirect('groups')->with('fails', Lang::get('lang.group_can_not_update') . '<li>' . Lang::get('lang.can-not-inactive-group') . '</li>');
         }
         // Updating Name
         $var->name = $request->input('name');
@@ -175,7 +171,7 @@ class GroupController extends Controller
             return redirect('groups')->with('success', Lang::get('lang.group_updated_successfully'));
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('groups')->with('fails', Lang::get('lang.group_can_not_update').'<li>'.$e->getMessage().'</li>');
+            return redirect('groups')->with('fails', Lang::get('lang.group_can_not_update') . '<li>' . $e->getMessage() . '</li>');
         }
     }
 
@@ -192,9 +188,8 @@ class GroupController extends Controller
     {
         $users = User::where('assign_group', '=', $id)->first();
         if ($users) {
-            $user = '<li>'.Lang::get('lang.there_are_agents_assigned_to_this_group_please_unassign_them_from_this_group_to_delete').'</li>';
-
-            return redirect('groups')->with('fails', Lang::get('lang.group_cannot_delete').$user);
+            $user = '<li>' . Lang::get('lang.there_are_agents_assigned_to_this_group_please_unassign_them_from_this_group_to_delete') . '</li>';
+            return redirect('groups')->with('fails', Lang::get('lang.group_cannot_delete') . $user);
         }
         $group_assign_department->where('group_id', $id)->delete();
         $groups = $group->whereId($id)->first();
@@ -205,7 +200,7 @@ class GroupController extends Controller
             return redirect('groups')->with('success', Lang::get('lang.group_deleted_successfully'));
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('groups')->with('fails', Lang::get('lang.group_cannot_delete').'<li>'.$e->getMessage().'</li>');
+            return redirect('groups')->with('fails', Lang::get('lang.group_cannot_delete') . '<li>' . $e->getMessage() . '</li>');
         }
     }
 }

@@ -1,25 +1,25 @@
 @extends('themes.default1.client.layout.client')
 @section('content')
 
-<!-- Start of Page Container -->
+  <!-- Start of Page Container -->
 <div class="col-md-12">
-    <div class="row home-listing-area">
-        <div class="span8">
-            <h2>{{$page->name}}</h2>
-        </div>
+  <div class="row home-listing-area">
+    <div class="span8">
+      <h2>{{$page->name}}</h2>
     </div>
+  </div>
 
-    <div class="row separator">
-
-
-        <section>
-            {!! $page->description !!}
-        </section>
+  <div class="row separator">
 
 
-    </div>
+    <section>
+      {!! $page->description !!}
+    </section>
 
 
-    <!-- end of page content -->
+  </div>
+
+
+  <!-- end of page content -->
 </div>
 @stop

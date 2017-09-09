@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Agent\helpdesk;
 
 // controllers
 use App\Http\Controllers\Controller;
+
 // requests
 /*  Include Sys_user Model  */
 use App\Http\Requests\helpdesk\ProfilePassword;
@@ -16,16 +16,19 @@ use App\Http\Requests\helpdesk\Sys_userUpdate;
 // models
 use App\Model\helpdesk\Agent_panel\Organization;
 use App\Model\helpdesk\Agent_panel\User_org;
+
 /* include User Model */
 /* include Help_topic Model */
 /* Profile validator */
 /* Profile Password validator */
 use App\User;
+
 // classes
 /* include ticket_thred model */
 use Auth;
 /* include tickets model */
 use Hash;
+
 /* TicketRequest to validate the ticket response */
 /* Validate post check ticket */
 use Input;
@@ -79,49 +82,45 @@ class UserController extends Controller
     public function user_list()
     {
         return \Datatable::collection(User::where('role', '!=', 'admin')->where('role', '!=', 'agent')->get())
-                        ->searchColumns('user_name')
-                        ->orderColumns('user_name', 'email')
-                        ->addColumn('user_name', function ($model) {
-                            return $model->user_name;
-                        })
-                        ->addColumn('email', function ($model) {
-                            $email = $model->email;
-
-                            return $email;
-                        })
-                        ->addColumn('phone', function ($model) {
-                            $phone = '';
-                            if ($model->phone_number) {
-                                $phone = $model->ext.' '.$model->phone_number;
-                            }
-                            $mobile = '';
-                            if ($model->mobile) {
-                                $mobile = $model->mobile;
-                            }
-                            $phone = $phone.'&nbsp;&nbsp;&nbsp;'.$mobile;
-
-                            return $phone;
-                        })
-                        ->addColumn('status', function ($model) {
-                            $status = $model->active;
-                            if ($status == 1) {
-                                $stat = '<button class="btn btn-success btn-xs">Active</button>';
-                            } else {
-                                $stat = '<button class="btn btn-danger btn-xs">Inactive</button>';
-                            }
-
-                            return $stat;
-                        })
-                        ->addColumn('lastlogin', function ($model) {
-                            $t = $model->updated_at;
-
-                            return faveoDate($t);
-                        })
-                        ->addColumn('Actions', function ($model) {
-                            //return '<a href=article/delete/ ' . $model->id . ' class="btn btn-danger btn-flat" onclick="myFunction()">Delete</a>&nbsp;<a href=article/' . $model->id . '/edit class="btn btn-warning btn-flat">Edit</a>&nbsp;<a href=show/' . $model->id . ' class="btn btn-warning btn-flat">View</a>';
-                            //return '<form action="article/delete/ ' . $model->id . '" method="post" onclick="alert()"><button type="sumbit" value="Delete"></button></form><a href=article/' . $model->id . '/edit class="btn btn-warning btn-flat">Edit</a>&nbsp;<a href=show/' . $model->id . ' class="btn btn-warning btn-flat">View</a>';
-                            return '<span  data-toggle="modal" data-target="#deletearticle'.$model->id.'"><a href="#" ><button class="btn btn-danger btn-xs"></a> '.\Lang::get('lang.delete').' </button></span>&nbsp;<a href="'.route('user.edit', $model->id).'" class="btn btn-warning btn-xs">'.\Lang::get('lang.edit').'</a>&nbsp;<a href="'.route('user.show', $model->id).'" class="btn btn-primary btn-xs">'.\Lang::get('lang.view').'</a>
-				<div class="modal fade" id="deletearticle'.$model->id.'">
+            ->searchColumns('user_name')
+            ->orderColumns('user_name', 'email')
+            ->addColumn('user_name', function ($model) {
+                return $model->user_name;
+            })
+            ->addColumn('email', function ($model) {
+                $email = $model->email;
+                return $email;
+            })
+            ->addColumn('phone', function ($model) {
+                $phone = '';
+                if ($model->phone_number) {
+                    $phone = $model->ext . ' ' . $model->phone_number;
+                }
+                $mobile = '';
+                if ($model->mobile) {
+                    $mobile = $model->mobile;
+                }
+                $phone = $phone . '&nbsp;&nbsp;&nbsp;' . $mobile;
+                return $phone;
+            })
+            ->addColumn('status', function ($model) {
+                $status = $model->active;
+                if ($status == 1) {
+                    $stat = '<button class="btn btn-success btn-xs">Active</button>';
+                } else {
+                    $stat = '<button class="btn btn-danger btn-xs">Inactive</button>';
+                }
+                return $stat;
+            })
+            ->addColumn('lastlogin', function ($model) {
+                $t = $model->updated_at;
+                return faveoDate($t);
+            })
+            ->addColumn('Actions', function ($model) {
+                //return '<a href=article/delete/ ' . $model->id . ' class="btn btn-danger btn-flat" onclick="myFunction()">Delete</a>&nbsp;<a href=article/' . $model->id . '/edit class="btn btn-warning btn-flat">Edit</a>&nbsp;<a href=show/' . $model->id . ' class="btn btn-warning btn-flat">View</a>';
+                //return '<form action="article/delete/ ' . $model->id . '" method="post" onclick="alert()"><button type="sumbit" value="Delete"></button></form><a href=article/' . $model->id . '/edit class="btn btn-warning btn-flat">Edit</a>&nbsp;<a href=show/' . $model->id . ' class="btn btn-warning btn-flat">View</a>';
+                return '<span  data-toggle="modal" data-target="#deletearticle' . $model->id . '"><a href="#" ><button class="btn btn-danger btn-xs"></a> ' . \Lang::get('lang.delete') . ' </button></span>&nbsp;<a href="' . route('user.edit', $model->id) . '" class="btn btn-warning btn-xs">' . \Lang::get('lang.edit') . '</a>&nbsp;<a href="' . route('user.show', $model->id) . '" class="btn btn-primary btn-xs">' . \Lang::get('lang.view') . '</a>
+				<div class="modal fade" id="deletearticle' . $model->id . '">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -129,17 +128,17 @@ class UserController extends Controller
                     <h4 class="modal-title">Are You Sure ?</h4>
                 </div>
                 <div class="modal-body">
-                '.$model->user_name.'
+                ' . $model->user_name . '
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="dismis2">Close</button>
-                    <a href="'.route('user.delete', $model->id).'"><button class="btn btn-danger">delete</button></a>
+                    <a href="' . route('user.delete', $model->id) . '"><button class="btn btn-danger">delete</button></a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>';
-                        })
-                        ->make();
+            })
+            ->make();
     }
 
     /**
@@ -203,7 +202,6 @@ class UserController extends Controller
         try {
             /* select the field where id = $id(request Id) */
             $users = $user->whereId($id)->first();
-
             return view('themes.default1.agent.helpdesk.user.show', compact('users'));
         } catch (Exception $e) {
             return view('404');
@@ -223,7 +221,6 @@ class UserController extends Controller
         try {
             /* select the field where id = $id(request Id) */
             $users = $user->whereId($id)->first();
-
             return view('themes.default1.agent.helpdesk.user.edit', compact('users'));
         } catch (Exception $e) {
             return view('404');
@@ -295,7 +292,6 @@ class UserController extends Controller
     public function getProfile()
     {
         $user = Auth::user();
-
         return view('themes.default1.agent.helpdesk.user.profile', compact('user'));
     }
 
@@ -307,7 +303,6 @@ class UserController extends Controller
     public function getProfileedit()
     {
         $user = Auth::user();
-
         return view('themes.default1.agent.helpdesk.user.profile-edit', compact('user'));
     }
 
@@ -339,13 +334,12 @@ class UserController extends Controller
             //$extension = Input::file('profile_pic')->getClientOriginalExtension();
             $name = Input::file('profile_pic')->getClientOriginalName();
             $destinationPath = 'uploads/profilepic';
-            $fileName = rand(0000, 9999).'.'.$name;
+            $fileName = rand(0000, 9999) . '.' . $name;
             //echo $fileName;
             Input::file('profile_pic')->move($destinationPath, $fileName);
             $user->profile_pic = $fileName;
         } else {
             $user->fill($request->except('profile_pic', 'gender'))->save();
-
             return Redirect::route('profile')->with('success', 'Profile Updated sucessfully');
         }
         if ($user->fill($request->except('profile_pic'))->save()) {
@@ -368,7 +362,6 @@ class UserController extends Controller
         if (Hash::check($request->input('old_password'), $user->getAuthPassword())) {
             $user->password = Hash::make($request->input('new_password'));
             $user->save();
-
             return redirect('profile-edit')->with('success1', 'Password Updated sucessfully');
         } else {
             return redirect('profile-edit')->with('fails1', 'Password was not Updated. Incorrect old password');
@@ -389,7 +382,6 @@ class UserController extends Controller
         $user_org->org_id = $org;
         $user_org->user_id = $id;
         $user_org->save();
-
         return 1;
     }
 
@@ -406,10 +398,8 @@ class UserController extends Controller
         } else {
             $check = null;
         }
-
         // checking name
         $check2 = Organization::where('name', '=', Input::get('name'))->first();
-
         if (\Input::get('name') == null) {
             return 'Name is required';
         } elseif ($check2 != null) {
@@ -424,12 +414,10 @@ class UserController extends Controller
             $org->address = Input::get('address');
             $org->internal_notes = Input::get('internal');
             $org->save();
-
             $user_org = new User_org();
             $user_org->org_id = $org->id;
             $user_org->user_id = $id;
             $user_org->save();
-
             return 0;
         }
     }

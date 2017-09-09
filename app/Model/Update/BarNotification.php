@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\Update;
 
 use App\BaseModel;

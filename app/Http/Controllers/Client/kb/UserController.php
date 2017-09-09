@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Client\kb;
 
 use App\Http\Controllers\Controller;
@@ -46,19 +45,17 @@ class UserController extends Controller
         $article = $article->where('type', '1');
         $article = $article->orderBy('publish_time', 'desc');
         $article = $article->paginate($pagination);
-
         $article->setPath('article-list');
         $categorys = $category->get();
-
         return view('themes.default1.client.kb.article-list.articles', compact('time', 'categorys', 'article'));
     }
 
     /**
      * Get excerpt from string.
      *
-     * @param string $str       String to get an excerpt from
-     * @param int    $startPos  Position int string to start excerpt from
-     * @param int    $maxLength Maximum length the excerpt may be
+     * @param string $str String to get an excerpt from
+     * @param int $startPos Position int string to start excerpt from
+     * @param int $maxLength Maximum length the excerpt may be
      *
      * @return string excerpt
      */
@@ -72,7 +69,6 @@ class UserController extends Controller
         } else {
             $excerpt = $str;
         }
-
         return $excerpt;
     }
 
@@ -80,9 +76,9 @@ class UserController extends Controller
      * function to search an article.
      *
      * @param \App\Http\Requests\kb\SearchRequest $request
-     * @param \App\Model\kb\Category              $category
-     * @param \App\Model\kb\Article               $article
-     * @param \App\Model\kb\Settings              $settings
+     * @param \App\Model\kb\Category $category
+     * @param \App\Model\kb\Article $article
+     * @param \App\Model\kb\Settings $settings
      *
      * @return type view
      */
@@ -91,13 +87,12 @@ class UserController extends Controller
         $settings = $settings->first();
         $pagination = $settings->pagination;
         $search = $request->input('s');
-        $result = $article->where('name', 'LIKE', '%'.$search.'%')
-                ->orWhere('slug', 'LIKE', '%'.$search.'%')
-                ->orWhere('description', 'LIKE', '%'.$search.'%')
-                ->paginate($pagination);
-        $result->setPath('search?s='.$search);
+        $result = $article->where('name', 'LIKE', '%' . $search . '%')
+            ->orWhere('slug', 'LIKE', '%' . $search . '%')
+            ->orWhere('description', 'LIKE', '%' . $search . '%')
+            ->paginate($pagination);
+        $result->setPath('search?s=' . $search);
         $categorys = $category->get();
-
         return view('themes.default1.client.kb.article-list.search', compact('categorys', 'result'));
     }
 
@@ -114,16 +109,12 @@ class UserController extends Controller
         date_default_timezone_set($tz);
         $date = \Carbon\Carbon::now()->toDateTimeString();
         $arti = $article->where('slug', $slug);
-
         if (!Auth::check() || \Auth::user()->role == 'user') {
             $arti = $arti->where('status', '1');
             $arti = $arti->where('publish_time', '<', $date);
         }
-
         $arti = $arti->where('type', '1');
-
         $arti = $arti->first();
-
         if ($arti) {
             return view('themes.default1.client.kb.article-list.show', compact('arti'));
         } else {
@@ -165,7 +156,6 @@ class UserController extends Controller
     {
         $faq = $faq->where('id', '1')->first();
         $categorys = $category->get();
-
         return view('themes.default1.client.kb.article-list.faq', compact('categorys', 'faq'));
     }
 
@@ -178,7 +168,6 @@ class UserController extends Controller
     {
         $settings = $settings->whereId('1')->first();
         $categorys = $category->get();
-
         return view('themes.default1.client.kb.article-list.contact', compact('settings', 'categorys'));
     }
 
@@ -308,11 +297,9 @@ class UserController extends Controller
     // 	return $date;
     // 	//return substr($date, 0, -6);
     // }
-
     public function clientProfile()
     {
         $user = Auth::user();
-
         return view('themes.default1.client.kb.article-list.profile', compact('user'));
     }
 
@@ -336,13 +323,12 @@ class UserController extends Controller
             //$extension = Input::file('profile_pic')->getClientOriginalExtension();
             $name = Input::file('profile_pic')->getClientOriginalName();
             $destinationPath = 'lb-faveo/dist/img';
-            $fileName = rand(0000, 9999).'.'.$name;
+            $fileName = rand(0000, 9999) . '.' . $name;
             //echo $fileName;
             Input::file('profile_pic')->move($destinationPath, $fileName);
             $user->profile_pic = $fileName;
         } else {
             $user->fill($request->except('profile_pic', 'gender'))->save();
-
             return redirect('guest')->with('success', Lang::get('lang.profile_updated_sucessfully'));
         }
         if ($user->fill($request->except('profile_pic'))->save()) {
@@ -357,7 +343,6 @@ class UserController extends Controller
         if (Hash::check($request->input('old_password'), $user->getAuthPassword())) {
             $user->password = Hash::make($request->input('new_password'));
             $user->save();
-
             return redirect()->back()->with('success', Lang::get('lang.password_updated_sucessfully'));
         } else {
             return redirect()->back()->with('fails', Lang::get('lang.password_was_not_updated'));

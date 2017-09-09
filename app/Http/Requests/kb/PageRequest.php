@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\kb;
 
 use App\Http\Requests\Request;
@@ -24,9 +23,8 @@ class PageRequest extends Request
     public function rules()
     {
         $slug = $this->segment(2);
-
         return [
-            'name' => 'required|unique:kb_pages,slug,'.$slug,
+            'name' => 'required|unique:kb_pages,slug,' . $slug,
         ];
     }
 }

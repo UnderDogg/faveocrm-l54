@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Cache;
@@ -23,13 +22,11 @@ class LanguageMiddleware
         } else {
             $lang = $this->getLangFromSessionOrCache();
         }
-
         if ($lang != '' and array_key_exists($lang, Config::get('languages'))) {
             App::setLocale($lang);
         } else { // This is optional as Laravel will automatically set the fallback language if there is none specified
             App::setLocale(Config::get('app.fallback_locale'));
         }
-
         return $next($request);
     }
 
@@ -41,7 +38,6 @@ class LanguageMiddleware
         } elseif (Cache::has('language')) {
             $lang = Cache::get('language');
         }
-
         return $lang;
     }
 }

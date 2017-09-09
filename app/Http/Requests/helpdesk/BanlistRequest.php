@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -30,7 +29,7 @@ class BanlistRequest extends Request
     {
         return [
             'email' => 'email',
-            'ban'   => 'required',
+            'ban' => 'required',
         ];
     }
 }

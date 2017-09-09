@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use App\Model\Update\BarNotification;
@@ -24,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('Illuminate\Contracts\Auth\Registrar');
-        require_once __DIR__.'/../Http/helpers.php';
+        require_once __DIR__ . '/../Http/helpers.php';
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);
         }
@@ -33,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Queue::failing(function (JobFailed $event) {
-            loging('Failed Job - '.$event->connectionName, json_encode([$event->job->payload(), 'error' => $event->exception->getMessage()]));
+            loging('Failed Job - ' . $event->connectionName, json_encode([$event->job->payload(), 'error' => $event->exception->getMessage()]));
         });
         Route::singularResourceParameters(false);
         // Please note the different namespace
@@ -41,19 +40,15 @@ class AppServiceProvider extends ServiceProvider
         \Event::listen('cron.collectJobs', function () {
             \Cron::add('example1', '* * * * *', function () {
                 $this->index();
-
                 return 'No';
             });
-
             \Cron::add('example2', '*/2 * * * *', function () {
                 // Do some crazy things successfully every two minute
             });
-
             \Cron::add('disabled job', '0 * * * *', function () {
                 // Do some crazy things successfully every hour
             }, false);
         });
-
         $this->composer();
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\FaveoStorage;
 
 use Illuminate\Support\ServiceProvider;
@@ -13,19 +12,16 @@ class StorageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $view_path = app_path().DIRECTORY_SEPARATOR.'FaveoStorage'.DIRECTORY_SEPARATOR.'views';
+        $view_path = app_path() . DIRECTORY_SEPARATOR . 'FaveoStorage' . DIRECTORY_SEPARATOR . 'views';
         $this->loadViewsFrom($view_path, 'storage');
-
-        $lang_path = app_path().DIRECTORY_SEPARATOR.'FaveoStorage'.DIRECTORY_SEPARATOR.'lang';
+        $lang_path = app_path() . DIRECTORY_SEPARATOR . 'FaveoStorage' . DIRECTORY_SEPARATOR . 'lang';
         $this->loadTranslationsFrom($lang_path, 'storage');
-
         if (isInstall()) {
             $controller = new Controllers\SettingsController();
             $controller->activate();
         }
-
         if (class_exists('Breadcrumbs')) {
-            require __DIR__.'/breadcrumbs.php';
+            require __DIR__ . '/breadcrumbs.php';
         }
     }
 

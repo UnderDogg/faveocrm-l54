@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
@@ -32,7 +31,6 @@ class TemplateSetController extends Controller
     {
         try {
             $sets = TemplateSet::all();
-
             return view('themes.default1.common.template.sets', compact('sets'));
         } catch (\Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -64,7 +62,6 @@ class TemplateSetController extends Controller
             foreach ($templates as $template) {
                 \DB::table('templates')->insert(['set_id' => $sets->id, 'name' => $template->name, 'variable' => $template->variable, 'type' => $template->type, 'subject' => $template->subject, 'message' => $template->message]);
             }
-
             return redirect('template-sets')->with('success', Lang::get('lang.you_have_created_a_new_template_set'));
         } catch (Exception $ex) {
             return redirect('template-sets')->with('fails', $ex->getMessage());
@@ -87,7 +84,6 @@ class TemplateSetController extends Controller
                 $ratName = $id;
             }
             \DB::table('settings_email')->update(['template' => $ratName]);
-
             return \Redirect::back()->with('success', Lang::get('lang.you_have_successfully_activated_this_set'));
         } catch (Exception $ex) {
             return \Redirect::back()->with('fails', $ex->getMessage());
@@ -114,7 +110,7 @@ class TemplateSetController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -143,7 +139,6 @@ class TemplateSetController extends Controller
                 $template->delete();
             }
             TemplateSet::whereId($id)->delete();
-
             return redirect()->back()->with('success', Lang::get('lang.template_set_deleted_successfully'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());

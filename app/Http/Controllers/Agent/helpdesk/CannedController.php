@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Agent\helpdesk;
 
 // controllers
@@ -85,7 +84,6 @@ class CannedController extends Controller
             $canned->message = $request->input('message');
             // saving inputs
             $canned->save();
-
             return redirect()->route('canned.list')->with('success', Lang::get('lang.added_successfully'));
         } catch (Exception $e) {
             return redirect()->route('canned.list')->with('fails', $e->getMessage());
@@ -95,7 +93,7 @@ class CannedController extends Controller
     /**
      * Show the form for editing the Canned Response.
      *
-     * @param type        $id
+     * @param type $id
      * @param type Canned $canned
      *
      * @return type View
@@ -105,7 +103,6 @@ class CannedController extends Controller
         try {
             // fetching requested canned response
             $canned = $canned->where('user_id', '=', \Auth::user()->id)->where('id', '=', $id)->first();
-
             return view('themes.default1.agent.helpdesk.canned.edit', compact('canned'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -115,7 +112,7 @@ class CannedController extends Controller
     /**
      * Update the Canned Response in database.
      *
-     * @param type                     $id
+     * @param type $id
      * @param type CannedUpdateRequest $request
      * @param type Canned              $canned
      *
@@ -132,7 +129,6 @@ class CannedController extends Controller
             $canned->message = $request->input('message');
             // saving inputs
             $canned->save();
-
             return redirect()->route('canned.list')->with('success', Lang::get('lang.updated_successfully'));
         } catch (Exception $e) {
             return redirect()->route('canned.list')->with('fails', $e->getMessage());
@@ -142,7 +138,7 @@ class CannedController extends Controller
     /**
      * Delete the Canned Response from storage.
      *
-     * @param type        $id
+     * @param type $id
      * @param type Canned $canned
      *
      * @return type Redirect

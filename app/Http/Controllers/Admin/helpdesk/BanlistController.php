@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // controller
@@ -48,7 +47,6 @@ class BanlistController extends Controller
     {
         try {
             $bans = User::where('ban', '=', 1)->get();
-
             return view('themes.default1.admin.helpdesk.emails.banlist.index', compact('bans'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -73,7 +71,7 @@ class BanlistController extends Controller
      * Store a new banned user credentials.
      *
      * @param BanRequest $request
-     * @param User       $user
+     * @param User $user
      *
      * @return type Response
      */
@@ -96,7 +94,6 @@ class BanlistController extends Controller
                 $user->ban = $request->input('ban');
                 $user->internal_note = $request->input('internal_note');
                 $user->save();
-
                 return redirect('banlist')->with('success', Lang::get('lang.email_banned_sucessfully'));
             }
         } catch (Exception $e) {
@@ -116,7 +113,6 @@ class BanlistController extends Controller
     {
         try {
             $bans = $ban->whereId($id)->first();
-
             return view('themes.default1.admin.helpdesk.emails.banlist.edit', compact('bans'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -126,8 +122,8 @@ class BanlistController extends Controller
     /**
      * Update the banned users.
      *
-     * @param type           $id
-     * @param User           $ban
+     * @param type $id
+     * @param User $ban
      * @param BanlistRequest $request
      *
      * @return type Response
@@ -151,7 +147,7 @@ class BanlistController extends Controller
     /**
      * delete the banned users.
      *
-     * @param type      $id
+     * @param type $id
      * @param \App\User $ban
      *
      * @return type view
@@ -162,7 +158,6 @@ class BanlistController extends Controller
             $ban_user = $ban->where('id', '=', $id)->first();
             $ban_user->ban = 0;
             $ban_user->save();
-
             return redirect('banlist')->with('success', Lang::get('lang.banned_removed_sucessfully'));
         } catch (Exception $ex) {
             return redirect('banlist')->with('fails', $ex->getMessage());

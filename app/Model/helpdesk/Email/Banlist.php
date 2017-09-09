@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Email;
 
 use App\BaseModel;

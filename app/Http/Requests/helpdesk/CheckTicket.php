@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,7 +28,7 @@ class CheckTicket extends Request
     public function rules()
     {
         return [
-            'email'         => 'required|email',
+            'email' => 'required|email',
             'ticket_number' => 'required',
         ];
     }

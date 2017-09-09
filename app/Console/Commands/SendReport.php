@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Console\Commands;
 
 use App\Http\Controllers\Agent\helpdesk\NotificationController;
@@ -46,7 +45,6 @@ class SendReport extends Command
                 $mail->setQueue();
                 $this_report = new NotificationController($mail);
                 $report = $this_report->send_notification();
-
                 if ($report !== 0) {
                     loging('sending-mail-report', 'Report has send', 'info');
                     //\Log::info("Report has send");

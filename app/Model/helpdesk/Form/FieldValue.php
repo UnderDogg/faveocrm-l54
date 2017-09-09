@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Form;
 
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +15,6 @@ class FieldValue extends Model
         if ($child) {
             $childid = $this->attributes['child_id'];
         }
-
         return $childid;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk\Queue;
 
 use App\Http\Requests\Request;
@@ -25,7 +24,6 @@ class QueueRequest extends Request
     {
         $request = $this->except('_token');
         $rules = $this->setRule($request);
-
         return $rules;
     }
 
@@ -33,11 +31,10 @@ class QueueRequest extends Request
     {
         $rules = [];
         if (count($request) > 0) {
-            foreach ($request as $key=>$value) {
+            foreach ($request as $key => $value) {
                 $rules[$key] = 'required';
             }
         }
-
         return $rules;
     }
 }

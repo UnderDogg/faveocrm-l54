@@ -13,9 +13,7 @@
  |     translated   : [NO/YES]
  |      Added on    :
  */
-
 return [
-
     /*
       |--------------------------------------------------------------------------
       | Password Reminder Language Lines
@@ -26,10 +24,9 @@ return [
       | has failed, such as for an invalid token or invalid new password.
       |
      */
-
     'password' => 'As senhas devem ter pelo menos seis caracteres e serem idênticas.',
-    'user'     => 'Nenhum usuário foi localizado com esse endereço de e-mail.',
-    'token'    => 'Chave de redefinição de senha é inválida.',
-    'sent'     => 'O link para redefinição de senha será enviado por e-mail!',
-    'reset'    => 'Sua senha foi redefinida!',
+    'user' => 'Nenhum usuário foi localizado com esse endereço de e-mail.',
+    'token' => 'Chave de redefinição de senha é inválida.',
+    'sent' => 'O link para redefinição de senha será enviado por e-mail!',
+    'reset' => 'Sua senha foi redefinida!',
 ];

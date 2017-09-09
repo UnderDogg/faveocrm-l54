@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Pagination Language Lines
@@ -12,15 +10,13 @@ return [
     | you want to customize your views to better match your application.
     |
     */
-
-    'filename'     => 'ISO CODE',
-    'language'     => 'Язык',
-    'Action'       => 'Действие',
-    'status'       => 'stature',
-    'not-active'   => 'Не Активный',
-    'active'       => 'Активный',
-    'hello'        => 'Привет',
-    'enable'       => 'Включен',
-    'disable'      => 'Выключен',
-
+    'filename' => 'ISO CODE',
+    'language' => 'Язык',
+    'Action' => 'Действие',
+    'status' => 'stature',
+    'not-active' => 'Не Активный',
+    'active' => 'Активный',
+    'hello' => 'Привет',
+    'enable' => 'Включен',
+    'disable' => 'Выключен',
 ];

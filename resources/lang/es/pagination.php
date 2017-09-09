@@ -13,9 +13,7 @@
  |  Last updates : 26-1-2016
  |
  */
-
 return [
-
     /*
       |--------------------------------------------------------------------------
       | Pagination Language Lines
@@ -26,7 +24,6 @@ return [
       | you want to customize your views to better match your application.
       |
      */
-
     'previous' => '&laquo; Anterior',
-    'next'     => 'Siguiente &raquo;',
+    'next' => 'Siguiente &raquo;',
 ];

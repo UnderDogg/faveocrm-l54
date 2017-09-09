@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Manage;
 
 use App\BaseModel;

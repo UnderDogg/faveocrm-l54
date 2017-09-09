@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,7 +28,6 @@ class TicketRequest extends Request
     public function rules()
     {
         $error = '';
-
         try {
             $size = $this->size();
             if ($size > 800 || $size == 0) {
@@ -39,9 +37,9 @@ class TicketRequest extends Request
             dd($ex);
             $error = $this->error($ex);
         }
-//        return [
-//            'attachment' => 'not_in:'.$error,
-//        ];
+        //        return [
+        //            'attachment' => 'not_in:'.$error,
+        //        ];
     }
 
     public function size()
@@ -56,7 +54,6 @@ class TicketRequest extends Request
                 $size += $file->getSize();
             }
         }
-
         return $size;
     }
 
@@ -67,7 +64,6 @@ class TicketRequest extends Request
             if (is_object($message)) {
                 $message = $message->toArray();
             }
-
             return $message;
         }
     }

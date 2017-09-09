@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\kb;
 
 use App\BaseModel;

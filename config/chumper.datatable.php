@@ -1,5 +1,4 @@
 <?php
-
 return [
     /*
       |--------------------------------------------------------------------------
@@ -7,7 +6,6 @@ return [
       |--------------------------------------------------------------------------
       |
      */
-
     'table' => [
         /*
           |--------------------------------------------------------------------------
@@ -18,7 +16,6 @@ return [
           | Supported: string
           |
          */
-
         'class' => 'table table-bordered',
         /*
           |--------------------------------------------------------------------------
@@ -44,7 +41,7 @@ return [
          */
         'options' => [
             'sPaginationType' => 'full_numbers',
-            'bProcessing'     => true,
+            'bProcessing' => true,
         ],
         /*
           |--------------------------------------------------------------------------
@@ -105,7 +102,6 @@ return [
           | Supported: boolean
           |
          */
-
         'exactWordSearch' => false,
     ],
     /*
@@ -116,7 +112,7 @@ return [
      */
     'classmap' => [
         'CollectionEngine' => 'Chumper\Datatable\Engines\CollectionEngine',
-        'QueryEngine'      => 'Chumper\Datatable\Engines\QueryEngine',
-        'Table'            => 'Chumper\Datatable\Table',
+        'QueryEngine' => 'Chumper\Datatable\Engines\QueryEngine',
+        'Table' => 'Chumper\Datatable\Table',
     ],
 ];

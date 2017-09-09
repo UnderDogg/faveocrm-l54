@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
@@ -19,12 +18,10 @@ class FileuploadController extends Controller
     public function file_upload_max_size()
     {
         static $max_size = -1;
-
         if ($max_size < 0) {
             // Start with post_max_size.
             $max_size_in_bytes = $this->parse_size(ini_get('post_max_size'));
             $max_size_in_actual = ini_get('post_max_size');
-
             // If upload_max_size is less, then reduce. Except if upload_max_size is
             // zero, which indicates no limit.
             $upload_max = $this->parse_size(ini_get('upload_max_filesize'));
@@ -33,9 +30,8 @@ class FileuploadController extends Controller
                 $max_size_in_actual = ini_get('upload_max_filesize');
             }
         }
-
         return ['0' => $max_size_in_bytes, '1' => $max_size_in_actual];
-//        return $max_size_in_bytes;
+        //        return $max_size_in_bytes;
     }
 
     public function parse_size($size)

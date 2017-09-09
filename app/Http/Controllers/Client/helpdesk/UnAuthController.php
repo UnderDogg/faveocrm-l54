@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Client\helpdesk;
 
 // controllers
@@ -54,14 +53,14 @@ class UnAuthController extends Controller
     {
         try {
             $validator = \Validator::make($request->all(), [
-                        'email_address' => 'required|email',
-                        'ticket_number' => 'required',
+                'email_address' => 'required|email',
+                'ticket_number' => 'required',
             ]);
             if ($validator->fails()) {
                 return redirect()->back()
-                                ->withErrors($validator)
-                                ->withInput()
-                                ->with('check', '1');
+                    ->withErrors($validator)
+                    ->withInput()
+                    ->with('check', '1');
             }
             $email = $request->input('email_address');
             $ticket_number = $request->input('ticket_number');
@@ -79,7 +78,7 @@ class UnAuthController extends Controller
                 if ($user_details->role == 'user') {
                     $username = $user_details->first_name;
                 } else {
-                    $username = $user_details->first_name.' '.$user_details->last_name;
+                    $username = $user_details->first_name . ' ' . $user_details->last_name;
                 }
                 // check for preentered ticket token
                 $ticket_token = TicketToken::where('ticket_id', '=', $ticket->id)->first();
@@ -96,16 +95,14 @@ class UnAuthController extends Controller
                     $ticket_token->token = $hashed_token;
                     $ticket_token->save();
                 }
-
                 try {
                     $this->PhpMailController->sendmail(
-                            $from = $this->PhpMailController->mailfrom('1', '0'), $to = ['name' => $username, 'email' => $user_details->email], $message = ['subject' => 'Ticket link Request ['.$ticket_number.']', 'scenario' => 'check-ticket'], $template_variables = ['user' => $username, 'ticket_link_with_number' => url('show-ticket/'.$ticket->id.'/'.$token)]
+                        $from = $this->PhpMailController->mailfrom('1', '0'), $to = ['name' => $username, 'email' => $user_details->email], $message = ['subject' => 'Ticket link Request [' . $ticket_number . ']', 'scenario' => 'check-ticket'], $template_variables = ['user' => $username, 'ticket_link_with_number' => url('show-ticket/' . $ticket->id . '/' . $token)]
                     );
                 } catch (\Exception $e) {
                 }
-
                 return redirect()->back()
-                                ->with('success', Lang::get('lang.we_have_sent_you_a_link_by_email_please_click_on_that_link_to_view_ticket'));
+                    ->with('success', Lang::get('lang.we_have_sent_you_a_link_by_email_please_click_on_that_link_to_view_ticket'));
             } else {
                 return \Redirect::route('form')->with('fails', Lang::get("lang.email_didn't_match_with_ticket_number"));
             }
@@ -129,7 +126,6 @@ class UnAuthController extends Controller
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
-
         return $randomString;
     }
 
@@ -148,12 +144,11 @@ class UnAuthController extends Controller
             if (Hash::check($token, $check_token->token) == true) {
                 $token_time = CommonSettings::where('option_name', '=', 'ticket_token_time_duration')->first();
                 $time = $token_time->option_value;
-                $new_time = date_add($check_token->updated_at, date_interval_create_from_date_string($time.' Hours'));
+                $new_time = date_add($check_token->updated_at, date_interval_create_from_date_string($time . ' Hours'));
                 if (date('Y-m-d H:i:s') > $new_time) {
                     return redirect()->route('form')->with('fails', Lang::get('lang.sorry_your_ticket_token_has_expired_please_try_to_resend_the_ticket_link_request'));
                 }
                 $tickets = Tickets::where('id', '=', $ticket_id)->first();
-
                 return view('themes.default1.client.helpdesk.unauth.showticket', compact('tickets', 'token'));
             } else {
                 return redirect()->route('form')->with('fails', Lang::get('lang.sorry_you_are_not_allowed_token_expired'));
@@ -181,20 +176,17 @@ class UnAuthController extends Controller
             if ($ratingrefs !== null) {
                 $ratingrefs->rating_id = $ratID->id;
                 $ratingrefs->ticket_id = $id;
-
                 $ratingrefs->thread_id = '0';
                 $ratingrefs->rating_value = $value;
                 $ratingrefs->save();
             } else {
                 $rating_ref->rating_id = $ratID->id;
                 $rating_ref->ticket_id = $id;
-
                 $rating_ref->thread_id = '0';
                 $rating_ref->rating_value = $value;
                 $rating_ref->save();
             }
         }
-
         return redirect()->back()->with('Success', Lang::get('lang.thank_you_for_your_rating'));
     }
 
@@ -228,7 +220,6 @@ class UnAuthController extends Controller
                 $rating_ref->save();
             }
         }
-
         return redirect()->back()->with('Success', Lang::get('lang.thank_you_for_your_rating'));
     }
 
@@ -252,42 +243,34 @@ class UnAuthController extends Controller
         $tickets->save();
         $ticket_thread = Ticket_Thread::where('ticket_id', '=', $ticket_status->id)->first();
         $ticket_subject = $ticket_thread->title;
-
         $user = User::where('id', '=', $tickets->user_id)->first();
-
         $thread = new Ticket_Thread();
         $thread->ticket_id = $tickets->id;
         $thread->user_id = $tickets->user_id;
         $thread->is_internal = 1;
-        $thread->body = $ticket_status->message.' '.$user->user_name;
+        $thread->body = $ticket_status->message . ' ' . $user->user_name;
         $thread->save();
-
         $email = $user->email;
         $user_name = $user->user_name;
-
         $ticket_number = $tickets->ticket_number;
-
         $sending_emails = Emails::where('department', '=', $ticket_status->dept_id)->first();
         if ($sending_emails == null) {
             $from_email = $this->system_mail();
         } else {
             $from_email = $sending_emails->id;
         }
-
         try {
-            $this->PhpMailController->sendmail($from = $this->PhpMailController->mailfrom('0', $tickets->dept_id), $to = ['name' => $user_name, 'email' => $email], $message = ['subject' => $ticket_subject.'[#'.$ticket_number.']', 'scenario' => 'close-ticket'], $template_variables = ['ticket_number' => $ticket_number]);
+            $this->PhpMailController->sendmail($from = $this->PhpMailController->mailfrom('0', $tickets->dept_id), $to = ['name' => $user_name, 'email' => $email], $message = ['subject' => $ticket_subject . '[#' . $ticket_number . ']', 'scenario' => 'close-ticket'], $template_variables = ['ticket_number' => $ticket_number]);
         } catch (\Exception $e) {
             return 0;
         }
-
-        return Lang::get('lang.your_ticket_has_been').' '.$ticket_status->state;
+        return Lang::get('lang.your_ticket_has_been') . ' ' . $ticket_status->state;
     }
 
     //Auto-close tickets
     public function autoCloseTickets()
     {
         $workflow = \App\Model\helpdesk\Workflow\WorkflowClose::whereId(1)->first();
-
         if ($workflow->condition == 1) {
             $overdues = Tickets::where('status', '=', 1)->where('isanswered', '=', 1)->orderBy('id', 'DESC')->get();
             if (count($overdues) == 0) {
@@ -296,37 +279,36 @@ class UnAuthController extends Controller
                 $i = 0;
                 foreach ($overdues as $overdue) {
                     //                $sla_plan = Sla_plan::where('id', '=', $overdue->sla)->first();
-
                     $ovadate = $overdue->created_at;
-                    $new_date = date_add($ovadate, date_interval_create_from_date_string($workflow->days.' days')).'<br/><br/>';
+                    $new_date = date_add($ovadate, date_interval_create_from_date_string($workflow->days . ' days')) . '<br/><br/>';
                     if (date('Y-m-d H:i:s') > $new_date) {
                         $i++;
                         $overdue->status = 3;
                         $overdue->closed = 1;
                         $overdue->closed_at = date('Y-m-d H:i:s');
                         $overdue->save();
-//        if($workflow->send_email == 1) {
-//             $this->PhpMailController->sendmail($from = $this->PhpMailController->mailfrom('0', $overdue->dept_id), $to = ['name' => $user_name, 'email' => $email], $message = ['subject' => $ticket_subject.'[#'.$ticket_number.']', 'scenario' => 'close-ticket'], $template_variables = ['ticket_number' => $ticket_number]);
-//        }
+                        //        if($workflow->send_email == 1) {
+                        //             $this->PhpMailController->sendmail($from = $this->PhpMailController->mailfrom('0', $overdue->dept_id), $to = ['name' => $user_name, 'email' => $email], $message = ['subject' => $ticket_subject.'[#'.$ticket_number.']', 'scenario' => 'close-ticket'], $template_variables = ['ticket_number' => $ticket_number]);
+                        //        }
                     }
                 }
                 // dd(count($value));
-//            if ($i > 0) {
-//                $tickets = new collection($value);
-//            } else {
-//                $tickets = null;
-//            }
+                //            if ($i > 0) {
+                //                $tickets = new collection($value);
+                //            } else {
+                //                $tickets = null;
+                //            }
             }
         } else {
         }
     }
 
     /**
-     *@category function to change system's language
+     * @category function to change system's language
      *
-     *@param string $lang //desired language's iso code
+     * @param string $lang //desired language's iso code
      *
-     *@return response
+     * @return response
      */
     public static function changeLanguage($lang)
     {
@@ -338,7 +320,6 @@ class UnAuthController extends Controller
         } else {
             return false;
         }
-
         return true;
     }
 
@@ -348,41 +329,39 @@ class UnAuthController extends Controller
         $followup = Followup::whereId('1')->first();
         $condition = $followup->condition;
         // dd($condition);
-
         switch ($condition) {
             case 'everyMinute':
-              $followup_set = ' + 1 minute';
+                $followup_set = ' + 1 minute';
                 break;
             case 'everyFiveMinutes':
-               $followup_set = ' + 5 minute';
+                $followup_set = ' + 5 minute';
                 break;
             case 'everyTenMinutes':
-               $followup_set = ' + 10 minute';
+                $followup_set = ' + 10 minute';
                 break;
             case 'everyThirtyMinutes':
-               $followup_set = ' + 30 minute';
+                $followup_set = ' + 30 minute';
                 break;
             case 'hourly':
-               $followup_set = ' + 1 hours';
+                $followup_set = ' + 1 hours';
                 break;
             case 'daily':
-               $followup_set = ' + 1 day';
+                $followup_set = ' + 1 day';
                 break;
             case 'weekly':
-               $followup_set = ' + 7 day';
+                $followup_set = ' + 7 day';
                 break;
             case 'monthly':
-               $followup_set = ' + 30 day';
+                $followup_set = ' + 30 day';
                 break;
             case 'yearly':
-               $followup_set = ' + 365 day';
+                $followup_set = ' + 365 day';
                 break;
         }
-
         if ($followup->status = 1) {
             $tickets = Tickets::where('id', '>=', 1)->where('status', '!=', 5)->get();
             foreach ($tickets as $ticket) {
-                $ck = date('Y-m-d H:i:s', strtotime($ticket->updated_at.$followup_set));
+                $ck = date('Y-m-d H:i:s', strtotime($ticket->updated_at . $followup_set));
                 $current_time = date('Y-m-d H:i:s');
                 if ($current_time > $ck) {
                     $ticket->follow_up = 1;
@@ -393,11 +372,11 @@ class UnAuthController extends Controller
     }
 
     /**
-     *@category function to change system's language
+     * @category function to change system's language
      *
-     *@param string $lang //desired language's iso code
+     * @param string $lang //desired language's iso code
      *
-     *@return response
+     * @return response
      */
     public static function changeUserLanguage($lang)
     {
@@ -412,7 +391,6 @@ class UnAuthController extends Controller
                 Session::put('language', $lang);
             }
         }
-
         return redirect()->back();
     }
 }

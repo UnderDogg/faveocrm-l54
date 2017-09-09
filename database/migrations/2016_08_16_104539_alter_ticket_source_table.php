@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -26,7 +25,7 @@ class AlterTicketSourceTable extends Migration
 
     public function values()
     {
-        return[
+        return [
             ['name' => 'web', 'value' => 'Web', 'css_class' => 'fa fa-internet-explorer'],
             ['name' => 'email', 'value' => 'E-mail', 'css_class' => 'fa fa-envelope'],
             ['name' => 'agent', 'value' => 'Agent Panel', 'css_class' => 'fa fa-envelope'],

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,10 +28,9 @@ class FormRequest extends Request
     public function rules()
     {
         return [
-
-            'title'      => 'required',
-            'label'      => 'required',
-            'type'       => 'required',
+            'title' => 'required',
+            'label' => 'required',
+            'type' => 'required',
             'visibility' => 'required',
         ];
     }

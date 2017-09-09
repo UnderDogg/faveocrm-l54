@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Agent_panel;
 
 use App\BaseModel;
@@ -7,7 +6,6 @@ use App\BaseModel;
 class Organization extends BaseModel
 {
     /* define the table name */
-
     protected $table = 'organization';
 
     /* Define the fillable fields */
@@ -16,14 +14,12 @@ class Organization extends BaseModel
     public function userRelation()
     {
         $related = "App\Model\helpdesk\Agent_panel\User_org";
-
         return $this->hasMany($related, 'org_id');
     }
 
     public function getUserIds()
     {
         $user_relations = $this->userRelation()->pluck('user_id')->toArray();
-
         return $user_relations;
     }
 
@@ -32,7 +28,6 @@ class Organization extends BaseModel
         $user = new \App\User();
         $user_ids = $this->getUserIds();
         $users = $user->whereIn('id', $user_ids);
-
         return $users;
     }
 }

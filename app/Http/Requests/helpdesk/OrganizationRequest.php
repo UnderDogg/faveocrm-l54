@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,10 +28,9 @@ class OrganizationRequest extends Request
     public function rules()
     {
         return [
-
-            'name'    => 'required|unique:organization',
+            'name' => 'required|unique:organization',
             'website' => 'url',
-                // 'phone' => 'size:10',
+            // 'phone' => 'size:10',
         ];
     }
 }

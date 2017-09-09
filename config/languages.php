@@ -1,5 +1,4 @@
 <?php
-
 //Iso codes for languages
 return [
     'aa' => 'Afar',

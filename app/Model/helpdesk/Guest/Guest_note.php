@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Guest;
 
 use Illuminate\Database\Eloquent\Model;

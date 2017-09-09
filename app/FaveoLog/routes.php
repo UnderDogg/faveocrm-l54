@@ -1,5 +1,4 @@
 <?php
-
 Breadcrumbs::register('logs', function ($breadcrumbs) {
     $breadcrumbs->parent('setting');
     $breadcrumbs->push('System Logs', route('logs'));

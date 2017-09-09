@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Notification;
 
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +22,6 @@ class Notification extends Model
     public function requester()
     {
         $related = 'App\User';
-
         return $this->belongsTo($related, 'by');
     }
 

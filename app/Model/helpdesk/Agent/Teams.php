@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Agent;
 
 use App\BaseModel;
@@ -19,7 +18,7 @@ class Teams extends BaseModel
     public function delete()
     {
         \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $this->ticket()->update(['team_id'=>null]);
+        $this->ticket()->update(['team_id' => null]);
         parent::delete();
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

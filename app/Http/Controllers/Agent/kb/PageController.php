@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Agent\kb;
 
 use App\Http\Controllers\Controller;
@@ -50,7 +49,6 @@ class PageController extends Controller
     {
         $pages = $this->page->paginate(3);
         $pages->setPath('page');
-
         try {
             return view('themes.default1.agent.kb.pages.index', compact('pages'));
         } catch (Exception $e) {
@@ -67,25 +65,24 @@ class PageController extends Controller
     {
         /* fetching chumper datatables */
         return Datatable::collection(Page::All())
-                        /* search column name */
-                        ->searchColumns('name')
-                        /* order column name, description and created */
-                        ->orderColumns('name', 'description', 'created')
-                        /* add column name */
-                        ->addColumn('name', function ($model) {
-                            return $model->name;
-                        })
-                        /* add column Created */
-                        ->addColumn('Created', function ($model) {
-                            $t = $model->created_at;
-
-                            return faveoDate($t);
-                        })
-                        /* add column Actions */
-                        /* there are action buttons and modal popup to delete a data column */
-                        ->addColumn('Actions', function ($model) {
-                            return '<span  data-toggle="modal" data-target="#deletepage'.$model->id.'"><a href="#" ><button class="btn btn-danger btn-xs"></a> '.\Lang::get('lang.delete').'</button></span>&nbsp;<a href=page/'.$model->slug.'/edit class="btn btn-warning btn-xs">'.\Lang::get('lang.edit').'</a>&nbsp;<a href=pages/'.$model->slug.' class="btn btn-primary btn-xs">'.\Lang::get('lang.view').'</a>
-				<div class="modal fade" id="deletepage'.$model->id.'">
+            /* search column name */
+            ->searchColumns('name')
+            /* order column name, description and created */
+            ->orderColumns('name', 'description', 'created')
+            /* add column name */
+            ->addColumn('name', function ($model) {
+                return $model->name;
+            })
+            /* add column Created */
+            ->addColumn('Created', function ($model) {
+                $t = $model->created_at;
+                return faveoDate($t);
+            })
+            /* add column Actions */
+            /* there are action buttons and modal popup to delete a data column */
+            ->addColumn('Actions', function ($model) {
+                return '<span  data-toggle="modal" data-target="#deletepage' . $model->id . '"><a href="#" ><button class="btn btn-danger btn-xs"></a> ' . \Lang::get('lang.delete') . '</button></span>&nbsp;<a href=page/' . $model->slug . '/edit class="btn btn-warning btn-xs">' . \Lang::get('lang.edit') . '</a>&nbsp;<a href=pages/' . $model->slug . ' class="btn btn-primary btn-xs">' . \Lang::get('lang.view') . '</a>
+				<div class="modal fade" id="deletepage' . $model->id . '">
         			<div class="modal-dialog">
             			<div class="modal-content">
                 			<div class="modal-header">
@@ -93,17 +90,17 @@ class PageController extends Controller
                     			<h4 class="modal-title">Are You Sure ?</h4>
                 			</div>
                 			<div class="modal-body">
-                				'.$model->name.'
+                				' . $model->name . '
                 			</div>
                 			<div class="modal-footer">
 	                    		<button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="dismis2">Close</button>
-    			                <a href="page/delete/'.$model->id.'"><button class="btn btn-danger">delete</button></a>
+    			                <a href="page/delete/' . $model->id . '"><button class="btn btn-danger">delete</button></a>
 			                </div>
 		            	</div>
 			        </div>
     			</div>';
-                        })
-                        ->make();
+            })
+            ->make();
     }
 
     /**
@@ -128,10 +125,8 @@ class PageController extends Controller
         $sl = $request->input('name');
         $slug = str_slug($sl, '-');
         $this->page->slug = $slug;
-
         try {
             $this->page->fill($request->input())->save();
-
             return redirect('page')->with('success', Lang::get('lang.page_created_successfully'));
         } catch (Exception $e) {
             return redirect('page')->with('fails', $e->getMessage());
@@ -149,7 +144,6 @@ class PageController extends Controller
     {
         try {
             $page = $this->page->where('slug', $slug)->first();
-
             return view('themes.default1.agent.kb.pages.edit', compact('page'));
         } catch (Exception $e) {
             return redirect('page')->with('fails', $e->getMessage());
@@ -159,7 +153,7 @@ class PageController extends Controller
     /**
      * To update a page.
      *
-     * @param type            $slug
+     * @param type $slug
      * @param type PageUpdate $request
      *
      * @return type redirect
@@ -170,12 +164,10 @@ class PageController extends Controller
         $pages = $this->page->where('slug', $slug)->first();
         $sl = $request->input('name');
         $slug = str_slug($sl, '-');
-
         try {
             $pages->fill($request->all())->save();
             $pages->slug = $slug;
             $pages->save();
-
             return redirect('page')->with('success', Lang::get('lang.your_page_updated_successfully'));
         } catch (Exception $e) {
             return redirect('page')->with('fails', $e->getMessage());
@@ -195,7 +187,6 @@ class PageController extends Controller
             // get the page to be deleted
             $page = $this->page->whereId($id)->first();
             $page->delete();
-
             return redirect('page')->with('success', Lang::get('lang.page_deleted_successfully'));
         } catch (Exception $e) {
             return redirect('page')->with('fails', $e->getMessage());

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Settings;
 
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +16,7 @@ class SocialMedia extends Model
     {
         $social = '';
         if ($key == 'redirect' && $login == true) {
-            $social = url('social/login/'.$provider);
+            $social = url('social/login/' . $provider);
         }
         if ($key !== '' && $key !== 'redirect') {
             $social = $this->where('provider', $provider)->where('key', $key)->first();
@@ -27,7 +26,6 @@ class SocialMedia extends Model
         if (is_object($social)) {
             $social = $social->value;
         }
-
         return $social;
     }
 
@@ -41,7 +39,6 @@ class SocialMedia extends Model
                 $check = true;
             }
         }
-
         return $check;
     }
 
@@ -55,7 +52,6 @@ class SocialMedia extends Model
                 $check = true;
             }
         }
-
         return $check;
     }
 }

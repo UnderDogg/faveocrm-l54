@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Filters;
 
 use Illuminate\Database\Eloquent\Model;
@@ -18,19 +17,17 @@ class Filter extends Model
             $labels = new Label();
             $label = $labels->whereIn('title', $labelids)->get();
             if ($label->count() > 0) {
-                foreach ($label as $key=>$l) {
+                foreach ($label as $key => $l) {
                     $output[$key] = $l->titleWithColor();
                 }
             }
         }
-
         return $output;
     }
 
     public function getTagsByTicketId($ticketid)
     {
         $filter = $this->where('key', 'tag')->where('ticket_id', $ticketid)->pluck('value')->toArray();
-
         return $filter;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Workflow;
 
 use App\BaseModel;

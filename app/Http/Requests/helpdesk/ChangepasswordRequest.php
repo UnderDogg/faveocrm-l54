@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,7 +28,6 @@ class ChangepasswordRequest extends Request
     public function rules()
     {
         return [
-
             'change_password' => 'required',
             // 'message' => 'required',
         ];

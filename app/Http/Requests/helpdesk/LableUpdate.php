@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -31,9 +30,8 @@ class LableUpdate extends Request
     {
         $label_data = \Request::segments();
         $label = Label::find($label_data[1]);
-
         return [
-            'title' => 'required|max:10|unique:labels,title,'.$label->id,
+            'title' => 'required|max:10|unique:labels,title,' . $label->id,
             'color' => 'required|regex:/#([a-fA-F0-9]{3}){1,2}\b/',
             'order' => 'required|integer',
         ];

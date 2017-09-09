@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,7 +28,7 @@ class TeamUpdate extends Request
     public function rules()
     {
         return [
-            'name'   => 'required|max:30',
+            'name' => 'required|max:30',
             'status' => 'required',
         ];
     }

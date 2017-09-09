@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Ticket;
 
 use App\BaseModel;
@@ -17,7 +16,6 @@ class Ticket_Form_Data extends BaseModel
         if ($field) {
             $value = $field->label;
         }
-
         return $value;
     }
 
@@ -30,7 +28,6 @@ class Ticket_Form_Data extends BaseModel
         if ($field && $field->type == 'hidden') {
             $check = true;
         }
-
         return $check;
     }
 

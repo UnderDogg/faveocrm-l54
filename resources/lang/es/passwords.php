@@ -13,9 +13,7 @@
  |  Last updates : 26-1-2016
  |
  */
-
 return [
-
     /*
       |--------------------------------------------------------------------------
       | Password Reminder Language Lines
@@ -26,10 +24,9 @@ return [
       | has failed, such as for an invalid token or invalid new password.
       |
      */
-
     'password' => 'Las contraseñas deben tener al menos seis caracteres y coincidir con la confirmación.',
-    'user'     => 'No podemos encontrar un usuario con esa dirección de correo electrónico.',
-    'token'    => 'Este token de restablecimiento de contraseña no es válido.',
-    'sent'     => 'Hemos enviado su enlace de restablecimiento de contraseña por correo electrónico!',
-    'reset'    => 'Tu contraseña ha sido restablecida!',
+    'user' => 'No podemos encontrar un usuario con esa dirección de correo electrónico.',
+    'token' => 'Este token de restablecimiento de contraseña no es válido.',
+    'sent' => 'Hemos enviado su enlace de restablecimiento de contraseña por correo electrónico!',
+    'reset' => 'Tu contraseña ha sido restablecida!',
 ];

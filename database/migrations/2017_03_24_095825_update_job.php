@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +17,6 @@ class UpdateJob extends Migration
             $table->dropColumn('reserved');
             $table->index(['queue', 'reserved_at']);
         });
-
         Schema::table('failed_jobs', function (Blueprint $table) {
             $table->longText('exception')->after('payload');
         });
@@ -31,7 +29,6 @@ class UpdateJob extends Migration
             $table->index(['queue', 'reserved', 'reserved_at']);
             $table->dropIndex('jobs_queue_reserved_at_index');
         });
-
         Schema::table('failed_jobs', function (Blueprint $table) {
             $table->dropColumn('exception');
         });

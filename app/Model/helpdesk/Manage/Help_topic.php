@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Manage;
 
 use App\BaseModel;
@@ -17,7 +16,6 @@ class Help_topic extends BaseModel
     {
         $related = 'App\Model\helpdesk\Agent\Department';
         $foreignKey = 'department';
-
         return $this->belongsTo($related, $foreignKey);
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\kb;
 
 use App\Http\Requests\Request;
@@ -24,8 +23,8 @@ class ContactRequest extends Request
     public function rules()
     {
         return [
-            'name'    => 'required',
-            'email'   => 'required|email',
+            'name' => 'required',
+            'email' => 'required|email',
             'subject' => 'required|max:20',
             'message' => 'required|max:60',
         ];

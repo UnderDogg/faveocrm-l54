@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // controller
@@ -53,7 +52,6 @@ class DepartmentController extends Controller
     {
         try {
             $departments = $department->get();
-
             return view('themes.default1.admin.helpdesk.agent.departments.index', compact('departments'));
         } catch (Exception $e) {
             return view('404');
@@ -77,15 +75,14 @@ class DepartmentController extends Controller
     {
         try {
             $slas = $sla->where('status', '=', 1)
-                    ->select('grace_period', 'id')->get();
+                ->select('grace_period', 'id')->get();
             $user = $user->where('role', '<>', 'user')
-            ->where('active', '=', 1)
-            ->get();
-            $emails = $email->select('email_name', 'id')->get();
+                ->where('active', '=', 1)
+                ->get();
+            $mailboxes = $email->select('email_name', 'id')->get();
             $templates = $template->get();
             $department = $department->get();
             $groups = $group->pluck('id', 'name');
-
             return view('themes.default1.admin.helpdesk.agent.departments.create', compact('department', 'templates', 'slas', 'user', 'emails', 'groups'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -121,10 +118,9 @@ class DepartmentController extends Controller
             if ($department->save() == true) {
                 if ($request->input('sys_department') == 'on') {
                     DB::table('settings_system')
-                            ->where('id', 1)
-                            ->update(['department' => $department->id]);
+                        ->where('id', 1)
+                        ->update(['department' => $department->id]);
                 }
-
                 return redirect('departments')->with('success', Lang::get('lang.department_created_sucessfully'));
             } else {
                 return redirect('departments')->with('fails', Lang::get('lang.failed_to_create_department'));
@@ -153,20 +149,19 @@ class DepartmentController extends Controller
     {
         try {
             $sys_department = \DB::table('settings_system')
-                    ->select('department')
-                    ->where('id', '=', 1)
-                    ->first();
+                ->select('department')
+                ->where('id', '=', 1)
+                ->first();
             $slas = $sla->where('status', '=', 1)
-                    ->select('grace_period', 'id')->get();
+                ->select('grace_period', 'id')->get();
             $user = $user->where('primary_dpt', $id)
-            ->where('active', '=', 1)
-            ->get();
-            $emails = $email->select('email_name', 'id')->get();
+                ->where('active', '=', 1)
+                ->get();
+            $mailboxes = $email->select('email_name', 'id')->get();
             $templates = $template->get();
             $departments = $department->whereId($id)->first();
             //$groups = $group->pluck('id', 'name');
             $assign = $group_assign_department->where('department_id', $id)->pluck('group_id');
-
             return view('themes.default1.admin.helpdesk.agent.departments.edit', compact('assign', 'team', 'templates', 'departments', 'slas', 'user', 'emails', 'sys_department'));
         } catch (Exception $e) {
             return redirect('departments')->with('fails', $e->getMessage());
@@ -194,7 +189,6 @@ class DepartmentController extends Controller
             // DB::insert('insert into group_assign_department (group_id, department_id) values (?,?)', [$req, $id]);
             // }
             $departments = $department->whereId($id)->first();
-
             if ($request->manager) {
                 $departments->manager = $request->input('manager');
             } else {
@@ -210,8 +204,8 @@ class DepartmentController extends Controller
             }
             if ($request->input('sys_department') == 'on') {
                 DB::table('settings_system')
-                        ->where('id', 1)
-                        ->update(['department' => $id]);
+                    ->where('id', 1)
+                    ->update(['department' => $id]);
             }
             if ($departments->fill($request->except('group_access', 'manager', 'sla'))->save()) {
                 return redirect('departments')->with('success', Lang::get('lang.department_updated_sucessfully'));
@@ -235,7 +229,6 @@ class DepartmentController extends Controller
     public function destroy($id, Department $department, Group_assign_department $group_assign_department, System $system, Tickets $tickets)
     {
         // try {
-
         $system = $system->where('id', '=', '1')->first();
         if ($system->department == $id) {
             return redirect('departments')->with('fails', Lang::get('lang.you_cannot_delete_default_department'));
@@ -247,7 +240,7 @@ class DepartmentController extends Controller
                 } else {
                     $text_tickets = 'Ticket';
                 }
-                $ticket = '<li>'.$tickets.' '.$text_tickets.Lang::get('lang.have_been_moved_to_default_department').'</li>';
+                $ticket = '<li>' . $tickets . ' ' . $text_tickets . Lang::get('lang.have_been_moved_to_default_department') . '</li>';
             } else {
                 $ticket = '';
             }
@@ -258,35 +251,35 @@ class DepartmentController extends Controller
                 } else {
                     $text_user = 'User';
                 }
-                $user = '<li>'.$users.' '.$text_user.Lang::get('lang.have_been_moved_to_default_department').'</li>';
+                $user = '<li>' . $users . ' ' . $text_user . Lang::get('lang.have_been_moved_to_default_department') . '</li>';
             } else {
                 $user = '';
             }
-            $emails = DB::table('emails')->where('department', '=', $id)->update(['department' => $system->department]);
-            if ($emails > 0) {
-                if ($emails > 1) {
+            $mailboxes = DB::table('emails')->where('department', '=', $id)->update(['department' => $system->department]);
+            if ($mailboxes > 0) {
+                if ($mailboxes > 1) {
                     $text_emails = 'Emails';
                 } else {
                     $text_emails = 'Email';
                 }
-                $email = '<li>'.$emails.' System '.$text_emails.Lang::get('lang.have_been_moved_to_default_department').' </li>';
+                $email = '<li>' . $mailboxes . ' System ' . $text_emails . Lang::get('lang.have_been_moved_to_default_department') . ' </li>';
             } else {
                 $email = '';
             }
             $helptopic = DB::table('help_topic')->where('department', '=', $id)->update(['department' => null], ['status' => '1']);
             if ($helptopic > 0) {
-                $helptopic = '<li>'.Lang::get('lang.the_associated_helptopic_has_been_deactivated').'</li>';
+                $helptopic = '<li>' . Lang::get('lang.the_associated_helptopic_has_been_deactivated') . '</li>';
             } else {
                 $helptopic = '';
             }
-            $message = $ticket.$user.$email.$helptopic;
+            $message = $ticket . $user . $email . $helptopic;
             /* Becouse of foreign key we delete group_assign_department first */
             $group_assign_department = $group_assign_department->where('department_id', $id);
             $group_assign_department->delete();
             $departments = $department->whereId($id)->first();
             /* Check the function is Success or Fail */
             if ($departments->delete() == true) {
-                return redirect('departments')->with('success', Lang::get('lang.department_deleted_sucessfully').$message);
+                return redirect('departments')->with('success', Lang::get('lang.department_deleted_sucessfully') . $message);
             } else {
                 return redirect('departments')->with('fails', Lang::get('lang.department_can_not_delete'));
             }

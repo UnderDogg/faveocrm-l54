@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,7 +28,7 @@ class SlaUpdate extends Request
     public function rules()
     {
         return [
-            'name'              => 'required|max:50',
+            'name' => 'required|max:50',
             'grace_period_time' => 'required',
         ];
     }

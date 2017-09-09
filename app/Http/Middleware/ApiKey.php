@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use App\Model\helpdesk\Settings\System;
@@ -19,7 +18,7 @@ class ApiKey
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
+     * @param \Closure $next
      *
      * @return mixed
      */
@@ -35,12 +34,10 @@ class ApiKey
                 }
                 if ($check == '0') {
                     $result = 'wrong api key';
-
                     return response()->json(compact('result'));
                 }
             } else {
                 $result = 'please enable api';
-
                 return response()->json(compact('result'));
             }
         } else {

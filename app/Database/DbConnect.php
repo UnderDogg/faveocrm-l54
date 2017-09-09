@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Database;
 
 use Config;
@@ -72,7 +71,6 @@ class DbConnect
     {
         $tables = $this->getConnection()->getDoctrineSchemaManager()->listTableNames();
         $droplist = implode(',', $tables);
-
         $this->getConnection()->beginTransaction();
         //turn off referential integrity
         $this->getConnection()->statement('SET FOREIGN_KEY_CHECKS = 0');

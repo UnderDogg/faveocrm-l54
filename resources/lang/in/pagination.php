@@ -1,13 +1,12 @@
 <?php
-
 return [
-/*
-|  Indonesian language translation for Faveo Helpdesk
-|  Author: Fajri Surya Putra
-|  Contact: fajrisuryaputra@outlook.co.id
-|  Collaborator:
-|  Last update: 21-12-2016
-*/
+    /*
+    |  Indonesian language translation for Faveo Helpdesk
+    |  Author: Fajri Surya Putra
+    |  Contact: fajrisuryaputra@outlook.co.id
+    |  Collaborator:
+    |  Last update: 21-12-2016
+    */
     /*
       |--------------------------------------------------------------------------
       | Pagination Language Lines
@@ -18,7 +17,6 @@ return [
       | you want to customize your views to better match your application.
       |
      */
-
     'previous' => '&laquo; Sebelumnya',
-    'next'     => 'Selanjutnya &raquo;',
+    'next' => 'Selanjutnya &raquo;',
 ];

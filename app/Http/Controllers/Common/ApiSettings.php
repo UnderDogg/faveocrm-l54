@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
@@ -20,7 +19,6 @@ class ApiSettings extends Controller
     {
         $this->middleware('auth', ['except' => ['ticketDetailEvent', 'postHook', 'postForm']]);
         $this->middleware('roles', ['except' => ['ticketDetailEvent', 'postHook', 'postForm']]);
-
         $api = new ApiSetting();
         $this->api = $api;
     }
@@ -39,7 +37,6 @@ class ApiSettings extends Controller
             if (array_key_exists('ticket_detail', $details)) {
                 $ticket_detail = $details['ticket_detail'];
             }
-
             return view('themes.default1.common.api.settings', compact('ticket_detail', 'systems'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -51,14 +48,13 @@ class ApiSettings extends Controller
         $this->validate($request, [
             'ticket_detail' => 'url',
         ]);
-
         try {
             // dd($request->input());
             DB::table('settings_system')
-            ->where('id', 1)
-            ->update(['api_enable'  => Input::get('api_enable'),
-                'api_key_mandatory' => Input::get('api_key_mandatory'),
-                'api_key'           => Input::get('api_key'), ]);
+                ->where('id', 1)
+                ->update(['api_enable' => Input::get('api_enable'),
+                    'api_key_mandatory' => Input::get('api_key_mandatory'),
+                    'api_key' => Input::get('api_key'),]);
             $settings = $this->api;
             if ($settings->get()->count() > 0) {
                 foreach ($settings->get() as $set) {
@@ -68,7 +64,6 @@ class ApiSettings extends Controller
             foreach ($request->except('_token') as $key => $value) {
                 $settings->create(['key' => $key, 'value' => $value]);
             }
-
             return redirect()->back()->with('success', 'Updated Successfully');
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -81,18 +76,17 @@ class ApiSettings extends Controller
             $ticket = new Tickets();
             $ticketid = $detail->ticket_id;
             $data = $ticket
-                    ->join('ticket_thread', function ($join) use ($ticketid) {
-                        $join->on('tickets.id', '=', 'ticket_thread.ticket_id')
+                ->join('ticket_thread', function ($join) use ($ticketid) {
+                    $join->on('tickets.id', '=', 'ticket_thread.ticket_id')
                         ->where('ticket_thread.ticket_id', '=', $ticketid);
-                    })
-                    ->join('users', 'ticket_thread.user_id', '=', 'users.id')
-                    ->select('ticket_thread.title', 'ticket_thread.body', 'users.first_name', 'users.last_name', 'users.email', 'ticket_thread.created_at')
-                    ->get()
-                    ->toJson();
+                })
+                ->join('users', 'ticket_thread.user_id', '=', 'users.id')
+                ->select('ticket_thread.title', 'ticket_thread.body', 'users.first_name', 'users.last_name', 'users.email', 'ticket_thread.created_at')
+                ->get()
+                ->toJson();
             $this->postHook($data);
         } catch (Exception $ex) {
             dd($ex);
-
             throw new Exception($ex->getMessage());
         }
     }
@@ -108,7 +102,6 @@ class ApiSettings extends Controller
             }
         } catch (Exception $ex) {
             dd($ex);
-
             throw new Exception($ex->getMessage());
         }
     }
@@ -121,7 +114,7 @@ class ApiSettings extends Controller
             ];
             $upgrade_controller = new \App\Http\Controllers\Update\UpgradeController();
             $upgrade_controller->postCurl($url, $post_data);
-            Log::info('ticket details has send to : '.$url.' and details are : '.$data);
+            Log::info('ticket details has send to : ' . $url . ' and details are : ' . $data);
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
         }

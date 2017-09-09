@@ -1,27 +1,27 @@
 @extends('themes.default1.admin.layout.admin')
 @section('HeadInclude')
 @stop
-<!-- header -->
+  <!-- header -->
 @section('PageHeader')
-<h3>
-   Dashboard
-   <!-- <small>Add</small> -->
-</h3>
-@stop
-<!-- /header -->
-<!-- breadcrumbs -->
+  <h3>
+    Dashboard
+    <!-- <small>Add</small> -->
+  </h3>
+  @stop
+    <!-- /header -->
+  <!-- breadcrumbs -->
 @section('breadcrumbs')
-<ol class="breadcrumb">
+  <ol class="breadcrumb">
 
-</ol>
-@stop
-<!-- /breadcrumbs -->
-<!-- content -->
-@section('content')
-@stop
-</div><!-- /.box -->
-@section('FooterInclude')
+  </ol>
+  @stop
+    <!-- /breadcrumbs -->
+  <!-- content -->
+  @section('content')
+  @stop
+  </div><!-- /.box -->
+  @section('FooterInclude')
 
-@stop
-@stop
-<!-- /content -->
+  @stop
+  @stop
+    <!-- /content -->

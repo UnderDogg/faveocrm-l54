@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Form;
 
 use App\BaseModel;
@@ -18,14 +17,12 @@ class Fields extends BaseModel
     public function valueRelation()
     {
         $related = "App\Model\helpdesk\Form\FieldValue";
-
         return $this->hasMany($related, 'field_id');
     }
 
     public function values()
     {
         $value = $this->valueRelation();
-
         return $value;
     }
 
@@ -36,7 +33,6 @@ class Fields extends BaseModel
         if (count($values) > 0) {
             $string = implode(',', $values);
         }
-
         return $string;
     }
 
@@ -47,7 +43,6 @@ class Fields extends BaseModel
         if ($required === '1') {
             $check = true;
         }
-
         return $check;
     }
 
@@ -58,7 +53,6 @@ class Fields extends BaseModel
         if ($required !== '1') {
             $check = true;
         }
-
         return $check;
     }
 

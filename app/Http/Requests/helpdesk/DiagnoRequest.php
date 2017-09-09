@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,8 +28,8 @@ class DiagnoRequest extends Request
     public function rules()
     {
         return [
-            'from'    => 'required|email',
-            'to'      => 'required|email',
+            'from' => 'required|email',
+            'to' => 'required|email',
             'subject' => 'required',
             'message' => 'required',
         ];

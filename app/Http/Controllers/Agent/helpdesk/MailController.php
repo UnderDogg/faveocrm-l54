@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Agent\helpdesk;
 
 // models
@@ -40,11 +39,11 @@ class MailController extends Controller
      *
      * @return type
      */
-    public function readmails(Emails $emails, Email $settings_email, System $system, Ticket $ticket)
+    public function readmails(Emails $mailboxes, Email $settings_email, System $system, Ticket $ticket)
     {
         if ($settings_email->first()->email_fetching == 1) {
             if ($settings_email->first()->all_emails == 1) {
-                $email = $emails->get();
+                $email = $mailboxes->get();
                 if ($email->count() > 0) {
                     foreach ($email as $e_mail) {
                         try {
@@ -73,7 +72,6 @@ class MailController extends Controller
     {
         $body2 = explode('---Reply above this line---', $body);
         $body3 = $body2[0];
-
         return $body3;
     }
 
@@ -88,7 +86,6 @@ class MailController extends Controller
         if (!$priority) {
             $priority = $this->ticketController()->getSystemDefaultPriority();
         }
-
         return $priority;
     }
 
@@ -105,7 +102,6 @@ class MailController extends Controller
         if (!$department) {
             $department = $this->ticketController()->getSystemDefaultDepartment();
         }
-
         return $department;
     }
 
@@ -123,7 +119,6 @@ class MailController extends Controller
         if (!$helptopic) {
             $helptopic = $this->ticketController()->getSystemDefaultHelpTopic();
         }
-
         return $helptopic;
     }
 
@@ -144,7 +139,6 @@ class MailController extends Controller
         if (!$sla) {
             $sla = $this->ticketController()->getSystemDefaultSla();
         }
-
         return $sla;
     }
 
@@ -158,7 +152,6 @@ class MailController extends Controller
         $PhpMailController = new \App\Http\Controllers\Common\PhpMailController();
         $NotificationController = new \App\Http\Controllers\Common\NotificationController();
         $controller = new TicketController($PhpMailController, $NotificationController);
-
         return $controller;
     }
 
@@ -267,7 +260,6 @@ class MailController extends Controller
         } else {
             loging('attachment', 'FaveoStorage not installed');
         }
-
         \Log::info('Ticket has created : ', ['id' => $thread->ticket_id]);
     }
 
@@ -280,8 +272,7 @@ class MailController extends Controller
                 if (isset($structure->disposition)) {
                     $disposition = $structure->disposition;
                 }
-
-                $filename = str_random(16).'-'.$attachment->getFileName();
+                $filename = str_random(16) . '-' . $attachment->getFileName();
                 $type = $attachment->getMimeType();
                 $size = $attachment->getSize();
                 $data = $attachment->getData();
@@ -320,7 +311,7 @@ class MailController extends Controller
             $threads = new Ticket_Thread();
             $thread = $threads->find($thread_id);
             $body = $thread->body;
-            $body = str_replace('cid:'.$id, $filename, $body);
+            $body = str_replace('cid:' . $id, $filename, $body);
             $thread->body = $body;
             $thread->save();
         }
@@ -362,7 +353,6 @@ class MailController extends Controller
         if (array_key_exists($this_address, $array)) {
             unset($array[$this_address]);
         }
-
         return $array;
     }
 
@@ -377,17 +367,16 @@ class MailController extends Controller
     {
         $attachment = \App\Model\helpdesk\Ticket\Ticket_attachments::where('id', '=', $id)->first();
         if (mime($attachment->type) == true) {
-            echo "<img src=data:$attachment->type;base64,".$attachment->file.'>';
+            echo "<img src=data:$attachment->type;base64," . $attachment->file . '>';
         } else {
             $file = base64_decode($attachment->file);
-
             return response($file)
-                            ->header('Cache-Control', 'no-cache private')
-                            ->header('Content-Description', 'File Transfer')
-                            ->header('Content-Type', $attachment->type)
-                            ->header('Content-length', strlen($file))
-                            ->header('Content-Disposition', 'attachment; filename='.$attachment->name)
-                            ->header('Content-Transfer-Encoding', 'binary');
+                ->header('Cache-Control', 'no-cache private')
+                ->header('Content-Description', 'File Transfer')
+                ->header('Content-Type', $attachment->type)
+                ->header('Content-length', strlen($file))
+                ->header('Content-Disposition', 'attachment; filename=' . $attachment->name)
+                ->header('Content-Transfer-Encoding', 'binary');
         }
     }
 
@@ -404,7 +393,6 @@ class MailController extends Controller
         if (is_array($body2) && array_key_exists(0, $body2)) {
             $body = $body2[0];
         }
-
         return $body;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // controller
@@ -68,10 +67,10 @@ class AgentController extends Controller
      * creating a new agent.
      *
      * @param Assign_team_agent $team_assign_agent
-     * @param Timezones         $timezone
-     * @param Groups            $group
-     * @param Department        $department
-     * @param Teams             $team_all
+     * @param Timezones $timezone
+     * @param Groups $group
+     * @param Department $department
+     * @param Teams $team_all
      *
      * @return type view
      */
@@ -92,7 +91,6 @@ class AgentController extends Controller
             $phonecode = $code->where('iso', '=', $location->iso_code)->first();
             // returns to the page with all the variables and their datas
             $send_otp = DB::table('common_settings')->select('status')->where('option_name', '=', 'send_otp')->first();
-
             return view('themes.default1.admin.helpdesk.agent.agents.create', compact('assign', 'teams', 'agents', 'timezones', 'groups', 'departments', 'team', 'send_otp'))->with('phonecode', $phonecode->phonecode);
         } catch (Exception $e) {
             // returns if try fails with exception meaagse
@@ -103,8 +101,8 @@ class AgentController extends Controller
     /**
      * store a new agent.
      *
-     * @param User              $user
-     * @param AgentRequest      $request
+     * @param User $user
+     * @param AgentRequest $request
      * @param Assign_team_agent $team_assign_agent
      *
      * @return type Response
@@ -125,7 +123,7 @@ class AgentController extends Controller
         // fixing the user role to agent
         $user->fill($request->except(['permission', 'primary_department', 'agent_time_zone', 'mobile']))->save();
         if (count($permission) > 0) {
-            $user->permision()->create(['permision' => $permission]);
+            $user->permission()->create(['permission' => $permission]);
         }
         if ($request->get('mobile')) {
             $user->mobile = $request->get('mobile');
@@ -165,7 +163,6 @@ class AgentController extends Controller
             if ($request->input('active') == '0' || $request->input('active') == 0) {
                 \Event::fire(new \App\Events\LoginEvent($request));
             }
-
             return redirect('agents')->with('success', Lang::get('lang.agent_creation_success'));
         } else {
             // returns if fails
@@ -200,7 +197,6 @@ class AgentController extends Controller
             $table = $team_assign_agent->where('agent_id', $id)->first();
             $teams = $team->pluck('id', 'name')->toArray();
             $assign = $team_assign_agent->where('agent_id', $id)->pluck('team_id')->toArray();
-
             return view('themes.default1.admin.helpdesk.agent.agents.edit', compact('teams', 'assign', 'table', 'teams1', 'selectedTeams', 'user', 'timezones', 'groups', 'departments', 'team', 'exp', 'counted'))->with('phonecode', $phonecode->phonecode);
         } catch (Exception $e) {
             return redirect('agents')->with('fail', Lang::get('lang.failed_to_edit_agent'));
@@ -255,19 +251,18 @@ class AgentController extends Controller
             $user->primary_dpt = $request->primary_department;
             $user->agent_tzone = $request->agent_time_zone;
             $user->save();
-            $user->permision()->updateOrCreate(['user_id'=>$user->id], ['permision'=>json_encode($permission)]);
-
+            $user->permission()->updateOrCreate(['user_id' => $user->id], ['permission' => json_encode($permission)]);
             return redirect('agents')->with('success', Lang::get('lang.agent_updated_sucessfully'));
         } catch (Exception $e) {
-            return redirect('agents')->with('fails', Lang::get('lang.unable_to_update_agent').'<li>'.$e->errorInfo[2].'</li>');
+            return redirect('agents')->with('fails', Lang::get('lang.unable_to_update_agent') . '<li>' . $e->errorInfo[2] . '</li>');
         }
     }
 
     /**
      * Remove the specified agent from storage.
      *
-     * @param type              $id
-     * @param User              $user
+     * @param type $id
+     * @param User $user
      * @param Assign_team_agent $team_assign_agent
      *
      * @throws Exception
@@ -281,12 +276,10 @@ class AgentController extends Controller
         $team_assign_agent = $team_assign_agent->where('agent_id', $id);
         $team_assign_agent->delete();
         $user = $user->whereId($id)->first();
-
         try {
             $error = Lang::get('lang.this_staff_is_related_to_some_tickets');
             $user->id;
             $user->delete();
-
             throw new \Exception($error);
             return redirect('agents')->with('success', Lang::get('lang.agent_deleted_sucessfully'));
         } catch (\Exception $e) {

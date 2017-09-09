@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Jobs;
 
 use App\Http\Controllers\Common\PhpMailController;
@@ -41,7 +40,6 @@ class SendEmail implements ShouldQueue
     public function handle(PhpMailController $PhpMailController)
     {
         $p = $PhpMailController->sendEmail($this->from, $this->to, $this->message, $this->template, $this->thread, $this->auto_respond);
-
         return $p;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,10 +28,9 @@ class TemplateUdate2 extends Request
     public function rules()
     {
         return [
-
-            'ban_status'            => 'required',
+            'ban_status' => 'required',
             'template_set_to_clone' => 'required',
-            'language'              => 'required',
+            'language' => 'required',
         ];
     }
 }

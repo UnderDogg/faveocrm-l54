@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Agent\kb;
 
 // Controllers
@@ -66,29 +65,26 @@ class ArticleController extends Controller
     {
         $article = new Article();
         $articles = $article
-                ->select('id', 'name', 'description', 'publish_time', 'slug')
-                ->orderBy('publish_time', 'desc')
-                ->get();
+            ->select('id', 'name', 'description', 'publish_time', 'slug')
+            ->orderBy('publish_time', 'desc')
+            ->get();
         // returns chumper datatable
         return Datatable::Collection($articles)
-
-                        /* add column name */
-                        ->addColumn('name', function ($model) {
-                            $name = str_limit($model->name, 20, '...');
-
-                            return "<p title=$model->name>$name</p>";
-                        })
-                        /* add column Created */
-                        ->addColumn('publish_time', function ($model) {
-                            $t = $model->publish_time;
-
-                            return $t;
-                        })
-                        /* add column action */
-                        ->addColumn('Actions', function ($model) {
-                            /* here are all the action buttons and modal popup to delete articles with confirmations */
-                            return '<span  data-toggle="modal" data-target="#deletearticle'.$model->id.'"><a href="#" ><button class="btn btn-danger btn-xs"></a> '.\Lang::get('lang.delete').' </button></span>&nbsp;<a href='.url("article/$model->id/edit").' class="btn btn-warning btn-xs">'.\Lang::get('lang.edit').'</a>&nbsp;<a href='.url("show/$model->slug").' class="btn btn-primary btn-xs">'.\Lang::get('lang.view').'</a>
-				<div class="modal fade" id="deletearticle'.$model->id.'">
+            /* add column name */
+            ->addColumn('name', function ($model) {
+                $name = str_limit($model->name, 20, '...');
+                return "<p title=$model->name>$name</p>";
+            })
+            /* add column Created */
+            ->addColumn('publish_time', function ($model) {
+                $t = $model->publish_time;
+                return $t;
+            })
+            /* add column action */
+            ->addColumn('Actions', function ($model) {
+                /* here are all the action buttons and modal popup to delete articles with confirmations */
+                return '<span  data-toggle="modal" data-target="#deletearticle' . $model->id . '"><a href="#" ><button class="btn btn-danger btn-xs"></a> ' . \Lang::get('lang.delete') . ' </button></span>&nbsp;<a href=' . url("article/$model->id/edit") . ' class="btn btn-warning btn-xs">' . \Lang::get('lang.edit') . '</a>&nbsp;<a href=' . url("show/$model->slug") . ' class="btn btn-primary btn-xs">' . \Lang::get('lang.view') . '</a>
+				<div class="modal fade" id="deletearticle' . $model->id . '">
         			<div class="modal-dialog">
             			<div class="modal-content">
                 			<div class="modal-header">
@@ -96,19 +92,19 @@ class ArticleController extends Controller
                     			<h4 class="modal-title">Are You Sure ?</h4>
                 			</div>
                 			<div class="modal-body">
-                				'.$model->name.'
+                				' . $model->name . '
                 			</div>
                 			<div class="modal-footer">
                     			<button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="dismis2">Close</button>
-                    			<a href='.url("article/delete/$model->slug").'><button class="btn btn-danger">delete</button></a>
+                    			<a href=' . url("article/delete/$model->slug") . '><button class="btn btn-danger">delete</button></a>
                 			</div>
             			</div>
         			</div>
     			</div>';
-                        })
-                        ->searchColumns('name', 'description', 'publish_time')
-                        ->orderColumns('name', 'description', 'publish_time')
-                        ->make();
+            })
+            ->searchColumns('name', 'description', 'publish_time')
+            ->orderColumns('name', 'description', 'publish_time')
+            ->make();
     }
 
     /**
@@ -123,7 +119,6 @@ class ArticleController extends Controller
             if (!$this->ticket_policy->kb()) {
                 return redirect('dashboard')->with('fails', 'Permission denied');
             }
-
             return view('themes.default1.agent.kb.article.index');
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -146,7 +141,6 @@ class ArticleController extends Controller
             if (!$this->ticket_policy->kb()) {
                 return redirect('dashboard')->with('fails', 'Permission denied');
             }
-
             return view('themes.default1.agent.kb.article.create', compact('category'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -167,8 +161,7 @@ class ArticleController extends Controller
             return redirect('dashboard')->with('fails', 'Permission denied');
         }
         // requesting the values to store article data
-        $publishTime = $request->input('year').'-'.$request->input('month').'-'.$request->input('day').' '.$request->input('hour').':'.$request->input('minute').':00';
-
+        $publishTime = $request->input('year') . '-' . $request->input('month') . '-' . $request->input('day') . ' ' . $request->input('hour') . ':' . $request->input('minute') . ':00';
         $sl = $request->input('name');
         $slug = str_slug($sl, '-');
         $article->slug = $slug;
@@ -177,17 +170,15 @@ class ArticleController extends Controller
         // creating article category relationship
         $requests = $request->input('category_id');
         $id = $article->id;
-
         foreach ($requests as $req) {
             DB::insert('insert into kb_article_relationship (category_id, article_id) values (?,?)', [$req, $id]);
         }
         /* insert the values to the article table  */
         try {
             $article->fill($request->except('slug'))->save();
-
             return redirect('article')->with('success', Lang::get('lang.article_inserted_successfully'));
         } catch (Exception $e) {
-            return redirect('article')->with('fails', Lang::get('lang.article_not_inserted').'<li>'.$e->getMessage().'</li>');
+            return redirect('article')->with('fails', Lang::get('lang.article_not_inserted') . '<li>' . $e->getMessage() . '</li>');
         }
     }
 
@@ -244,13 +235,11 @@ class ArticleController extends Controller
         $article = new Article();
         $relation = new Relationship();
         $aid = $article->where('id', $slug)->first();
-        $publishTime = $request->input('year').'-'.$request->input('month').'-'.$request->input('day').' '.$request->input('hour').':'.$request->input('minute').':00';
-
+        $publishTime = $request->input('year') . '-' . $request->input('month') . '-' . $request->input('day') . ' ' . $request->input('hour') . ':' . $request->input('minute') . ':00';
         $id = $aid->id;
         $sl = $request->input('slug');
         $slug = str_slug($sl, '-');
         // dd($slug);
-
         $article->slug = $slug;
         /* get the attribute of relation table where id==$id */
         $relation = $relation->where('article_id', $id);
@@ -268,17 +257,16 @@ class ArticleController extends Controller
             $article->slug = $slug;
             $article->publish_time = $publishTime;
             $article->save();
-
             return redirect()->back()->with('success', Lang::get('lang.article_updated_successfully'));
         } catch (Exception $e) {
-            return redirect()->back()->with('fails', Lang::get('lang.article_not_updated').'<li>'.$e->getMessage().'</li>');
+            return redirect()->back()->with('fails', Lang::get('lang.article_not_updated') . '<li>' . $e->getMessage() . '</li>');
         }
     }
 
     /**
      * Delete an Agent by id.
      *
-     * @param type         $id
+     * @param type $id
      * @param type Article $article
      *
      * @return Response

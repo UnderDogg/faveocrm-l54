@@ -1,5 +1,4 @@
 <?php
-
 return [
     // Interval defines the time in minutes between two run method calls - in other words, the time between the Cron route or command will be called
     'runInterval' => 1,

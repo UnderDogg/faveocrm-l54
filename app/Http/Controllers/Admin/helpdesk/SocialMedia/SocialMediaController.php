@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk\SocialMedia;
 
 use App\Http\Controllers\Controller;
@@ -18,7 +17,6 @@ class SocialMediaController extends Controller
     {
         try {
             $social = new SocialMedia();
-
             return view('themes.default1.admin.helpdesk.settings.social-media.settings', compact('social', 'provider'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -28,19 +26,16 @@ class SocialMediaController extends Controller
     public function postSettings($provider, Request $request)
     {
         $this->validate($request, [
-            'client_id'     => 'required',
+            'client_id' => 'required',
             'client_secret' => 'required',
-            'redirect'      => 'required|url',
+            'redirect' => 'required|url',
         ]);
-
         try {
             $requests = $request->except('_token');
             $this->insertProvider($provider, $requests);
-
             return redirect()->back()->with('success', 'Updated');
         } catch (Exception $ex) {
             dd($ex);
-
             return redirect()->back()->with('fails', $ex->getMessage());
         }
     }
@@ -65,8 +60,8 @@ class SocialMediaController extends Controller
         foreach ($requests as $key => $value) {
             $social->create([
                 'provider' => $provider,
-                'key'      => $key,
-                'value'    => $value,
+                'key' => $key,
+                'value' => $value,
             ]);
         }
     }
@@ -75,7 +70,6 @@ class SocialMediaController extends Controller
     {
         try {
             $social = new SocialMedia();
-
             return view('themes.default1.admin.helpdesk.settings.social-media.index', compact('social'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());

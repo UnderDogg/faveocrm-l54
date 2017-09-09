@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Ticket;
 
 use App\BaseModel;

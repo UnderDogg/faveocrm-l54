@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // controllers
@@ -86,17 +85,16 @@ class SlaController extends Controller
             // $grace_period_type=$request->grace_period_type;
             // $grace_period=($request->grace_period_time.' '.$request->grace_period_type);
             $sla->name = $request->name;
-            $sla->grace_period = ($request->grace_period_time.' '.$request->grace_period_type);
+            $sla->grace_period = ($request->grace_period_time . ' ' . $request->grace_period_type);
             $sla->admin_note = $request->admin_note;
             $sla->status = $request->status;
             $sla->save();
             // dd('oh');
-
             /* redirect to Index page with Success Message */
             return redirect('sla')->with('success', Lang::get('lang.sla_plan_created_successfully'));
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('sla')->with('fails', Lang::get('lang.sla_plan_can_not_create').'<li>'.$e->getMessage().'</li>');
+            return redirect('sla')->with('fails', Lang::get('lang.sla_plan_can_not_create') . '<li>' . $e->getMessage() . '</li>');
         }
     }
 
@@ -111,25 +109,20 @@ class SlaController extends Controller
     public function edit($id)
     {
         try {
-
-        //     $ticket=Tickets::where('id','=',9)->select('created_at','duedate')->first();
+            //     $ticket=Tickets::where('id','=',9)->select('created_at','duedate')->first();
             //     // dd($ticket->created_at);
-
             //     $sla_plan = Sla_plan::where('id', '=', 4)->first();
             // $ovdate = $ticket->created_at;
             // $new_date = date_add($ovdate, date_interval_create_from_date_string($sla_plan->grace_period));
             // dd($new_date);
             // $ticket->duedate = $new_date;
-
             /* Direct to edit page along values of perticular field using Id */
             $slas = Sla_plan::whereId($id)->first();
             $slas->get();
-
             // $total_grace_period = $slas->grace_period;
             // $grace_period = explode(' ', $total_grace_period);
             // dd(checkArray(1,$grace_period));
             $sla = \DB::table('settings_ticket')->select('sla')->where('id', '=', 1)->first();
-
             return view('themes.default1.admin.helpdesk.manage.sla.edit', compact('slas', 'sla'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -148,16 +141,14 @@ class SlaController extends Controller
     public function update($id, SlaUpdate $request)
     {
         try {
-
             /* Fill values to selected field using Id except Check box */
             $slas = Sla_plan::whereId($id)->first();
             // $grace_period=($request->grace_period_time.'-'.$request->grace_period_type);
             $slas->name = $request->name;
-            $slas->grace_period = ($request->grace_period_time.' '.$request->grace_period_type);
+            $slas->grace_period = ($request->grace_period_time . ' ' . $request->grace_period_type);
             $slas->admin_note = $request->admin_note;
             $slas->status = $request->status;
             $slas->save();
-
             $slas->fill($request->except('transient', 'ticket_overdue'))->save();
             /* Update transient checkox field */
             $slas->transient = $request->input('transient');
@@ -168,14 +159,13 @@ class SlaController extends Controller
             /* redirect to Index page with Success Message */
             if ($request->input('sys_sla') == 'on') {
                 \DB::table('settings_ticket')
-                     ->where('id', '=', 1)
-                     ->update(['sla' => $id]);
+                    ->where('id', '=', 1)
+                    ->update(['sla' => $id]);
             }
-
             return redirect('sla')->with('success', Lang::get('lang.sla_plan_updated_successfully'));
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('sla')->with('fails', Lang::get('lang.sla_plan_can_not_update').'<li>'.$e->getMessage().'</li>');
+            return redirect('sla')->with('fails', Lang::get('lang.sla_plan_can_not_update') . '<li>' . $e->getMessage() . '</li>');
         }
     }
 
@@ -200,7 +190,7 @@ class SlaController extends Controller
                 } else {
                     $text_tickets = 'Ticket';
                 }
-                $ticket = '<li>'.$tickets.' '.$text_tickets.Lang::get('lang.have_been_moved_to_default_sla').'</li>';
+                $ticket = '<li>' . $tickets . ' ' . $text_tickets . Lang::get('lang.have_been_moved_to_default_sla') . '</li>';
             } else {
                 $ticket = '';
             }
@@ -211,7 +201,7 @@ class SlaController extends Controller
                 } else {
                     $text_dept = 'Email';
                 }
-                $dept = '<li>'.Lang::get('lang.associated_department_have_been_moved_to_default_sla').'</li>';
+                $dept = '<li>' . Lang::get('lang.associated_department_have_been_moved_to_default_sla') . '</li>';
             } else {
                 $dept = '';
             }
@@ -222,21 +212,21 @@ class SlaController extends Controller
                 } else {
                     $text_topic = 'Email';
                 }
-                $topic = '<li>'.Lang::get('lang.associated_help_topic_have_been_moved_to_default_sla').'</li>';
+                $topic = '<li>' . Lang::get('lang.associated_help_topic_have_been_moved_to_default_sla') . '</li>';
             } else {
                 $topic = '';
             }
-            $message = $ticket.$dept.$topic;
+            $message = $ticket . $dept . $topic;
             /* Delete a perticular field from the database by delete() using Id */
             $slas = Sla_plan::whereId($id)->first();
             /* Check whether function success or not */
             try {
                 $slas->delete();
                 /* redirect to Index page with Success Message */
-                return redirect('sla')->with('success', Lang::get('lang.sla_plan_deleted_successfully').$message);
+                return redirect('sla')->with('success', Lang::get('lang.sla_plan_deleted_successfully') . $message);
             } catch (Exception $e) {
                 /* redirect to Index page with Fails Message */
-                return redirect('sla')->with('fails', Lang::get('lang.sla_plan_can_not_delete').'<li>'.$e->getMessage().'</li>');
+                return redirect('sla')->with('fails', Lang::get('lang.sla_plan_can_not_delete') . '<li>' . $e->getMessage() . '</li>');
             }
         }
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Ticket;
 
 use App\BaseModel;
@@ -21,7 +20,6 @@ class Ticket_Status extends BaseModel
         if ($value) {
             $value = json_decode($value, true);
         }
-
         return $value;
     }
 }

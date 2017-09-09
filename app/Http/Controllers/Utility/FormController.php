@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Utility;
 
 use App\Http\Controllers\Controller;
@@ -17,14 +16,12 @@ class FormController extends Controller
         if ($custom) {
             $json = str_replace("'", '"', $custom->json);
         }
-
-        return '['.$json.']';
+        return '[' . $json . ']';
     }
 
     public function dependancy(Request $request)
     {
         $dependency = $request->input('dependency', 'priority');
-
         return $this->getDependancy($dependency);
     }
 
@@ -53,18 +50,17 @@ class FormController extends Controller
         $user = new \App\User();
         $term = $request->input('term');
         $users = $user
-                ->where('first_name', 'LIKE', '%'.$term.'%')
-                ->orWhere('last_name', 'LIKE', '%'.$term.'%')
-                ->orWhere('user_name', 'LIKE', '%'.$term.'%')
-                ->orWhere('email', 'LIKE', '%'.$term.'%')
-                ->with(['org' => function ($org) {
-                    $org->select('org_id', 'user_id');
-                }, 'org.organisation' => function ($company) {
-                    $company->select('id', 'name as company');
-                }])
-                ->select('id', 'user_name as name', 'first_name', 'last_name')
-                ->get();
-
+            ->where('first_name', 'LIKE', '%' . $term . '%')
+            ->orWhere('last_name', 'LIKE', '%' . $term . '%')
+            ->orWhere('user_name', 'LIKE', '%' . $term . '%')
+            ->orWhere('email', 'LIKE', '%' . $term . '%')
+            ->with(['org' => function ($org) {
+                $org->select('org_id', 'user_id');
+            }, 'org.organisation' => function ($company) {
+                $company->select('id', 'name as company');
+            }])
+            ->select('id', 'user_name as name', 'first_name', 'last_name')
+            ->get();
         return $users;
     }
 
@@ -74,7 +70,6 @@ class FormController extends Controller
         if (\Auth::user()) {
             $user = \Auth::user();
         }
-
         return $user;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -24,10 +23,9 @@ class StatusRequest extends Request
     public function rules()
     {
         return [
-            'name'            => 'required',
-            'sort'            => 'required|numeric',
-            'icon_class'      => 'required',
-
+            'name' => 'required',
+            'sort' => 'required|numeric',
+            'icon_class' => 'required',
         ];
     }
 }

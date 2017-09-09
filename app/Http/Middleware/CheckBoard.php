@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use App\Model\helpdesk\Settings\System;
@@ -17,7 +16,7 @@ class CheckBoard
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
+     * @param \Closure $next
      *
      * @return type Mixed
      */
@@ -42,7 +41,6 @@ class CheckBoard
         if ($system->first()) {
             $res = $system->first()->status;
         }
-
         return $res;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Form;
 
 use App\BaseModel;
@@ -18,14 +17,12 @@ class Forms extends BaseModel
     public function fieldRelation()
     {
         $related = "App\Model\helpdesk\Form\Fields";
-
         return $this->hasMany($related);
     }
 
     public function fields()
     {
         $relation = $this->fieldRelation()->get();
-
         return $relation;
     }
 
@@ -42,14 +39,12 @@ class Forms extends BaseModel
     public function formValueRelation()
     {
         $related = "App\Model\helpdesk\Form\FieldValue";
-
         return $this->hasMany($related, 'child_id');
     }
 
     public function formValueChild()
     {
         $childs = $this->formValueRelation()->get();
-
         return $childs;
     }
 

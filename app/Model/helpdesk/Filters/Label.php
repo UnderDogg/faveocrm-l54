@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Filters;
 
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +14,7 @@ class Label extends Model
         $title = $this->title;
         $color = $this->color;
         if ($title && $color) {
-            return "<span class='label' style='background-color:".$color."; color: #FFF;'>".$title.'</span>';
+            return "<span class='label' style='background-color:" . $color . "; color: #FFF;'>" . $title . '</span>';
         } else {
             return '--';
         }
@@ -28,7 +27,6 @@ class Label extends Model
         if ($status == 1) {
             $output = Lang::get('lang.enabled');
         }
-
         return $output;
     }
 
@@ -38,14 +36,13 @@ class Label extends Model
         $output = '';
         $filters = new Filter();
         $filter = $filters
-                ->where('ticket_id', $ticketid)
-                ->where('key', 'label')
-                ->where('value', $title)
-                ->first();
+            ->where('ticket_id', $ticketid)
+            ->where('key', 'label')
+            ->where('value', $title)
+            ->first();
         if ($filter && $filter->value) {
             $output = 'checked';
         }
-
         return $output;
     }
 
@@ -58,11 +55,10 @@ class Label extends Model
             foreach ($filter as $fil) {
                 $label = $this->where('title', $fil->value)->select('title', 'color')->first();
                 if ($label) {
-                    $output .= '&nbsp;&nbsp;'.$label->titleWithColor().'&nbsp;&nbsp;';
+                    $output .= '&nbsp;&nbsp;' . $label->titleWithColor() . '&nbsp;&nbsp;';
                 }
             }
         }
-
         return $output;
     }
 }

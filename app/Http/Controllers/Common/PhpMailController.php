@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
@@ -17,9 +16,8 @@ class PhpMailController extends Controller
 {
     public function fetch_smtp_details($id)
     {
-        $emails = Emails::where('id', '=', $id)->first();
-
-        return $emails;
+        $mailboxes = Emails::where('id', '=', $id)->first();
+        return $mailboxes;
     }
 
     /**
@@ -35,7 +33,6 @@ class PhpMailController extends Controller
         } else {
             $company = $company->company_name;
         }
-
         return $company;
     }
 
@@ -50,15 +47,13 @@ class PhpMailController extends Controller
     public function mailfrom($reg, $dept_id)
     {
         $email_id = '';
-        $emails = Emails::where('department', '=', $dept_id)->first();
-
+        $mailboxes = Emails::where('department', '=', $dept_id)->first();
         $email = Email::find(1);
-        if ($emails && $emails->sending_status) {
-            $email_id = $emails->id;
+        if ($mailboxes && $mailboxes->sending_status) {
+            $email_id = $mailboxes->id;
         } else {
             $email_id = $email->sys_email;
         }
-
         return $email_id;
     }
 
@@ -75,9 +70,7 @@ class PhpMailController extends Controller
         if ($from_address == null) {
             throw new Exception('Invalid Email Configuration', 601);
         }
-
         $this->setMailConfig($from_address);
-
         $recipants = $this->checkElement('email', $to);
         $recipantname = $this->checkElement('name', $to);
         $cc = $this->checkElement('cc', $to);
@@ -92,7 +85,6 @@ class PhpMailController extends Controller
             $subject = checkArray('subject', $content_array);
         }
         $send = $this->laravelMail($recipants, $recipantname, $subject, $content, $cc, $attachment, $thread, $auto_respond);
-
         return $send;
     }
 
@@ -114,21 +106,21 @@ class PhpMailController extends Controller
             $port = '';
         }
         $configs = [
-            'username'   => $username,
-            'from'       => ['address' => $username, 'name' => $fromname],
-            'password'   => $password,
+            'username' => $username,
+            'from' => ['address' => $username, 'name' => $fromname],
+            'password' => $password,
             'encryption' => $smtpsecure,
-            'host'       => $host,
-            'port'       => $port,
-            'driver'     => $protocol,
+            'host' => $host,
+            'port' => $port,
+            'driver' => $protocol,
         ];
         foreach ($configs as $key => $config) {
             if (is_array($config)) {
                 foreach ($config as $from) {
-                    \Config::set('mail.'.$key, $config);
+                    \Config::set('mail.' . $key, $config);
                 }
             } else {
-                \Config::set('mail.'.$key, $config);
+                \Config::set('mail.' . $key, $config);
             }
         }
     }
@@ -149,7 +141,6 @@ class PhpMailController extends Controller
                 $value = $array[$element];
             }
         }
-
         return $value;
     }
 
@@ -172,8 +163,8 @@ class PhpMailController extends Controller
             }
             if ($thread && is_object($thread)) {
                 $attach = $thread->attach()
-                                        ->where('poster', 'ATTACHMENT')
-                                        ->select('driver', 'name', 'path', 'type', \DB::raw('type as mime'), \DB::raw('name as file_name'), \DB::raw('path as file_path'), \DB::raw('path as file_path'), \DB::raw('path as file_path'), \DB::raw('file as data'), 'poster', 'file')->get()->toArray();
+                    ->where('poster', 'ATTACHMENT')
+                    ->select('driver', 'name', 'path', 'type', \DB::raw('type as mime'), \DB::raw('name as file_name'), \DB::raw('path as file_path'), \DB::raw('path as file_path'), \DB::raw('path as file_path'), \DB::raw('file as data'), 'poster', 'file')->get()->toArray();
             }
             $size = count($attach);
             if ($size > 0) {
@@ -191,10 +182,8 @@ class PhpMailController extends Controller
                         if (is_array($attach[$i]) && array_key_exists('mode', $attach[$i])) {
                             $mode = $attach[$i]['mode'];
                         }
-
                         $name = $attach[$i]['file_name'];
                         $mime = $attach[$i]['mime'];
-
                         $this->attachmentMode($m, $file, $name, $mime, $mode);
                     }
                 }
@@ -204,7 +193,6 @@ class PhpMailController extends Controller
         if (is_object($mail) || (is_object($mail) && $mail->getStatusCode() == 200)) {
             $mail = 1;
         }
-
         return $mail;
     }
 
@@ -215,7 +203,7 @@ class PhpMailController extends Controller
             for ($i = 0; $i < $size; $i++) {
                 if (is_array($attach) && array_key_exists($i, $attach)) {
                     if (checkArray('poster', $attach[$i])) {
-                        $file = $attach[$i]['file_path'].DIRECTORY_SEPARATOR.$attach[$i]['file_name'];
+                        $file = $attach[$i]['file_path'] . DIRECTORY_SEPARATOR . $attach[$i]['file_name'];
                         chmod($file, 1204);
                     }
                 }
@@ -228,8 +216,8 @@ class PhpMailController extends Controller
         $short = 'database';
         $field = [
             'driver' => 'database',
-            'table'  => 'jobs',
-            'queue'  => 'default',
+            'table' => 'jobs',
+            'queue' => 'default',
             'expire' => 60,
         ];
         $queue = new \App\Model\MailJob\QueueService();
@@ -253,7 +241,6 @@ class PhpMailController extends Controller
     public function attachmentMode($message, $file, $name, $mime, $mode)
     {
         $m = $message->attachData(base64_decode($file, true), $name, ['mime' => $mime]);
-
         return $m;
     }
 
@@ -268,7 +255,6 @@ class PhpMailController extends Controller
         if ($template) {
             $temp = $this->set($set, $ticket_number, $message, $template);
             $contents = $temp['content'];
-
             $variables = $this->templateVariables($template_variables, $content, $from);
             foreach ($variables as $k => $v) {
                 $messagebody = str_replace($k, $v, $contents);
@@ -276,7 +262,7 @@ class PhpMailController extends Controller
             }
             if ($template_type == 'ticket-reply-agent') {
                 $line = '---Reply above this line--- <br/><br/>';
-                $content = $line.$messagebody;
+                $content = $line . $messagebody;
             } else {
                 $content = $messagebody;
             }
@@ -284,7 +270,6 @@ class PhpMailController extends Controller
         if (checkArray('subject', $temp)) {
             $subject = checkArray('subject', $temp);
         }
-
         return ['content' => $content, 'subject' => $subject];
     }
 
@@ -304,34 +289,33 @@ class PhpMailController extends Controller
             $system_link = url('/');
         }
         $variables = [
-            '{!!$user!!}'                    => checkArray('user', $template_variables),
-            '{!!$agent!!}'                   => $agent,
-            '{!!$ticket_number!!}'           => checkArray('ticket_number', $template_variables),
-            '{!!$content!!}'                 => $content,
-            '{!!$from!!}'                    => $from,
-            '{!!$ticket_agent_name!!}'       => checkArray('ticket_agent_name', $template_variables),
-            '{!!$ticket_client_name!!}'      => checkArray('ticket_client_name', $template_variables),
-            '{!!$ticket_client_email!!}'     => checkArray('ticket_client_email', $template_variables),
-            '{!!$ticket_body!!}'             => checkArray('ticket_body', $template_variables),
-            '{!!$ticket_assigner!!}'         => checkArray('ticket_assigner', $template_variables),
+            '{!!$user!!}' => checkArray('user', $template_variables),
+            '{!!$agent!!}' => $agent,
+            '{!!$ticket_number!!}' => checkArray('ticket_number', $template_variables),
+            '{!!$content!!}' => $content,
+            '{!!$from!!}' => $from,
+            '{!!$ticket_agent_name!!}' => checkArray('ticket_agent_name', $template_variables),
+            '{!!$ticket_client_name!!}' => checkArray('ticket_client_name', $template_variables),
+            '{!!$ticket_client_email!!}' => checkArray('ticket_client_email', $template_variables),
+            '{!!$ticket_body!!}' => checkArray('ticket_body', $template_variables),
+            '{!!$ticket_assigner!!}' => checkArray('ticket_assigner', $template_variables),
             '{!!$ticket_link_with_number!!}' => checkArray('ticket_link_with_number', $template_variables),
-            '{!!$system_error!!}'            => checkArray('system_error', $template_variables),
-            '{!!$agent_sign!!}'              => checkArray('agent_sign', $template_variables),
-            '{!!$department_sign!!}'         => checkArray('department_sign', $template_variables),
-            '{!!$password_reset_link!!}'     => checkArray('password_reset_link', $template_variables),
-            '{!!$email_address!!}'           => checkArray('email_address', $template_variables),
-            '{!!$user_password!!}'           => checkArray('user_password', $template_variables),
-            '{!!$system_from!!}'             => $system_from,
-            '{!!$system_link!!}'             => $system_link,
-            '{!!$duedate!!}'                 => checkArray('duedate', $template_variables),
-            '{!!$requester!!}'               => checkArray('requester', $template_variables),
-            '{!!$title!!}'                   => checkArray('title', $template_variables),
-            '{!!$ticket_link!!}'             => checkArray('ticket_link', $template_variables),
-            '{!!$by!!}'                      => checkArray('by', $template_variables),
-            '{!!$internal_content!!}'        => checkArray('internal_content', $template_variables),
-            '{!!$user_profile_link!!}'       => checkArray('user_profile_link', $template_variables),
+            '{!!$system_error!!}' => checkArray('system_error', $template_variables),
+            '{!!$agent_sign!!}' => checkArray('agent_sign', $template_variables),
+            '{!!$department_sign!!}' => checkArray('department_sign', $template_variables),
+            '{!!$password_reset_link!!}' => checkArray('password_reset_link', $template_variables),
+            '{!!$email_address!!}' => checkArray('email_address', $template_variables),
+            '{!!$user_password!!}' => checkArray('user_password', $template_variables),
+            '{!!$system_from!!}' => $system_from,
+            '{!!$system_link!!}' => $system_link,
+            '{!!$duedate!!}' => checkArray('duedate', $template_variables),
+            '{!!$requester!!}' => checkArray('requester', $template_variables),
+            '{!!$title!!}' => checkArray('title', $template_variables),
+            '{!!$ticket_link!!}' => checkArray('ticket_link', $template_variables),
+            '{!!$by!!}' => checkArray('by', $template_variables),
+            '{!!$internal_content!!}' => checkArray('internal_content', $template_variables),
+            '{!!$user_profile_link!!}' => checkArray('user_profile_link', $template_variables),
         ];
-
         return $variables;
     }
 
@@ -348,12 +332,11 @@ class PhpMailController extends Controller
                 if ($template_data->subject) {
                     $subject = $template_data->subject;
                     if ($ticket_number != null) {
-                        $subject = $subject.' [#'.$ticket_number.']';
+                        $subject = $subject . ' [#' . $ticket_number . ']';
                     }
                 }
             }
         }
-
         return ['content' => $contents, 'subject' => $subject];
     }
 }

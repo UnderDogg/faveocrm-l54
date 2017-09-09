@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -33,23 +32,22 @@ class RegisterRequest extends Request
         if ($check != 0) {
             return $check;
         }
-
         return [
-            'email'                 => 'required|max:50|email|unique:users',
-            'full_name'             => 'required',
-            'password'              => 'required|min:6',
+            'email' => 'required|max:50|email|unique:users',
+            'full_name' => 'required',
+            'password' => 'required|min:6',
             'password_confirmation' => 'required|same:password',
         ];
     }
 
     /**
-     *@category Funcion to set rule if send opt is enabled
+     * @category Funcion to set rule if send opt is enabled
      *
-     *@param object $settings (instance of Model common settings)
+     * @param object $settings (instance of Model common settings)
      *
-     *@author manish.verma@ladybirdweb.com
+     * @author manish.verma@ladybirdweb.com
      *
-     *@return array|int
+     * @return array|int
      */
     public function check($settings)
     {
@@ -60,21 +58,21 @@ class RegisterRequest extends Request
             return 0;
         } elseif (($settings->status == '1' || $settings->status == 1) && ($email_mandatory->status == 1 || $email_mandatory->status == '1')) {
             return [
-                'email'                 => 'required|max:50|email|unique:users',
-                'full_name'             => 'required',
-                'password'              => 'required|min:6',
+                'email' => 'required|max:50|email|unique:users',
+                'full_name' => 'required',
+                'password' => 'required|min:6',
                 'password_confirmation' => 'required|same:password',
-                'code'                  => 'required',
-                'mobile'                => 'required|unique:users',
+                'code' => 'required',
+                'mobile' => 'required|unique:users',
             ];
         } elseif (($settings->status == '1' || $settings->status == 1) && ($email_mandatory->status == 0 || $email_mandatory->status == '0')) {
             return [
-                'email'                 => 'max:50|email|unique:users',
-                'full_name'             => 'required',
-                'password'              => 'required|min:6',
+                'email' => 'max:50|email|unique:users',
+                'full_name' => 'required',
+                'password' => 'required|min:6',
                 'password_confirmation' => 'required|same:password',
-                'code'                  => 'required',
-                'mobile'                => 'required|unique:users',
+                'code' => 'required',
+                'mobile' => 'required|unique:users',
             ];
         } else {
             return 0;

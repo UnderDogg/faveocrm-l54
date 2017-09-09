@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -15,7 +14,7 @@ class CheckRoleAgent
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
+     * @param \Closure $next
      *
      * @return mixed
      */
@@ -24,7 +23,6 @@ class CheckRoleAgent
         if ($request->user()->role == 'agent' || $request->user()->role == 'admin') {
             return $next($request);
         }
-
         return redirect('dashboard')->with('fails', 'You are not Autherised');
     }
 }

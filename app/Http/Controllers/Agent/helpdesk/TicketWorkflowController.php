@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Agent\helpdesk;
 
 // controllers
@@ -166,13 +165,11 @@ class TicketWorkflowController extends Controller
                 }
             }
         }
-
         //dd($form_data);
         if ($ticket_settings_details['reject'] == true) {
             return ['0' => false, '1' => false];
         } else {
             $create_ticket = $this->TicketController->create_user($contact_details['email'], $contact_details['email_name'], $contact_details['subject'], $contact_details['message'], $phone, $phonecode, $mobile_number, $ticket_settings_details['help_topic'], $ticket_settings_details['sla'], $ticket_settings_details['priority'], $source, $collaborator, $ticket_settings_details['dept'], $ticket_settings_details['assign'], $form_data, $auto_response, $ticket_settings_details['status'], $attachments, $email_content);
-
             return $create_ticket;
         }
     }
@@ -201,11 +198,11 @@ class TicketWorkflowController extends Controller
         } elseif ($condition == 'ends') {
             $return = $this->checkEnds($statement, $to_check);
         }
-//        elseif($condition == 'match') {
-//
-//        } elseif($condition == 'not_match') {
-//
-//        }
+        //        elseif($condition == 'match') {
+        //
+        //        } elseif($condition == 'not_match') {
+        //
+        //        }
         return $return;
     }
 
@@ -312,16 +309,14 @@ class TicketWorkflowController extends Controller
         }
     }
 
-//    function startsWith($to_check, $statement) {
-//        // search backwards starting from haystack length characters from the end
-//        return $statement === "" || strrpos($to_check, $statement, -strlen($to_check)) !== false;
-//    }
-
-//    function endsWith($to_check, $statement) {
-//        // search forward starting from end minus needle length characters
-//        return $statement === "" || (($temp = strlen($to_check) - strlen($statement)) >= 0 && strpos($to_check, $statement, $temp) !== false);
-//    }
-
+    //    function startsWith($to_check, $statement) {
+    //        // search backwards starting from haystack length characters from the end
+    //        return $statement === "" || strrpos($to_check, $statement, -strlen($to_check)) !== false;
+    //    }
+    //    function endsWith($to_check, $statement) {
+    //        // search forward starting from end minus needle length characters
+    //        return $statement === "" || (($temp = strlen($to_check) - strlen($statement)) >= 0 && strpos($to_check, $statement, $temp) !== false);
+    //    }
     /**
      * function to apply the action to a ticket.
      *
@@ -352,7 +347,6 @@ class TicketWorkflowController extends Controller
                 $ticket_settings_details = $this->changeStatus($workflow_action, $ticket_settings_details);
             }
         }
-
         return $ticket_settings_details;
     }
 
@@ -366,7 +360,6 @@ class TicketWorkflowController extends Controller
     public function rejectTicket($ticket_settings_details)
     {
         $ticket_settings_details['reject'] = true;
-
         return $ticket_settings_details;
     }
 
@@ -385,7 +378,6 @@ class TicketWorkflowController extends Controller
             return $ticket_settings_details;
         } else {
             $ticket_settings_details['dept'] = $dept->id;
-
             return $ticket_settings_details;
         }
     }
@@ -405,7 +397,6 @@ class TicketWorkflowController extends Controller
             return $ticket_settings_details;
         } else {
             $ticket_settings_details['priority'] = $priority->priority_id;
-
             return $ticket_settings_details;
         }
     }
@@ -425,7 +416,6 @@ class TicketWorkflowController extends Controller
             return $ticket_settings_details;
         } else {
             $ticket_settings_details['sla'] = $sla_plan->id;
-
             return $ticket_settings_details;
         }
     }
@@ -445,7 +435,6 @@ class TicketWorkflowController extends Controller
             return $ticket_settings_details;
         } else {
             $ticket_settings_details['team'] = $team->id;
-
             return $ticket_settings_details;
         }
     }
@@ -465,7 +454,6 @@ class TicketWorkflowController extends Controller
             return $ticket_settings_details;
         } else {
             $ticket_settings_details['assign'] = $agent->id;
-
             return $ticket_settings_details;
         }
     }
@@ -485,7 +473,6 @@ class TicketWorkflowController extends Controller
             return $ticket_settings_details;
         } else {
             $ticket_settings_details['help_topic'] = $help_topic->id;
-
             return $ticket_settings_details;
         }
     }
@@ -505,7 +492,6 @@ class TicketWorkflowController extends Controller
             return $ticket_settings_details;
         } else {
             $ticket_settings_details['status'] = $status->id;
-
             return $ticket_settings_details;
         }
     }

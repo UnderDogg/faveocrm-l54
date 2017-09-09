@@ -1,5 +1,4 @@
 <?php
-
 use App\Model\helpdesk\Ticket\Ticket_Status;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +14,6 @@ class TicketStatusSeeder extends Seeder
         \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Ticket_status::truncate();
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
         Ticket_status::create(['name' => 'Open', 'state' => 'open', 'mode' => '3', 'message' => 'Ticket have been Reopened by', 'flags' => '0', 'sort' => '1', 'properties' => 'Open tickets.']);
         Ticket_status::create(['name' => 'Resolved', 'state' => 'closed', 'mode' => '1', 'message' => 'Ticket have been Resolved by', 'flags' => '0', 'sort' => '2', 'properties' => 'Resolved tickets.']);
         Ticket_status::create(['name' => 'Closed', 'state' => 'closed', 'mode' => '3', 'message' => 'Ticket have been Closed by', 'flags' => '0', 'sort' => '3', 'properties' => 'Closed tickets. Tickets will still be accessible on client and staff panels.']);

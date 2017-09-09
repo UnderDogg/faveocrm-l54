@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Agent\helpdesk;
 
 // controllers
@@ -77,17 +76,16 @@ class ReportController extends Controller
             $format = 'Y-m-d';
             // generating a date range of 1 month
             if ($request->input('duration') == 'day') {
-                $date1 = strtotime(date($format, strtotime('-15 day'.$date3)));
+                $date1 = strtotime(date($format, strtotime('-15 day' . $date3)));
             } elseif ($request->input('duration') == 'week') {
-                $date1 = strtotime(date($format, strtotime('-69 days'.$date3)));
+                $date1 = strtotime(date($format, strtotime('-69 days' . $date3)));
             } elseif ($request->input('duration') == 'month') {
-                $date1 = strtotime(date($format, strtotime('-179 days'.$date3)));
+                $date1 = strtotime(date($format, strtotime('-179 days' . $date3)));
             } else {
-                $date1 = strtotime(date($format, strtotime('-30 days'.$date3)));
+                $date1 = strtotime(date($format, strtotime('-30 days' . $date3)));
             }
-//            $help_topic = Help_topic::where('status', '=', '1')->min('id');
+            //            $help_topic = Help_topic::where('status', '=', '1')->min('id');
         }
-
         $return = '';
         $last = '';
         $j = 0;
@@ -95,7 +93,6 @@ class ReportController extends Controller
         $closed1 = '';
         $reopened1 = '';
         $in_progress = \DB::table('tickets')->where('help_topic_id', '=', $help_topic)->where('status', '=', 1)->count();
-
         for ($i = $date1; $i <= $date2; $i = $i + 86400) {
             $j++;
             $thisDate = date('Y-m-d', $i);
@@ -103,45 +100,44 @@ class ReportController extends Controller
             $open_array = [];
             $closed_array = [];
             $reopened_array = [];
-
             if ($request->input('open') || $request->input('closed') || $request->input('reopened')) {
                 if ($request->input('open') && $request->input('open') == 'on') {
-                    $created = \DB::table('tickets')->select('created_at')->where('help_topic_id', '=', $help_topic)->where('created_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $created = \DB::table('tickets')->select('created_at')->where('help_topic_id', '=', $help_topic)->where('created_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $open_array = ['open' => $created];
                 }
                 if ($request->input('closed') && $request->input('closed') == 'on') {
-                    $closed = \DB::table('tickets')->select('closed_at')->where('help_topic_id', '=', $help_topic)->where('closed_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $closed = \DB::table('tickets')->select('closed_at')->where('help_topic_id', '=', $help_topic)->where('closed_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $closed_array = ['closed' => $closed];
                 }
                 if ($request->input('reopened') && $request->input('reopened') == 'on') {
-                    $reopened = \DB::table('tickets')->select('reopened_at')->where('help_topic_id', '=', $help_topic)->where('reopened_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $reopened = \DB::table('tickets')->select('reopened_at')->where('help_topic_id', '=', $help_topic)->where('reopened_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $reopened_array = ['reopened' => $reopened];
                 }
-//                if ($request->input('overdue') && $request->input('overdue') == 'on') {
-//                    $overdue = Tickets::where('status', '=', 1)->where('isanswered', '=', 0)->where('dept_id', '=', $dept->id)->orderBy('id', 'DESC')->get();
-//                }
-//                        $open_array = ['open'=>$created1];
-//                        $closed_array = ['closed'=>$closed1];
-//                        $reopened_array = ['reopened'=>$reopened1];
+                //                if ($request->input('overdue') && $request->input('overdue') == 'on') {
+                //                    $overdue = Tickets::where('status', '=', 1)->where('isanswered', '=', 0)->where('dept_id', '=', $dept->id)->orderBy('id', 'DESC')->get();
+                //                }
+                //                        $open_array = ['open'=>$created1];
+                //                        $closed_array = ['closed'=>$closed1];
+                //                        $reopened_array = ['reopened'=>$reopened1];
                 $value = ['date' => $thisDate1];
-//                        if($open_array) {
+                //                        if($open_array) {
                 $value = array_merge($value, $open_array);
                 $value = array_merge($value, $closed_array);
                 $value = array_merge($value, $reopened_array);
                 $value = array_merge($value, ['inprogress' => $in_progress]);
-//                        } else {
-//                            $value = "";
-//                        }
+                //                        } else {
+                //                            $value = "";
+                //                        }
                 $array = array_map('htmlentities', $value);
                 $json = html_entity_decode(json_encode($array));
-                $return .= $json.',';
+                $return .= $json . ',';
             } else {
                 if ($duration == 'week') {
-                    $created = \DB::table('tickets')->select('created_at')->where('help_topic_id', '=', $help_topic)->where('created_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $created = \DB::table('tickets')->select('created_at')->where('help_topic_id', '=', $help_topic)->where('created_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $created1 += $created;
-                    $closed = \DB::table('tickets')->select('closed_at')->where('help_topic_id', '=', $help_topic)->where('closed_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $closed = \DB::table('tickets')->select('closed_at')->where('help_topic_id', '=', $help_topic)->where('closed_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $closed1 += $closed;
-                    $reopened = \DB::table('tickets')->select('reopened_at')->where('help_topic_id', '=', $help_topic)->where('reopened_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $reopened = \DB::table('tickets')->select('reopened_at')->where('help_topic_id', '=', $help_topic)->where('reopened_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $reopened1 += $reopened;
                     if ($j % 7 == 0) {
                         $open_array = ['open' => $created1];
@@ -151,24 +147,24 @@ class ReportController extends Controller
                         $reopened_array = ['reopened' => $reopened1];
                         $reopened1 = 0;
                         $value = ['date' => $thisDate1];
-//                        if($open_array) {
+                        //                        if($open_array) {
                         $value = array_merge($value, $open_array);
                         $value = array_merge($value, $closed_array);
                         $value = array_merge($value, $reopened_array);
                         $value = array_merge($value, ['inprogress' => $in_progress]);
-//                        } else {
-//                            $value = "";
-//                        }
+                        //                        } else {
+                        //                            $value = "";
+                        //                        }
                         $array = array_map('htmlentities', $value);
                         $json = html_entity_decode(json_encode($array));
-                        $return .= $json.',';
+                        $return .= $json . ',';
                     }
                 } elseif ($duration == 'month') {
-                    $created_month = \DB::table('tickets')->select('created_at')->where('help_topic_id', '=', $help_topic)->where('created_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $created_month = \DB::table('tickets')->select('created_at')->where('help_topic_id', '=', $help_topic)->where('created_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $created1 += $created_month;
-                    $closed_month = \DB::table('tickets')->select('closed_at')->where('help_topic_id', '=', $help_topic)->where('closed_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $closed_month = \DB::table('tickets')->select('closed_at')->where('help_topic_id', '=', $help_topic)->where('closed_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $closed1 += $closed_month;
-                    $reopened_month = \DB::table('tickets')->select('reopened_at')->where('help_topic_id', '=', $help_topic)->where('reopened_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $reopened_month = \DB::table('tickets')->select('reopened_at')->where('help_topic_id', '=', $help_topic)->where('reopened_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $reopened1 += $reopened_month;
                     if ($j % 30 == 0) {
                         $open_array = ['open' => $created1];
@@ -178,25 +174,23 @@ class ReportController extends Controller
                         $reopened_array = ['reopened' => $reopened1];
                         $reopened1 = 0;
                         $value = ['date' => $thisDate1];
-
                         $value = array_merge($value, $open_array);
                         $value = array_merge($value, $closed_array);
                         $value = array_merge($value, $reopened_array);
                         $value = array_merge($value, ['inprogress' => $in_progress]);
-
                         $array = array_map('htmlentities', $value);
                         $json = html_entity_decode(json_encode($array));
-                        $return .= $json.',';
+                        $return .= $json . ',';
                     }
                 } else {
                     if ($request->input('default') == null) {
                         $help_topic = Help_topic::where('status', '=', '1')->min('id');
                     }
-                    $created = \DB::table('tickets')->select('created_at')->where('help_topic_id', '=', $help_topic)->where('created_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $created = \DB::table('tickets')->select('created_at')->where('help_topic_id', '=', $help_topic)->where('created_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $open_array = ['open' => $created];
-                    $closed = \DB::table('tickets')->select('closed_at')->where('help_topic_id', '=', $help_topic)->where('closed_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $closed = \DB::table('tickets')->select('closed_at')->where('help_topic_id', '=', $help_topic)->where('closed_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $closed_array = ['closed' => $closed];
-                    $reopened = \DB::table('tickets')->select('reopened_at')->where('help_topic_id', '=', $help_topic)->where('reopened_at', 'LIKE', '%'.$thisDate.'%')->count();
+                    $reopened = \DB::table('tickets')->select('reopened_at')->where('help_topic_id', '=', $help_topic)->where('reopened_at', 'LIKE', '%' . $thisDate . '%')->count();
                     $reopened_array = ['reopened' => $reopened];
                     if ($j % 1 == 0) {
                         $open_array = ['open' => $created];
@@ -229,31 +223,28 @@ class ReportController extends Controller
                                 $value = array_merge($value, ['inprogress' => $in_progress]);
                             }
                         }
-
-//                        } else {
-//                            $value = "";
-//                        }
+                        //                        } else {
+                        //                            $value = "";
+                        //                        }
                         $array = array_map('htmlentities', $value);
                         $json = html_entity_decode(json_encode($array));
-                        $return .= $json.',';
+                        $return .= $json . ',';
                     }
                 }
             }
-
-//            $value = ['date' => $thisDate];
-//            if($open_array) {
-//                $value = array_merge($value,$open_array);
-//            }
-//            if($closed_array) {
-//                $value = array_merge($value,$closed_array);
-//            }
-//            if($reopened_array) {
-//                $value = array_merge($value,$reopened_array);
-//            }
+            //            $value = ['date' => $thisDate];
+            //            if($open_array) {
+            //                $value = array_merge($value,$open_array);
+            //            }
+            //            if($closed_array) {
+            //                $value = array_merge($value,$closed_array);
+            //            }
+            //            if($reopened_array) {
+            //                $value = array_merge($value,$reopened_array);
+            //            }
         }
         $last = rtrim($return, ',');
-
-        return '['.$last.']';
+        return '[' . $last . ']';
     }
 
     public function helptopicPdf(Request $request)
@@ -262,7 +253,6 @@ class ReportController extends Controller
         $table_help_topic = json_decode($request->input('pdf_form_help_topic'));
         $html = view('themes.default1.agent.helpdesk.report.pdf', compact('table_datas', 'table_help_topic'))->render();
         $html1 = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
-
         return PDF::load($html1)->show();
     }
 }

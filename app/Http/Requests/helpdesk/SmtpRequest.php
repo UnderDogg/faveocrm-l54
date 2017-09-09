@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,12 +28,12 @@ class SmtpRequest extends Request
     public function rules()
     {
         return [
-            'host'       => 'required',
-            'port'       => 'required',
+            'host' => 'required',
+            'port' => 'required',
             'encryption' => 'required',
-            'name'       => 'required',
-            'email'      => 'required',
-            'password'   => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
         ];
     }
 }

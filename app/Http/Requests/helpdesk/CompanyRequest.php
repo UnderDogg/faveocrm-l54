@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -30,9 +29,9 @@ class CompanyRequest extends Request
     {
         return [
             'company_name' => 'required|max:50',
-            'website'      => 'url',
-            'phone'        => 'numeric',
-            'logo'         => 'image',
+            'website' => 'url',
+            'phone' => 'numeric',
+            'logo' => 'image',
         ];
     }
 }

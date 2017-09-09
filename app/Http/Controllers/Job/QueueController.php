@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Job;
 
 use App\Http\Controllers\Controller;
@@ -17,7 +16,6 @@ class QueueController extends Controller
         try {
             $queue = new QueueService();
             $queues = $queue->select('id', 'name', 'status')->get();
-
             return view('themes.default1.admin.helpdesk.queue.index', compact('queues'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -32,7 +30,6 @@ class QueueController extends Controller
             if (!$queue) {
                 throw new Exception('Sorry we can not find your request');
             }
-
             return view('themes.default1.admin.helpdesk.queue.edit', compact('queue'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -59,12 +56,11 @@ class QueueController extends Controller
                 foreach ($values as $key => $value) {
                     $setting->create([
                         'service_id' => $id,
-                        'key'        => $key,
-                        'value'      => $value,
+                        'key' => $key,
+                        'value' => $value,
                     ]);
                 }
             }
-
             return redirect()->back()->with('success', 'Updated');
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -89,7 +85,6 @@ class QueueController extends Controller
             }
             $queue->status = 1;
             $queue->save();
-
             return redirect()->back()->with('success', 'Activated');
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -100,7 +95,6 @@ class QueueController extends Controller
     {
         $queueid = $request->input('queueid');
         $form = $this->getFormById($queueid);
-
         return $form;
     }
 
@@ -112,7 +106,6 @@ class QueueController extends Controller
         if ($queue) {
             $short = $queue->short_name;
         }
-
         return $short;
     }
 
@@ -124,7 +117,6 @@ class QueueController extends Controller
         if ($queue) {
             $id = $queue->id;
         }
-
         return $id;
     }
 
@@ -139,7 +131,6 @@ class QueueController extends Controller
                 $form .= $this->form($short, 'Host', 'host', 'col-md-6 form-group', 'localhost');
                 $form .= $this->form($short, 'Queue', 'queue', 'col-md-6 form-group', 'default');
                 $form .= '</div>';
-
                 return $form;
             case 'sqs':
                 $form .= "<div class='row'>";
@@ -148,7 +139,6 @@ class QueueController extends Controller
                 $form .= $this->form($short, 'Secret', 'secret', 'col-md-6 form-group', 'your-queue-url');
                 $form .= $this->form($short, 'Region', 'region', 'col-md-6 form-group', 'us-east-1');
                 $form .= '</div>';
-
                 return $form;
             case 'iron':
                 $form .= "<div class='row'>";
@@ -158,14 +148,12 @@ class QueueController extends Controller
                 $form .= $this->form($short, 'Project', 'project', 'col-md-6 form-group', 'your-project-id');
                 $form .= $this->form($short, 'Queue', 'queue', 'col-md-6 form-group', 'your-queue-name');
                 $form .= '</div>';
-
                 return $form;
             case 'redis':
                 $form .= "<div class='row'>";
                 $form .= $this->form($short, 'Driver', 'driver', 'col-md-6 form-group', 'redis');
                 $form .= $this->form($short, 'Queue', 'queue', 'col-md-6 form-group', 'default');
                 $form .= '</div>';
-
                 return $form;
             default:
                 return $form;
@@ -178,13 +166,12 @@ class QueueController extends Controller
         $queues = new QueueService();
         $queue = $queues->find($queueid);
         if ($queue) {
-            $form = "<div class='".$class."'>".Form::label($name, $label)."<span class='text-red'> *</span>".
-                    Form::text($name, $queue->getExtraField($name), ['class' => 'form-control', 'placeholder' => $placeholder]).'</div>';
+            $form = "<div class='" . $class . "'>" . Form::label($name, $label) . "<span class='text-red'> *</span>" .
+                Form::text($name, $queue->getExtraField($name), ['class' => 'form-control', 'placeholder' => $placeholder]) . '</div>';
         } else {
-            $form = "<div class='".$class."'>".Form::label($name, $label)."<span class='text-red'> *</span>".
-                    Form::text($name, null, ['class' => 'form-control', 'placeholder' => $placeholder]).'</div>';
+            $form = "<div class='" . $class . "'>" . Form::label($name, $label) . "<span class='text-red'> *</span>" .
+                Form::text($name, null, ['class' => 'form-control', 'placeholder' => $placeholder]) . '</div>';
         }
-
         return $form;
     }
 }

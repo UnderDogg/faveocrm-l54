@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Theme;
 
 use Illuminate\Database\Eloquent\Model;

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Policies;
 
 use App\User;
@@ -17,15 +16,14 @@ class TicketPolicy
     public function checkPermission($key)
     {
         $check = true;
-        if (\Auth::user() && \Auth::user()->permision()->first()) {
-            $permision = \Auth::user()->permision()->first()->permision;
-            if (is_array($permision) && checkArray($key, $permision)) {
+        if (\Auth::user() && \Auth::user()->permission()->first()) {
+            $permission = \Auth::user()->permission()->first()->permission;
+            if (is_array($permission) && checkArray($key, $permission)) {
                 $check = true;
             } else {
                 $check = false;
             }
         }
-
         return $check;
     }
 
@@ -79,7 +77,6 @@ class TicketPolicy
         if (\Auth::user()->role == 'admin') {
             return true;
         }
-
         return $this->checkPermission('email_verification');
     }
 
@@ -88,7 +85,6 @@ class TicketPolicy
         if (\Auth::user()->role == 'admin') {
             return true;
         }
-
         return $this->checkPermission('mobile_verification');
     }
 
@@ -97,7 +93,6 @@ class TicketPolicy
         if (\Auth::user()->role == 'admin') {
             return true;
         }
-
         return $this->checkPermission('account_activate');
     }
 }

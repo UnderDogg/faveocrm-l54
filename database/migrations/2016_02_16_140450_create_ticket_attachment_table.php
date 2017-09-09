@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -21,7 +20,6 @@ class CreateTicketAttachmentTable extends Migration
             $table->string('poster');
             $table->timestamps();
         });
-
         \DB::statement('ALTER TABLE `ticket_attachment` ADD `file` MEDIUMBLOB');
     }
 

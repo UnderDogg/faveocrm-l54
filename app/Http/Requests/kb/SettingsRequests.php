@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\kb;
 
 use App\Http\Requests\Request;
@@ -24,8 +23,8 @@ class SettingsRequests extends Request
     public function rules()
     {
         return [
-                // 'company_name' => 'required',
-                // 'website' => 'required|url',
+            // 'company_name' => 'required',
+            // 'website' => 'required|url',
         ];
     }
 }

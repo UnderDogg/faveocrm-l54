@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Settings;
 
 use App\BaseModel;
@@ -7,7 +6,6 @@ use App\BaseModel;
 class Ticket extends BaseModel
 {
     /* Using Ticket table  */
-
     protected $table = 'settings_ticket';
     /* Set fillable fields in table */
     protected $fillable = [

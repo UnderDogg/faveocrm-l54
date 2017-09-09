@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\kb;
 
 use App\Http\Requests\Request;
@@ -25,7 +24,7 @@ class FooterRequest extends Request
     {
         return [
             'title' => 'required',
-                //'description' => 'required',
+            //'description' => 'required',
         ];
     }
 }

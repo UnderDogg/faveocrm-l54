@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Email;
 
 use App\BaseModel;
@@ -24,7 +23,6 @@ class Emails extends BaseModel
         if ($mailService) {
             $id = $mailService->id;
         }
-
         return $id;
     }
 
@@ -37,14 +35,12 @@ class Emails extends BaseModel
         if ($service) {
             $value = $service->value;
         }
-
         return $value;
     }
 
     public function extraFieldRelation()
     {
         $related = "App\Model\MailJob\FaveoMail";
-
         return $this->hasMany($related, 'email_id');
     }
 
@@ -63,7 +59,6 @@ class Emails extends BaseModel
         if ($value) {
             return \Crypt::decrypt($value);
         }
-
         return $value;
     }
 

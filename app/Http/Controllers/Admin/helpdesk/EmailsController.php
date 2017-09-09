@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // controllers
@@ -43,7 +42,7 @@ class EmailsController extends Controller
     /**
      * Display a listing of the Emails.
      *
-     * @param type Emails $emails
+     * @param type Emails $mailboxes
      *
      * @return type view
      */
@@ -51,8 +50,7 @@ class EmailsController extends Controller
     {
         try {
             // fetch all the emails from emails table
-            $emails = $email->get();
-
+            $mailboxes = $email->get();
             return view('themes.default1.admin.helpdesk.emails.emails.index', compact('emails'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -80,10 +78,8 @@ class EmailsController extends Controller
             $priority = $ticket_priority->where('status', '=', 1)->get();
             // fetch all the types of mailbox protocols from the mailbox_protocols table
             $mailbox_protocols = $mailbox_protocol->get();
-
             $service = new \App\Model\MailJob\MailService();
             $services = $service->pluck('name', 'id')->toArray();
-
             // return with all the table data
             return view('themes.default1.admin.helpdesk.emails.emails.create', compact('mailbox_protocols', 'priority', 'departments', 'helps', 'services'));
         } catch (Exception $e) {
@@ -118,10 +114,8 @@ class EmailsController extends Controller
             }
             if ($send == 1 && $fetch == 1) {
                 $this->store($request, $service_request, $id);
-
                 return $this->jsonResponse('success', Lang::get('lang.success'));
             }
-
             return $this->validateEmailError($send, $fetch);
         } catch (Exception $ex) {
             $message = $ex->getMessage();
@@ -129,7 +123,6 @@ class EmailsController extends Controller
                 $message = imap_last_error();
             }
             loging('mail-config', $message);
-
             return $this->jsonResponse('fails', $message);
         }
     }
@@ -152,7 +145,6 @@ class EmailsController extends Controller
         if ($type == 'success') {
             $result = ['success' => $message];
         }
-
         return response()->json(compact('result'));
     }
 
@@ -170,9 +162,7 @@ class EmailsController extends Controller
         if ($id !== '') {
             $email = $email->find($id);
         }
-
         $email->email_address = $request->email_address;
-
         $email->email_name = $request->email_name;
         $email->fetching_host = $request->fetching_host;
         $email->fetching_port = $request->fetching_port;
@@ -181,11 +171,9 @@ class EmailsController extends Controller
         $email->sending_port = $request->sending_port;
         $email->sending_protocol = $this->getDriver($request->sending_protocol);
         $email->sending_encryption = $request->sending_encryption;
-
         if ($request->smtp_validate == 'on') {
             $email->smtp_validate = $request->smtp_validate;
         }
-
         if ($request->input('password')) {
             $email->password = Crypt::encrypt($request->input('password'));
         }
@@ -233,13 +221,12 @@ class EmailsController extends Controller
         if ($request->input('fetching_status')) {
             $this->fetch($email);
         }
-
         return 1;
     }
 
     public function checkMail($request)
     {
-        $mailservice_id = $request->input('sending_protocol');
+        /*$mailservice_id = $request->input('sending_protocol');
         $driver = $this->getDriver($mailservice_id);
         $username = $request->input('email_address');
         $password = $request->input('password');
@@ -255,8 +242,7 @@ class EmailsController extends Controller
         $transport->setUsername($username);
         $transport->setPassword($password);
         $mailer = \Swift_Mailer::newInstance($transport);
-        $mailer->getTransport()->start();
-
+        $mailer->getTransport()->start();*/
         return 1;
     }
 
@@ -271,7 +257,6 @@ class EmailsController extends Controller
         $port = $request->input('sending_port');
         $enc = $request->input('sending_encryption');
         $service_request = $request->except('sending_status', '_token', 'email_address', 'email_name', 'password', 'department', 'priority', 'help_topic', 'fetching_protocol', 'fetching_host', 'fetching_port', 'fetching_encryption', 'imap_authentication', 'sending_protocol', 'sending_host', 'sending_port', 'sending_encryption', 'smtp_authentication', 'internal_notes', '_wysihtml5_mode');
-
         $this->emailService($driver, $service_request);
         $this->setMailConfig($driver, $username, $name, $password, $enc, $host, $port);
         $controller = new \App\Http\Controllers\Common\PhpMailController();
@@ -279,28 +264,27 @@ class EmailsController extends Controller
         $data = 'test';
         //dd(\Config::get('mail'),\Config::get('services'));
         $send = $controller->laravelMail($username, $name, $subject, $data, [], []);
-
         return $send;
     }
 
     public function setMailConfig($driver, $username, $name, $password, $enc, $host, $port)
     {
         $configs = [
-            'username'   => $username,
-            'from'       => ['address' => $username, 'name' => $name],
-            'password'   => $password,
+            'username' => $username,
+            'from' => ['address' => $username, 'name' => $name],
+            'password' => $password,
             'encryption' => $enc,
-            'host'       => $host,
-            'port'       => $port,
-            'driver'     => $driver,
+            'host' => $host,
+            'port' => $port,
+            'driver' => $driver,
         ];
         foreach ($configs as $key => $config) {
             if (is_array($config)) {
                 foreach ($config as $from) {
-                    \Config::set('mail.'.$key, $config);
+                    \Config::set('mail.' . $key, $config);
                 }
             } else {
-                \Config::set('mail.'.$key, $config);
+                \Config::set('mail.' . $key, $config);
             }
         }
     }
@@ -313,7 +297,6 @@ class EmailsController extends Controller
         if ($email_driver) {
             $short = $email_driver->short_name;
         }
-
         return $short;
     }
 
@@ -335,7 +318,7 @@ class EmailsController extends Controller
             $sys_email = \DB::table('settings_email')->select('sys_email')->where('id', '=', 1)->first();
             // dd($sys_email);
             // fetch the selected emails
-            $emails = $email->whereId($id)->first();
+            $mailboxes = $email->whereId($id)->first();
             // get all the departments
             $departments = $department->get();
             //get count of emails
@@ -346,10 +329,8 @@ class EmailsController extends Controller
             $priority = $ticket_priority->where('status', '=', 1)->get();
             // get all the mailbox protocols
             $mailbox_protocols = $mailbox_protocol->get();
-
             $service = new \App\Model\MailJob\MailService();
             $services = $service->pluck('name', 'id')->toArray();
-
             // return if the execution is succeeded
             return view('themes.default1.admin.helpdesk.emails.emails.edit', compact('mailbox_protocols', 'priority', 'departments', 'helps', 'emails', 'sys_email', 'services'))->with('count', $count);
         } catch (Exception $e) {
@@ -384,7 +365,7 @@ class EmailsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param type                   $id
+     * @param type $id
      * @param type Emails            $email
      * @param type EmailsEditRequest $request
      *
@@ -395,18 +376,17 @@ class EmailsController extends Controller
         try {
             if ($request->sys_email == 'on') {
                 $system = \DB::table('settings_email')
-                        ->where('id', '=', 1)
-                        ->update(['sys_email' => $id]);
+                    ->where('id', '=', 1)
+                    ->update(['sys_email' => $id]);
             } elseif ($request->input('count') <= 1 && $request->sys_email == null) {
                 $system = \DB::table('settings_email')
-                        ->where('id', '=', 1)
-                        ->update(['sys_email' => null]);
+                    ->where('id', '=', 1)
+                    ->update(['sys_email' => null]);
             }
             $return = 1;
         } catch (Exception $e) {
             $return = $e->getMessage();
         }
-
         return $return;
     }
 
@@ -428,13 +408,11 @@ class EmailsController extends Controller
                 return redirect('emails')->with('fails', Lang::get('lang.you_cannot_delete_system_default_email'));
             }
         }
-
         try {
             // fetching the database instance of the current email
-            $emails = $email->whereId($id)->first();
+            $mailboxes = $email->whereId($id)->first();
             // checking if deleting the email is success or if it's carrying any dependencies
-            $emails->delete();
-
+            $mailboxes->delete();
             return redirect('emails')->with('success', Lang::get('lang.email_deleted_sucessfully'));
         } catch (Exception $e) {
             // returns if the try fails
@@ -468,10 +446,8 @@ class EmailsController extends Controller
         } else {
             $server->setFlag('validate-cert');
         }
-
         $server->setAuthentication($username, $password);
         $server->getImapStream();
-
         return 1;
     }
 
@@ -490,7 +466,6 @@ class EmailsController extends Controller
         } else {
             $imap_stream = 0;
         }
-
         return $imap_stream;
     }
 
@@ -518,8 +493,8 @@ class EmailsController extends Controller
                 $mail->SMTPAuth = true;                               // Enable SMTP authentication
                 $mail->SMTPOptions = [
                     'ssl' => [
-                        'verify_peer'       => false,
-                        'verify_peer_name'  => false,
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
                         'allow_self_signed' => true,
                     ],
                 ];
@@ -540,7 +515,6 @@ class EmailsController extends Controller
         } elseif ($request->input('sending_protocol') == 'mail') {
             $return = 1;
         }
-
         return $return;
     }
 
@@ -558,7 +532,6 @@ class EmailsController extends Controller
         } else {
             $email_department = null;
         }
-
         return $email_department;
     }
 
@@ -576,7 +549,6 @@ class EmailsController extends Controller
         } else {
             $email_priority = null;
         }
-
         return $email_priority;
     }
 
@@ -594,7 +566,6 @@ class EmailsController extends Controller
         } else {
             $email_help_topic = null;
         }
-
         return $email_help_topic;
     }
 
@@ -630,9 +601,9 @@ class EmailsController extends Controller
             }
             foreach ($request as $key => $value) {
                 $mail_service->create([
-                    'drive'    => $driver,
-                    'key'      => $key,
-                    'value'    => $value,
+                    'drive' => $driver,
+                    'key' => $key,
+                    'value' => $value,
                     'email_id' => $emailid,
                 ]);
             }
@@ -646,11 +617,11 @@ class EmailsController extends Controller
         $TicketController = new \App\Http\Controllers\Agent\helpdesk\TicketController($PhpMailController, $NotificationController);
         $TicketWorkflowController = new \App\Http\Controllers\Agent\helpdesk\TicketWorkflowController($TicketController);
         $controller = new \App\Http\Controllers\Agent\helpdesk\MailController($TicketWorkflowController);
-        $emails = new Emails();
+        $mailboxes = new Emails();
         $settings_email = new Email();
         $system = new \App\Model\helpdesk\Settings\System();
         $ticket = new \App\Model\helpdesk\Settings\Ticket();
-        $controller->readmails($emails, $settings_email, $system, $ticket);
+        $controller->readmails($mailboxes, $settings_email, $system, $ticket);
     }
 
     public function fetch($email)

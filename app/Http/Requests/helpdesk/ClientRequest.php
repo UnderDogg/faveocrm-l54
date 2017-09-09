@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -34,18 +33,16 @@ class ClientRequest extends Request
             return $check;
             $custom_rule = $this->getCustomRule();
             $rules = array_merge($check, $custom_rule);
-
             return $rules;
         }
         $current_rule = [
-            'Name'    => 'required',
-            'Email'   => 'required|email',
+            'Name' => 'required',
+            'Email' => 'required|email',
             'Subject' => 'required',
             'Details' => 'required',
         ];
         $custom_rule = $this->getCustomRule();
         $rules = array_merge($current_rule, $custom_rule);
-
         return $rules;
     }
 
@@ -54,7 +51,6 @@ class ClientRequest extends Request
         $help_topics = new \App\Model\helpdesk\Manage\Help_topic();
         $topic = $this->input('helptopic');
         $help_topic = $help_topics->where('id', $topic)->first();
-
         return $help_topic;
     }
 
@@ -65,7 +61,6 @@ class ClientRequest extends Request
         if ($help_topic) {
             $custom_form = $help_topic->custom_form;
         }
-
         return $this->getForm($custom_form);
     }
 
@@ -77,7 +72,6 @@ class ClientRequest extends Request
         if ($form) {
             $id = $form->id;
         }
-
         return $this->getFields($id);
     }
 
@@ -94,7 +88,6 @@ class ClientRequest extends Request
                 $rules = array_merge($rules, $this->getChild($fd->id));
             }
         }
-
         return $rules;
     }
 
@@ -106,22 +99,20 @@ class ClientRequest extends Request
         if ($childs->count() > 0) {
             foreach ($childs as $child) {
                 $child_formid = $child->child_id;
-
                 return $this->getForm($child_formid);
             }
         }
-
         return [];
     }
 
     /**
-     *@category Funcion to set rule if send opt is enabled
+     * @category Funcion to set rule if send opt is enabled
      *
-     *@param object $settings (instance of Model common settings)
+     * @param object $settings (instance of Model common settings)
      *
-     *@author manish.verma@ladybirdweb.com
+     * @author manish.verma@ladybirdweb.com
      *
-     *@return array|int
+     * @return array|int
      */
     public function check($settings)
     {
@@ -130,16 +121,16 @@ class ClientRequest extends Request
         if (($email_mandatory->status == 0 || $email_mandatory->status == '0')) {
             if (!\Auth::check()) {
                 return [
-                'Name'    => 'required',
-                'Email'   => 'email',
-                'Subject' => 'required',
-                'Details' => 'required',
-                'mobile'  => 'required',
+                    'Name' => 'required',
+                    'Email' => 'email',
+                    'Subject' => 'required',
+                    'Details' => 'required',
+                    'mobile' => 'required',
                 ];
             } else {
                 return [
-                'Subject' => 'required',
-                'Details' => 'required',
+                    'Subject' => 'required',
+                    'Details' => 'required',
                 ];
             }
         } else {
@@ -147,15 +138,15 @@ class ClientRequest extends Request
         }
     }
 
-//    public function purifyArray($array){
-//        $purified = [];
-//        foreach($array as $key=>$value){
-//            if(!is_array($value)){
-//                $purified[$key]="required";
-//            }else{
-//                $purified[] = $this->purifyArray($value);
-//            }
-//        }
-//        return array_dot($purified);
-//    }
+    //    public function purifyArray($array){
+    //        $purified = [];
+    //        foreach($array as $key=>$value){
+    //            if(!is_array($value)){
+    //                $purified[$key]="required";
+    //            }else{
+    //                $purified[] = $this->purifyArray($value);
+    //            }
+    //        }
+    //        return array_dot($purified);
+    //    }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Installer\helpdesk;
 
 // controllers
@@ -35,7 +34,7 @@ use View;
  *  Class to perform the first install operation without this the database
  *  settings could not be started
  *
- *  @author     Ladybird <info@ladybirdweb.com>
+ * @author     Ladybird <info@ladybirdweb.com>
  */
 class InstallControllerOld extends Controller
 {
@@ -48,12 +47,11 @@ class InstallControllerOld extends Controller
     {
         // checking if the installation is running for the first time or not
         $directory = base_path();
-        if (file_exists($directory.DIRECTORY_SEPARATOR.'.env')) {
+        if (file_exists($directory . DIRECTORY_SEPARATOR . '.env')) {
             return redirect('/auth/login');
         } else {
             Cache::flush();
             Artisan::call('config:clear');
-
             return view('themes/default1/installer/helpdesk/view1');
         }
     }
@@ -69,7 +67,6 @@ class InstallControllerOld extends Controller
         $accept = (Input::has('accept1')) ? true : false;
         if ($accept == 'accept') {
             Cache::forever('step1', 'step1');
-
             return Redirect::route('prerequisites');
         } else {
             return Redirect::route('licence')->with('fails', 'Failed! first accept the licence agreeement');
@@ -103,7 +100,6 @@ class InstallControllerOld extends Controller
     public function prerequisitescheck(Request $request)
     {
         Cache::forever('step2', 'step2');
-
         return Redirect::route('configuration');
     }
 
@@ -132,13 +128,11 @@ class InstallControllerOld extends Controller
     public function localizationcheck(Request $request)
     {
         Cache::forever('step3', 'step3');
-
         $request->session()->put('step3', 'step3');
         $request->session()->put('language', Input::get('language'));
         $request->session()->put('timezone', Input::get('timezone'));
         $request->session()->put('date', Input::get('date'));
         $request->session()->put('datetime', Input::get('datetime'));
-
         return Redirect::route('configuration');
     }
 
@@ -167,14 +161,12 @@ class InstallControllerOld extends Controller
     public function configurationcheck(DatabaseRequest $request)
     {
         Cache::forever('step4', 'step4');
-
         Session::put('default', $request->input('default'));
         Session::put('host', $request->input('host'));
         Session::put('databasename', $request->input('databasename'));
         Session::put('username', $request->input('username'));
         Session::put('password', $request->input('password'));
         Session::put('port', $request->input('port'));
-
         return Redirect::route('database');
     }
 
@@ -192,7 +184,6 @@ class InstallControllerOld extends Controller
         $dbusername = Input::get('username');
         $dbpassword = Input::get('password');
         $port = Input::get('port');
-
         $ENV['APP_ENV'] = 'production';
         $ENV['APP_DEBUG'] = 'false';
         $ENV['APP_KEY'] = 'base64:h3KjrHeVxyE+j6c8whTAs2YI+7goylGZ/e2vElgXT6I=';
@@ -213,17 +204,15 @@ class InstallControllerOld extends Controller
         $ENV['CACHE_DRIVER'] = 'file';
         $ENV['SESSION_DRIVER'] = 'file';
         $ENV['QUEUE_DRIVER'] = 'sync';
-
         $config = '';
         foreach ($ENV as $key => $val) {
             $config .= "{$key}={$val}\n";
         }
         // Write environment file
-        $fp = fopen(base_path().DIRECTORY_SEPARATOR.'example.env', 'w');
+        $fp = fopen(base_path() . DIRECTORY_SEPARATOR . 'example.env', 'w');
         fwrite($fp, $config);
         fclose($fp);
-        rename(base_path().DIRECTORY_SEPARATOR.'example.env', base_path().DIRECTORY_SEPARATOR.'.env');
-
+        rename(base_path() . DIRECTORY_SEPARATOR . 'example.env', base_path() . DIRECTORY_SEPARATOR . '.env');
         return 1;
     }
 
@@ -254,7 +243,6 @@ class InstallControllerOld extends Controller
         // checking if the installation is running for the first time or not
         if (Cache::get('step4') == 'step4') {
             $request->session()->put('step5', $request->input('step5'));
-
             return View::make('themes/default1/installer/helpdesk/view5');
         } else {
             return Redirect::route('configuration');
@@ -275,15 +263,14 @@ class InstallControllerOld extends Controller
         try {
             $check_for_pre_installation = System::all();
             if ($check_for_pre_installation) {
-                rename(base_path().DIRECTORY_SEPARATOR.'.env', base_path().DIRECTORY_SEPARATOR.'example.env');
+                rename(base_path() . DIRECTORY_SEPARATOR . '.env', base_path() . DIRECTORY_SEPARATOR . 'example.env');
                 Cache::put('fails', 'The data in database already exist. Please provide fresh database', 2);
-
                 return redirect()->route('configuration');
             }
         } catch (Exception $e) {
         }
         if ($request->input('dummy-data') == 'on') {
-            $path = base_path().'/DB/dummy-data.sql';
+            $path = base_path() . '/DB/dummy-data.sql';
             DB::unprepared(file_get_contents($path));
         } else {
             // migrate database
@@ -296,7 +283,6 @@ class InstallControllerOld extends Controller
         $email = $request->input('email');
         $username = $request->input('username');
         $password = $request->input('password');
-
         $language = $request->input('language');
         $timezone = $request->input('timezone');
         $date = $request->input('date');
@@ -306,17 +292,16 @@ class InstallControllerOld extends Controller
             return \Redirect::back()->with('fails', 'Invalid language');
         }
         // checking requested timezone for the admin and system
-//        $timezones = Timezones::where('name', '=', $timezone)->first();
-//        if ($timezones == null) {
-//            return redirect()->back()->with('fails', 'Invalid time-zone');
-//        }
-//
-//        // checking requested date time format for the admin and system
-//        $date_time_format = Date_time_format::where('format', '=', $datetime)->first();
-//        if ($date_time_format == null) {
-//            return redirect()->back()->with('fails', 'invalid date-time format');
-//        }
-
+        //        $timezones = Timezones::where('name', '=', $timezone)->first();
+        //        if ($timezones == null) {
+        //            return redirect()->back()->with('fails', 'Invalid time-zone');
+        //        }
+        //
+        //        // checking requested date time format for the admin and system
+        //        $date_time_format = Date_time_format::where('format', '=', $datetime)->first();
+        //        if ($date_time_format == null) {
+        //            return redirect()->back()->with('fails', 'invalid date-time format');
+        //        }
         // Creating minum settings for system
         $system = System::where('id', '=', 1)->first();
         if (!$system) {
@@ -331,23 +316,21 @@ class InstallControllerOld extends Controller
         $version = $version[1];
         $system->version = $version;
         $system->save();
-
         // creating an user
         $user = User::create([
-                    'first_name'   => $firstname,
-                    'last_name'    => $lastname,
-                    'email'        => $email,
-                    'user_name'    => $username,
-                    'password'     => Hash::make($password),
-                    'assign_group' => 1,
-                    'primary_dpt'  => 1,
-                    'active'       => 1,
-                    'role'         => 'admin',
+            'first_name' => $firstname,
+            'last_name' => $lastname,
+            'email' => $email,
+            'user_name' => $username,
+            'password' => Hash::make($password),
+            'assign_group' => 1,
+            'primary_dpt' => 1,
+            'active' => 1,
+            'role' => 'admin',
         ]);
         // checking if the user have been created
         if ($user) {
             Cache::forever('step6', 'step6');
-
             return Redirect::route('final');
         }
     }
@@ -363,28 +346,24 @@ class InstallControllerOld extends Controller
         // checking if the installation have been completed or not
         if (Cache::get('step6') == 'step6') {
             $value = '1';
-            $install = base_path().DIRECTORY_SEPARATOR.'.env';
+            $install = base_path() . DIRECTORY_SEPARATOR . '.env';
             $datacontent = File::get($install);
             $datacontent = str_replace('%0%', $value, $datacontent);
             File::put($install, $datacontent);
             // setting email settings in route
             $smtpfilepath = "\App\Http\Controllers\Common\SettingsController::smtp()";
-
-            $link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $link = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             $pos = strpos($link, 'final');
             $link = substr($link, 0, $pos);
-            $app_url = base_path().DIRECTORY_SEPARATOR.'.env';
+            $app_url = base_path() . DIRECTORY_SEPARATOR . '.env';
             $datacontent2 = File::get($app_url);
             $datacontent2 = str_replace('http://localhost', $link, $datacontent2);
             File::put($app_url, $datacontent2);
             $language = Cache::get('language');
-
             try {
                 Cache::flush();
-
                 //Artisan::call('key:generate');
                 \Cache::forever('language', $language);
-
                 return View::make('themes/default1/installer/helpdesk/view6');
             } catch (Exception $e) {
                 return Redirect::route('account')->with('fails', $e->getMessage());
@@ -411,7 +390,7 @@ class InstallControllerOld extends Controller
 
     public function changeFilePermission()
     {
-        $path1 = base_path().DIRECTORY_SEPARATOR.'.env';
+        $path1 = base_path() . DIRECTORY_SEPARATOR . '.env';
         if (chmod($path1, 0644)) {
             $f1 = substr(sprintf('%o', fileperms($path1)), -3);
             if ($f1 >= '644') {

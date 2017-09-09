@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
@@ -25,27 +24,23 @@ class ApiExceptAuthController extends Controller
         //dd($this->request);
         try {
             $v = \Validator::make($this->request->all(), [
-                        'url' => 'required|url',
+                'url' => 'required|url',
             ]);
             if ($v->fails()) {
                 $error = $v->errors();
-
                 return response()->json(compact('error'));
             }
-
             $url = $this->request->input('url');
             if (!str_is('*/', $url)) {
                 $url = str_finish($url, '/');
             }
-
-            $url = $url.'api/v1/helpdesk/check-url';
+            $url = $url . 'api/v1/helpdesk/check-url';
             //return $url;
             $result = $this->CallGetApi($url);
-//            dd($result);
+            //            dd($result);
             return response()->json(compact('result'));
         } catch (\Exception $ex) {
             $error = $ex->getMessage();
-
             return $error;
         } catch (\Symfony\Component\HttpKernel\Exception\HttpException $ex) {
             return ['status' => 'fails', 'code' => $ex->getStatusCode()];
@@ -61,7 +56,6 @@ class ApiExceptAuthController extends Controller
     {
         try {
             $result = ['status' => 'success'];
-
             return $result;
         } catch (\Symfony\Component\HttpKernel\Exception\HttpException $ex) {
             return ['status' => 'fails', 'code' => $ex->getStatusCode()];
@@ -83,11 +77,9 @@ class ApiExceptAuthController extends Controller
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
-
         if (curl_errno($curl)) {
             //echo 'error:' . curl_error($curl);
         }
-
         return $response;
         curl_close($curl);
     }
@@ -109,11 +101,9 @@ class ApiExceptAuthController extends Controller
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         $response = curl_exec($curl);
-
         if (curl_errno($curl)) {
-            echo 'error:'.curl_error($curl);
+            echo 'error:' . curl_error($curl);
         }
-
         return $response;
         curl_close($curl);
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -18,10 +17,10 @@ class ConfigServiceProvider extends ServiceProvider
     public function register()
     {
         config([
-                'lfm.images_url' => url('uploads').'/',
-                'lfm.images_dir' => '/public/uploads/',
-                'lfm.files_url'  => url('uploads').'/',
-                'lfm.files_dir'  => '/public/uploads/',
+            'lfm.images_url' => url('uploads') . '/',
+            'lfm.images_dir' => '/public/uploads/',
+            'lfm.files_url' => url('uploads') . '/',
+            'lfm.files_dir' => '/public/uploads/',
         ]);
     }
 }

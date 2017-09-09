@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -30,9 +29,9 @@ class TicketForm extends Request
     {
         return [
             'help_topic' => 'required',
-            'Email'      => 'required',
-            'Subject'    => 'required',
-            'Detail'     => 'required',
+            'Email' => 'required',
+            'Subject' => 'required',
+            'Detail' => 'required',
         ];
     }
 }

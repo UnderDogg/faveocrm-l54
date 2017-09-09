@@ -1,5 +1,4 @@
 <?php
-
 namespace App\FaveoLog\controllers;
 
 use App\FaveoLog\LaravelLogViewer;
@@ -18,20 +17,16 @@ class LogViewerController extends Controller
             //dd(base64_decode(Request::input('l')));
             LaravelLogViewer::setFile(base64_decode(Request::input('l')));
         }
-
         if (Request::input('dl')) {
             return Response::download(LaravelLogViewer::pathToLogFile(base64_decode(Request::input('dl'))));
         } elseif (Request::has('del')) {
             File::delete(LaravelLogViewer::pathToLogFile(base64_decode(Request::input('del'))));
-
             return Redirect::to(Request::url());
         }
-
         $logs = LaravelLogViewer::all();
-
         return View::make('log::log', [
-            'logs'         => $logs,
-            'files'        => LaravelLogViewer::getFiles(true),
+            'logs' => $logs,
+            'files' => LaravelLogViewer::getFiles(true),
             'current_file' => LaravelLogViewer::getFileName(),
         ]);
     }

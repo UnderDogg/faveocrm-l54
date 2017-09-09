@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Settings;
 
 use App\BaseModel;
@@ -18,7 +17,6 @@ class CommonSettings extends BaseModel
         if ($schema) {
             $status = $schema->status;
         }
-
         return $status;
     }
 
@@ -28,17 +26,14 @@ class CommonSettings extends BaseModel
         $schema = $this->where('option_name', $option);
         if ($field != '') {
             $schema = $schema->where('optional_field', $field);
-
             $value = $schema->first();
         }
         if ($value && $option_value) {
             $value = $value->option_value;
         }
-
         if (!$value && !$option_value) {
             $value = $schema->get();
         }
-
         return $value;
     }
 }

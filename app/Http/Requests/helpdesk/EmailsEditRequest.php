@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -30,7 +29,7 @@ class EmailsEditRequest extends Request
     {
         return [
             'email_address' => 'email',
-            'email_name'    => 'required',
+            'email_name' => 'required',
             // 'department' => 'required',
             // 'priority' => 'required',
             // 'help_topic' => 'required',
@@ -40,9 +39,9 @@ class EmailsEditRequest extends Request
             // 'sending_host' => 'required',
             // 'sending_port' => 'required',
             //'mailbox_protocol'	=>		'required'
-//            'fetching_host'    => 'required',
-//            'fetching_port'    => 'required',
-//            'mailbox_protocol' => 'required',
+            //            'fetching_host'    => 'required',
+            //            'fetching_port'    => 'required',
+            //            'mailbox_protocol' => 'required',
         ];
     }
 }

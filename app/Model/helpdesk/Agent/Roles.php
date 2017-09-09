@@ -3,9 +3,9 @@ namespace App\Model\helpdesk\Agent;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Groups extends Model
+class Roles extends Model
 {
-    protected $table = 'groups';
+    protected $table = 'roles';
     protected $fillable = [
         'user_id', 'permission',
     ];

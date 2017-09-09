@@ -1,5 +1,4 @@
 <?php
-
 use App\Model\MailJob\MailService;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,14 +18,13 @@ class CreateMailServicesTable extends Migration
             $table->string('short_name');
             $table->timestamps();
         });
-
         $mail = new MailService();
-        $services = ['smtp'=>'SMTP', 'mail'=>'Php Mail', 'sendmail'=>'Send Mail', 'mailgun'=>'Mailgun', 'mandrill'=>'Mandrill', 'log'=>'Log file'];
-        foreach ($services as $key=>$value) {
+        $services = ['smtp' => 'SMTP', 'mail' => 'Php Mail', 'sendmail' => 'Send Mail', 'mailgun' => 'Mailgun', 'mandrill' => 'Mandrill', 'log' => 'Log file'];
+        foreach ($services as $key => $value) {
             $mail->create([
-            'name'      => $value,
-            'short_name'=> $key,
-        ]);
+                'name' => $value,
+                'short_name' => $key,
+            ]);
         }
     }
 

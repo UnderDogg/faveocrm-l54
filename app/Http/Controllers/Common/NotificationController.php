@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
@@ -81,7 +80,6 @@ class NotificationController extends Controller
             $mark->is_read = '1';
             $mark->save();
         }
-
         return 1;
     }
 
@@ -99,7 +97,6 @@ class NotificationController extends Controller
             $mark->is_read = '1';
             $mark->save();
         }
-
         return 1;
     }
 
@@ -128,7 +125,6 @@ class NotificationController extends Controller
         foreach ($markasread as $mark) {
             $mark->delete();
         }
-
         return 1;
     }
 
@@ -142,7 +138,6 @@ class NotificationController extends Controller
                 }
             }
             $notifications->dummyDelete();
-
             return redirect()->back()->with('success', 'deleted');
         } catch (\Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -157,15 +152,14 @@ class NotificationController extends Controller
     public static function getNotifications()
     {
         $notifications = UserNotification::with([
-                    'notification.type' => function ($query) {
-                        $query->select('id', 'message', 'type');
-                    }, 'users' => function ($query) {
-                        $query->select('id', 'email', 'profile_pic');
-                    }, 'notification.model' => function ($query) {
-                        $query->select('id', 'ticket_number');
-                    },
+            'notification.type' => function ($query) {
+                $query->select('id', 'message', 'type');
+            }, 'users' => function ($query) {
+                $query->select('id', 'email', 'profile_pic');
+            }, 'notification.model' => function ($query) {
+                $query->select('id', 'ticket_number');
+            },
         ])->where('user_id', '=', \Auth::user()->id);
-
         return $notifications;
     }
 }

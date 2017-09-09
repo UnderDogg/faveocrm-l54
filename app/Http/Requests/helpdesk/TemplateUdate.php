@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,10 +28,10 @@ class TemplateUdate extends Request
     public function rules()
     {
         return [
-//            'name'                  => 'required|max:60',
-//            'subject'               => 'required',
-            'type'                  => 'required',
-            'message'               => 'required',
+            //            'name'                  => 'required|max:60',
+            //            'subject'               => 'required',
+            'type' => 'required',
+            'message' => 'required',
         ];
     }
 }

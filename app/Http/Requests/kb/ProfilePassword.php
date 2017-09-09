@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\kb;
 
 use App\Http\Requests\Request;
@@ -24,8 +23,8 @@ class ProfilePassword extends Request
     public function rules()
     {
         return [
-            'old_password'     => 'required',
-            'new_password'     => 'required|min:6',
+            'old_password' => 'required',
+            'new_password' => 'required|min:6',
             'confirm_password' => 'required|same:new_password',
         ];
     }

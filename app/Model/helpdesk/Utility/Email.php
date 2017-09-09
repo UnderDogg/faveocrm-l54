@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Utility;
 
 use App\BaseModel;
@@ -7,7 +6,6 @@ use App\BaseModel;
 class Email extends BaseModel
 {
     /* Using Email table  */
-
     protected $table = 'email';
     /* Set fillable fields in table */
     protected $fillable = [

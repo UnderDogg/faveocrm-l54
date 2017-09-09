@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\MailJob;
 
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +12,6 @@ class QueueService extends Model
     public function extraFieldRelation()
     {
         $related = "App\Model\MailJob\FaveoQueue";
-
         return $this->hasMany($related, 'service_id');
     }
 
@@ -24,7 +22,6 @@ class QueueService extends Model
         if ($setting) {
             $value = $setting->value;
         }
-
         return $value;
     }
 
@@ -32,19 +29,17 @@ class QueueService extends Model
     {
         $name = $this->attributes['name'];
         $id = $this->attributes['id'];
-        $html = '<a href='.url('queue/'.$id).'>'.$name.'</a>';
-
+        $html = '<a href=' . url('queue/' . $id) . '>' . $name . '</a>';
         return $html;
     }
 
     public function getStatus()
     {
         $status = $this->attributes['status'];
-        $html = "<span style='color:red'>".Lang::get('lang.inactive').'</span>';
+        $html = "<span style='color:red'>" . Lang::get('lang.inactive') . '</span>';
         if ($status == 1) {
-            $html = "<span style='color:green'>".Lang::get('lang.active').'</span>';
+            $html = "<span style='color:green'>" . Lang::get('lang.active') . '</span>';
         }
-
         return $html;
     }
 
@@ -52,11 +47,10 @@ class QueueService extends Model
     {
         $id = $this->attributes['id'];
         $status = $this->attributes['status'];
-        $html = '<a href='.url('queue/'.$id.'/activate')." class='btn btn-primary'>".Lang::get('lang.activate').'</a>';
+        $html = '<a href=' . url('queue/' . $id . '/activate') . " class='btn btn-primary'>" . Lang::get('lang.activate') . '</a>';
         if ($status == 1) {
-            $html = "<a href='#' class='btn btn-primary' disabled>".Lang::get('lang.activate').'</a>';
+            $html = "<a href='#' class='btn btn-primary' disabled>" . Lang::get('lang.activate') . '</a>';
         }
-
         return $html;
     }
 
@@ -67,7 +61,6 @@ class QueueService extends Model
         if ($settings->count() == 0) {
             $check = false;
         }
-
         return $check;
     }
 }

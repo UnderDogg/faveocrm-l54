@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Client\helpdesk;
 
 // controllers
@@ -75,7 +74,6 @@ class FormController extends Controller
             } else {
                 $phonecode = '';
             }
-
             return view('themes.default1.client.helpdesk.form', compact('topics', 'codes', 'email_mandatory'))->with('phonecode', $phonecode);
         } else {
             return \Redirect::route('home');
@@ -104,29 +102,29 @@ class FormController extends Controller
                         $form_fields = explode(',', $form_data->value);
                         $var = '';
                         foreach ($form_fields as $form_field) {
-                            $var .= '<option value="'.$form_field.'">'.$form_field.'</option>';
+                            $var .= '<option value="' . $form_field . '">' . $form_field . '</option>';
                         }
-                        echo '<br/><label>'.ucfirst($form_data->label).'</label><select class="form-control" name="'.$form_data->name.'">'.$var.'</select>';
+                        echo '<br/><label>' . ucfirst($form_data->label) . '</label><select class="form-control" name="' . $form_data->name . '">' . $var . '</select>';
                     } elseif ($form_data->type == 'radio') {
                         $type2 = $form_data->value;
                         $vals = explode(',', $type2);
-                        echo '<br/><label>'.ucfirst($form_data->label).'</label><br/>';
+                        echo '<br/><label>' . ucfirst($form_data->label) . '</label><br/>';
                         foreach ($vals as $val) {
-                            echo '<input type="'.$form_data->type.'" name="'.$form_data->name.'"> '.$form_data->value.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                            echo '<input type="' . $form_data->type . '" name="' . $form_data->name . '"> ' . $form_data->value . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                         }
                         echo '<br/>';
                     } elseif ($form_data->type == 'textarea') {
                         $type3 = $form_data->value;
-                        echo '<br/><label>'.$form_data->label.'</label></br><textarea id="unique-textarea" name="'.$form_data->name.'" class="form-control" style="height:15%;"></textarea>';
+                        echo '<br/><label>' . $form_data->label . '</label></br><textarea id="unique-textarea" name="' . $form_data->name . '" class="form-control" style="height:15%;"></textarea>';
                     } elseif ($form_data->type == 'checkbox') {
                         $type4 = $form_data->value;
                         $checks = explode(',', $type4);
-                        echo '<br/><label>'.ucfirst($form_data->label).'</label><br/>';
+                        echo '<br/><label>' . ucfirst($form_data->label) . '</label><br/>';
                         foreach ($checks as $check) {
-                            echo '<input type="'.$form_data->type.'" name="'.$form_data->name.'">&nbsp&nbsp'.$check;
+                            echo '<input type="' . $form_data->type . '" name="' . $form_data->name . '">&nbsp&nbsp' . $check;
                         }
                     } else {
-                        echo '<br/><label>'.ucfirst($form_data->label).'</label><input type="'.$form_data->type.'" class="form-control"   name="'.$form_data->name.'" />';
+                        echo '<br/><label>' . ucfirst($form_data->label) . '</label><input type="' . $form_data->type . '" class="form-control"   name="' . $form_data->name . '" />';
                     }
                 }
                 echo '<br/><br/>';
@@ -156,7 +154,7 @@ class FormController extends Controller
             $phonecode = null;
             $default_values = ['Requester', 'Requester_email', 'Requester_name', 'Requester_mobile',
                 'Requester_mobile', 'Requester_code', 'Group', 'Assigned', 'Subject', 'Description',
-                'Priority', 'Type', 'Status', 'attachment', 'inline', ];
+                'Priority', 'Type', 'Status', 'attachment', 'inline',];
             $form_extras = $request->except($default_values);
             $requester = $request->input('Requester');
             if ($request->has('Requester')) {
@@ -182,7 +180,6 @@ class FormController extends Controller
             } elseif ($user) {
                 $phonecode = $user->country_code;
             }
-
             if ($request->has('Group')) {
                 $helptopic = $request->input('Group');
                 $department = Help_topic::where('id', '=', $helptopic)->first()->value('department');
@@ -211,7 +208,6 @@ class FormController extends Controller
             } else {
                 $priority = null;
             }
-
             if ($request->input('Status')) {
                 $status = $ticket_settings->first()->status;
             } else {
@@ -227,17 +223,14 @@ class FormController extends Controller
             } else {
                 $attachments = null;
             }
-
             \Event::fire(new \App\Events\ClientTicketFormPost($form_extras, $email, $source));
             $response = $this->TicketWorkflowController->workflow($email, $name, $subject, $details, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source, $collaborator, $department, $assignto, $team_assign, $status, $form_extras, $auto_response, $attachments);
         } catch (\Exception $e) {
             $result = $e->getMessage();
-
             return response()->json(compact('result'), 500);
         }
-        $msg = Lang::get('lang.Ticket-has-been-created-successfully-your-ticket-number-is').' '.$response[0].'. '.Lang::get('lang.Please-save-this-for-future-reference');
+        $msg = Lang::get('lang.Ticket-has-been-created-successfully-your-ticket-number-is') . ' ' . $response[0] . '. ' . Lang::get('lang.Please-save-this-for-future-reference');
         $result = ['success' => $msg];
-
         return response()->json(compact('result'));
     }
 
@@ -254,18 +247,14 @@ class FormController extends Controller
             if ($comment != null) {
                 $tickets = Tickets::where('id', '=', $id)->first();
                 $thread = Ticket_Thread::where('ticket_id', '=', $tickets->id)->first();
-
-                $subject = $thread->title.'[#'.$tickets->ticket_number.']';
+                $subject = $thread->title . '[#' . $tickets->ticket_number . ']';
                 $body = $request->input('comment');
-
                 $user_cred = User::where('id', '=', $tickets->user_id)->first();
-
                 $fromaddress = $user_cred->email;
                 $fromname = $user_cred->user_name;
                 $phone = '';
                 $phonecode = '';
                 $mobile_number = '';
-
                 $helptopic = $tickets->help_topic_id;
                 $sla = $tickets->sla;
                 $priority = $tickets->priority_id;
@@ -277,9 +266,7 @@ class FormController extends Controller
                 $team_assign = null;
                 $ticket_status = null;
                 $auto_response = 0;
-
                 $this->TicketWorkflowController->workflow($fromaddress, $fromname, $subject, $body, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source, $collaborator, $dept, $assign, $team_assign, $ticket_status, $form_data, $auto_response);
-
                 return \Redirect::back()->with('success1', Lang::get('lang.successfully_replied'));
             } else {
                 return \Redirect::back()->with('fails1', Lang::get('lang.please_fill_some_data'));
@@ -305,7 +292,6 @@ class FormController extends Controller
             $form_controller = new \App\Http\Controllers\Admin\helpdesk\FormController($fields, $forms);
             $html = $form_controller->renderForm($custom_form);
         }
-
         return $html;
     }
 }

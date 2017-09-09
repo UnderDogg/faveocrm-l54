@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -30,7 +29,7 @@ class RedirectIfAuthenticated
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
+     * @param \Closure $next
      *
      * @return mixed
      */
@@ -39,7 +38,6 @@ class RedirectIfAuthenticated
         if ($this->auth->check()) {
             return redirect(url('dashboard'));
         }
-
         return $next($request);
     }
 }

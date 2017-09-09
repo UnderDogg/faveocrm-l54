@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 use App\Http\Controllers\Controller;
@@ -33,7 +32,6 @@ class CloseWrokflowController extends Controller
     {
         try {
             $security = $securitys->whereId('1')->first();
-
             return view('themes.default1.admin.helpdesk.settings.close-workflow.index', compact('security'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -43,7 +41,7 @@ class CloseWrokflowController extends Controller
     /**
      * updating the workflow settings for closing ticket.
      *
-     * @param type                                             $id
+     * @param type $id
      * @param \App\Http\Requests\helpdesk\WorkflowCloseRequest $request
      *
      * @return type redirect
@@ -54,11 +52,10 @@ class CloseWrokflowController extends Controller
             $security = new WorkflowClose();
             $securitys = $security->whereId($id)->first();
             $securitys->days = $request->input('days');
-//            $securitys->condition = $request->input('condition');
+            //            $securitys->condition = $request->input('condition');
             $securitys->send_email = $request->input('send_email');
             $securitys->status = $request->input('status');
             $securitys->save();
-
             return \Redirect::back()->with('success', Lang::get('lang.successfully_saved_your_settings'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());

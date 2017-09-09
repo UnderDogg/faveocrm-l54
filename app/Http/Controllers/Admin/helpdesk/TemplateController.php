@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // controllers
@@ -48,7 +47,6 @@ class TemplateController extends Controller
     {
         try {
             $templates = $template->get();
-
             return view('themes.default1.admin.helpdesk.emails.template.index', compact('templates'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -68,7 +66,6 @@ class TemplateController extends Controller
         try {
             $templates = $template->get();
             $languages = $language->get();
-
             return view('themes.default1.admin.helpdesk.emails.template.create', compact('languages', 'templates'));
         } catch (Exception $e) {
             return view('404');
@@ -115,7 +112,7 @@ class TemplateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param type           $id
+     * @param type $id
      * @param type Template  $template
      * @param type Languages $language
      *
@@ -123,31 +120,27 @@ class TemplateController extends Controller
      */
     public function listdirectories()
     {
-        $path = \Config::get('view.paths')[0].'/emails/';
+        $path = \Config::get('view.paths')[0] . '/emails/';
         $directories = scandir($path);
         $directory = str_replace('/', '-', $path);
-
         return view('themes.default1.admin.helpdesk.emails.template.listdirectories', compact('directories', 'directory'));
     }
 
     public function listtemplates($template, $path)
     {
         $paths = str_replace('-', '/', $path);
-        $directory2 = $paths.$template;
-
+        $directory2 = $paths . $template;
         $templates = scandir($directory2);
-        $directory = str_replace('/', '-', $directory2.'/');
-
+        $directory = str_replace('/', '-', $directory2 . '/');
         return view('themes.default1.admin.helpdesk.emails.template.listtemplates', compact('templates', 'directory'));
     }
 
     public function readtemplate($template, $path)
     {
         $directory = str_replace('-', '/', $path);
-        $handle = fopen($directory.$template, 'r');
-        $contents = fread($handle, filesize($directory.$template));
+        $handle = fopen($directory . $template, 'r');
+        $contents = fread($handle, filesize($directory . $template));
         fclose($handle);
-
         return view('themes.default1.admin.helpdesk.emails.template.readtemplates', compact('contents', 'template', 'path'));
     }
 
@@ -155,32 +148,27 @@ class TemplateController extends Controller
     {
         $directory = '../resources/views/emails/';
         $fname = Input::get('folder_name');
-        $filename = $directory.$fname;
-
+        $filename = $directory . $fname;
         // images folder creation using php
         //   $mydir = dirname( __FILE__ )."/html/images";
         //   if(!is_dir($mydir)){
         //   mkdir("html/images");
         //   }
         // Move all images files
-
         if (!file_exists($filename)) {
             mkdir($filename, 0777);
         }
-        $files = array_filter(scandir($directory.'default'));
-
+        $files = array_filter(scandir($directory . 'default'));
         foreach ($files as $file) {
             if ($file === '.' or $file === '..') {
                 continue;
             }
             if (!is_dir($file)) {
                 //   $file_to_go = str_replace("code/resources/views/emails/",'code/resources/views/emails/'.$fname,$file);
-                $destination = $directory.$fname.'/';
-
-                copy($directory.'default/'.$file, $destination.$file);
+                $destination = $directory . $fname . '/';
+                copy($directory . 'default/' . $file, $destination . $file);
             }
         }
-
         return \Redirect::back()->with('success', 'Successfully copied');
     }
 
@@ -188,16 +176,14 @@ class TemplateController extends Controller
     {
         $directory = str_replace('-', '/', $path);
         $b = Input::get('templatedata');
-
-        file_put_contents($directory.$template, print_r($b, true));
-
+        file_put_contents($directory . $template, print_r($b, true));
         return \Redirect::back()->with('success', 'Successfully updated');
     }
 
     public function deletetemplate($template, $path)
     {
         $directory = str_replace('-', '/', $path);
-        $dir = $directory.$template;
+        $dir = $directory . $template;
         $status = \DB::table('settings_email')->first();
         if ($template == 'default' or $template == $status->template) {
             return \Redirect::back()->with('fails', 'You cannot delete a default or active directory!');
@@ -206,21 +192,19 @@ class TemplateController extends Controller
             $objects = scandir($dir);
             foreach ($objects as $object) {
                 if ($object != '.' && $object != '..') {
-                    unlink($dir.'/'.$object);
+                    unlink($dir . '/' . $object);
                 }
             }
             rmdir($dir);
         } else {
             rmdir($dir);
         }
-
         return \Redirect::back()->with('success', 'Successfully Deleted');
     }
 
     public function activateset($setname)
     {
         \DB::table('settings_email')->update(['template' => $setname]);
-
         return \Redirect::back()->with('success', 'You have Successfully Activated this Set');
     }
 
@@ -229,7 +213,6 @@ class TemplateController extends Controller
         try {
             $templates = $template->whereId($id)->first();
             $languages = $language->get();
-
             return view('themes.default1.admin.helpdesk.emails.template.edit', compact('templates', 'languages'));
         } catch (Exception $e) {
             return view('404');
@@ -300,8 +283,7 @@ class TemplateController extends Controller
     public function formDiagno(Emails $email)
     {
         try {
-            $emails = $email->get();
-
+            $mailboxes = $email->get();
             return view('themes.default1.admin.helpdesk.emails.template.formDiagno', compact('emails'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -327,18 +309,15 @@ class TemplateController extends Controller
                 throw new Exception('Sorry! We can not find your request');
             }
             $to_address = [
-
-                'name'  => '',
+                'name' => '',
                 'email' => $to,
             ];
             $message = [
-                'subject'  => $subject,
+                'subject' => $subject,
                 'scenario' => null,
-                'body'     => $msg,
+                'body' => $msg,
             ];
-
             $this->PhpMailController->sendmail($from, $to_address, $message, [], []);
-
             return redirect()->back()->with('success', 'Mail has send successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());

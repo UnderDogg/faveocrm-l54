@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Filters;
 
 use Illuminate\Database\Eloquent\Model;

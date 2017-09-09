@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Auth\Authenticatable;
@@ -30,7 +29,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $fillable = ['user_name', 'email', 'password', 'active', 'first_name', 'last_name', 'ban', 'ext', 'mobile', 'profile_pic',
         'phone_number', 'company', 'agent_sign', 'account_type', 'account_status',
         'assign_group', 'primary_dpt', 'agent_tzone', 'daylight_save', 'limit_access',
-        'directory_listing', 'vacation_mode', 'role', 'internal_note', 'country_code', 'not_accept_ticket', 'is_delete', 'mobile_verify', ];
+        'directory_listing', 'vacation_mode', 'role', 'internal_note', 'country_code', 'not_accept_ticket', 'is_delete', 'mobile_verify',];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -48,17 +47,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
         if (!$pic && $value) {
             $pic = '';
-            $file = asset('uploads/profilepic/'.$value);
+            $file = asset('uploads/profilepic/' . $value);
             if ($file) {
                 $type = pathinfo($file, PATHINFO_EXTENSION);
                 $data = file_get_contents($file);
-                $pic = 'data:image/'.$type.';base64,'.base64_encode($data);
+                $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
             }
         }
         if (!$value) {
             $pic = \Gravatar::src($this->attributes['email']);
         }
-
         return $pic;
     }
 
@@ -66,7 +64,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $related = 'App\UserAdditionalInfo';
         $foreignKey = 'owner';
-
         return $this->hasMany($related, $foreignKey)->select('value')->where('key', 'avatar')->first();
     }
 
@@ -79,7 +76,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $org_id = $relation->org_id;
             $orgs = new \App\Model\helpdesk\Agent_panel\Organization();
             $org = $orgs->where('id', $org_id);
-
             return $org;
         }
     }
@@ -93,7 +89,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                 $name = $org->name;
             }
         }
-
         return $name;
     }
 
@@ -105,10 +100,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $orgs = $this->getOrganizationRelation()->first();
             if ($orgs) {
                 $id = $orgs->id;
-                $name = '<a href='.url('organizations/'.$id).'>'.ucfirst($org).'</a>';
+                $name = '<a href=' . url('organizations/' . $id) . '>' . ucfirst($org) . '</a>';
             }
         }
-
         return $name;
     }
 
@@ -117,7 +111,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if (!$value) {
             $value = \Lang::get('lang.not-available');
         }
-
         return $value;
     }
 
@@ -128,7 +121,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
         $info = new UserAdditionalInfo();
         $infos = $info->where('owner', $id)->pluck('value', 'key')->toArray();
-
         return $infos;
     }
 
@@ -140,7 +132,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                 $value = $array[$key];
             }
         }
-
         return $value;
     }
 
@@ -150,9 +141,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $info = $this->getExtraInfo();
         $username = $this->checkArray('username', $info);
         if ($username !== '') {
-            $html = "<a href='https://twitter.com/".$username."' target='_blank'><i class='fa fa-twitter'> </i> Twitter</a>";
+            $html = "<a href='https://twitter.com/" . $username . "' target='_blank'><i class='fa fa-twitter'> </i> Twitter</a>";
         }
-
         return $html;
     }
 
@@ -163,12 +153,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $name = $this->user_name;
         if ($first_name !== '' && $first_name !== null) {
             if ($last_name !== '' && $last_name !== null) {
-                $name = $first_name.' '.$last_name;
+                $name = $first_name . ' ' . $last_name;
             } else {
                 $name = $first_name;
             }
         }
-
         return $name;
     }
 
@@ -177,23 +166,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->name();
     }
 
-//    public function save() {
-//        dd($this->id);
-//        parent::save();
-//    }
-//    public function save(array $options = array()) {
-//        parent::save($options);
-//        dd($this->where('id',$this->id)->select('first_name','last_name','user_name','email')->get()->toJson());
-//    }
-
+    //    public function save() {
+    //        dd($this->id);
+    //        parent::save();
+    //    }
+    //    public function save(array $options = array()) {
+    //        parent::save($options);
+    //        dd($this->where('id',$this->id)->select('first_name','last_name','user_name','email')->get()->toJson());
+    //    }
     public function org()
     {
         return $this->hasOne('App\Model\helpdesk\Agent_panel\User_org', 'user_id');
     }
 
-    public function permision()
+    public function permission()
     {
-        return $this->hasOne('App\Model\helpdesk\Agent\Groups', 'user_id');
+        return $this->hasOne('App\Model\helpdesk\Agent\Roles', 'user_id');
     }
 
     public function save(array $options = [])
@@ -201,14 +189,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $changed = $this->isDirty() ? $this->getDirty() : false;
         $user = parent::save();
         $this->updateDeletedUserDependency($changed);
-
         return $user;
     }
 
     public function ticketsAssigned()
     {
         $related = 'App\Model\helpdesk\Ticket\Tickets';
-
         return $this->hasMany($related, 'assigned_to');
     }
 
@@ -228,7 +214,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if ($is_deleted) {
             $check = true;
         }
-
         return $check;
     }
 
@@ -239,7 +224,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if ($is_deleted) {
             $check = true;
         }
-
         return $check;
     }
 
@@ -250,7 +234,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if ($is_deleted) {
             $check = true;
         }
-
         return $check;
     }
 
@@ -261,7 +244,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if ($is_deleted) {
             $check = true;
         }
-
         return $check;
     }
 }

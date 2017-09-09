@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,8 +28,8 @@ class OtpVerifyRequest extends Request
     public function rules()
     {
         return [
-            'email'    => 'required',
-            'mobile'   => 'required',
+            'email' => 'required',
+            'mobile' => 'required',
         ];
     }
 }

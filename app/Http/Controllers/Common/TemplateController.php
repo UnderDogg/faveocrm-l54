@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
@@ -25,10 +24,8 @@ class TemplateController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('roles');
-
         $template = new Template();
         $this->template = $template;
-
         $type = new TemplateType();
         $this->type = $type;
     }
@@ -59,7 +56,6 @@ class TemplateController extends Controller
     {
         try {
             $templates = Template::where('set_id', '=', $id)->get();
-
             return view('themes.default1.common.template.list-templates', compact('templates'));
         } catch (\Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -76,18 +72,17 @@ class TemplateController extends Controller
     public function GetTemplates(Request $request)
     {
         $id = $request->input('id');
-
         return \Datatable::collection($this->template->where('set_id', '=', $id)->select('id', 'name', 'type')->get())
-                        ->showColumns('name')
-                        ->addColumn('type', function ($model) {
-                            return $this->type->where('id', $model->type)->first()->name;
-                        })
-                        ->addColumn('action', function ($model) {
-                            return '<a href='.url('templates/'.$model->id.'/edit')." class='btn btn-sm btn-primary'>Edit</a>";
-                        })
-                        ->searchColumns('name')
-                        ->orderColumns('name')
-                        ->make();
+            ->showColumns('name')
+            ->addColumn('type', function ($model) {
+                return $this->type->where('id', $model->type)->first()->name;
+            })
+            ->addColumn('action', function ($model) {
+                return '<a href=' . url('templates/' . $model->id . '/edit') . " class='btn btn-sm btn-primary'>Edit</a>";
+            })
+            ->searchColumns('name')
+            ->orderColumns('name')
+            ->make();
     }
 
     /**
@@ -98,7 +93,6 @@ class TemplateController extends Controller
         try {
             $i = $this->template->orderBy('created_at', 'desc')->first()->id + 1;
             $type = $this->type->pluck('name', 'id')->toArray();
-
             return view('themes.default1.common.template.create', compact('type'));
         } catch (\Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -116,7 +110,6 @@ class TemplateController extends Controller
     {
         try {
             $this->template->fill($request->input())->save();
-
             return redirect('templates')->with('success', Lang::get('lang.template_saved_successfully'));
         } catch (\Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -136,7 +129,6 @@ class TemplateController extends Controller
             $i = $this->template->orderBy('created_at', 'desc')->first()->id + 1;
             $template = $this->template->where('id', $id)->first();
             $type = $this->type->pluck('name', 'id')->toArray();
-
             return view('themes.default1.common.template.edit', compact('type', 'template'));
         } catch (\Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -146,7 +138,7 @@ class TemplateController extends Controller
     /**
      * function to update a template.
      *
-     * @param type                                      $id
+     * @param type $id
      * @param \App\Http\Requests\helpdesk\TemplateUdate $request
      *
      * @return type
@@ -157,7 +149,6 @@ class TemplateController extends Controller
             //dd($request);
             $template = $this->template->where('id', $id)->first();
             $template->fill($request->input())->save();
-
             return redirect()->back()->with('success', Lang::get('lang.template_updated_successfully'));
         } catch (\Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -183,9 +174,9 @@ class TemplateController extends Controller
                     } else {
                         echo "<div class='alert alert-danger alert-dismissable'>
                     <i class='fa fa-ban'></i>
-                    <b>".\Lang::get('message.alert').'!</b>
+                    <b>" . \Lang::get('message.alert') . '!</b>
                     <button type=button class=close data-dismiss=alert aria-hidden=true>&times;</button>
-                        '.\Lang::get('message.no-record').'
+                        ' . \Lang::get('message.no-record') . '
                 </div>';
                     }
                 }
@@ -193,22 +184,22 @@ class TemplateController extends Controller
                     <i class='fa fa-ban'></i>
                     <b>
                     <button type=button class=close data-dismiss=alert aria-hidden=true>&times;</button>
-                        ".\Lang::get('message.deleted-successfully').'
+                        " . \Lang::get('message.deleted-successfully') . '
                 </div>';
             } else {
                 echo "<div class='alert alert-danger alert-dismissable'>
                     <i class='fa fa-ban'></i>
-                    <b>".\Lang::get('message.alert').'!</b> 
+                    <b>" . \Lang::get('message.alert') . '!</b> 
                     <button type=button class=close data-dismiss=alert aria-hidden=true>&times;</button>
-                        '.\Lang::get('message.select-a-row').'
+                        ' . \Lang::get('message.select-a-row') . '
                 </div>';
             }
         } catch (\Exception $e) {
             echo "<div class='alert alert-danger alert-dismissable'>
                     <i class='fa fa-ban'></i>
-                    <b>".\Lang::get('message.alert').'!</b>
+                    <b>" . \Lang::get('message.alert') . '!</b>
                     <button type=button class=close data-dismiss=alert aria-hidden=true>&times;</button>
-                        '.$e->getMessage().'
+                        ' . $e->getMessage() . '
                 </div>';
         }
     }
@@ -249,22 +240,18 @@ class TemplateController extends Controller
                                 $currency = $currency->code;
                             }
                             $price = \App\Http\Controllers\Front\CartController::calculateTax($product->id, $product_currency->currency, 1, 0, 1);
-
                             $subscription = $this->plan->where('id', $product_currency->subscription)->first()->name;
                         } else {
                             return redirect('/')->with('fails', \Lang::get('message.no-such-currency-in-system'));
                         }
-
                         $array1 = ['{{title}}', '{{currency}}', '{{price}}', '{{subscription}}', '<li>{{feature}}</li>', '{{url}}'];
                         $array2 = [$title, $currency, $price, $subscription, $description, $url];
                         $template .= str_replace($array1, $array2, $data);
                     }
-
                     //dd($template);
                     return view('themes.default1.common.template.shoppingcart', compact('template'));
                 } else {
                     $template = '<p>No Products</p>';
-
                     return view('themes.default1.common.template.shoppingcart', compact('template'));
                 }
             } else {
@@ -272,7 +259,6 @@ class TemplateController extends Controller
             }
         } catch (\Exception $e) {
             dd($e);
-
             return redirect('/')->with('fails', $e->getMessage());
         }
     }

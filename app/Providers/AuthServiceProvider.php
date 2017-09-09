@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -12,7 +11,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model'                               => 'App\Policies\ModelPolicy',
+        'App\Model' => 'App\Policies\ModelPolicy',
         \App\Model\helpdesk\Ticket\Tickets::class => \App\Policies\TicketPolicy::class,
     ];
 

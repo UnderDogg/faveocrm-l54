@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Agent;
 
 use App\BaseModel;
@@ -16,7 +15,6 @@ class Department extends BaseModel
     public function assignAgent()
     {
         $related = "App\Model\helpdesk\Agent\DepartmentAssignAgents";
-
         return $this->hasMany($related, 'department_id');
     }
 
@@ -34,7 +32,7 @@ class Department extends BaseModel
     {
         \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $this->assignAgent()->delete();
-        $this->ticket()->update(['dept_id'=>null]);
+        $this->ticket()->update(['dept_id' => null]);
         parent::delete();
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

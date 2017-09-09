@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Ticket;
 
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +13,6 @@ class EmailThread extends Model
     {
         $related = 'App\Model\helpdesk\Ticket\Tickets';
         $foreignKey = 'ticket_id';
-
         return $this->belongsTo($related, $foreignKey);
     }
 
@@ -22,7 +20,6 @@ class EmailThread extends Model
     {
         $related = 'App\Model\helpdesk\Ticket\Ticket_Thread';
         $foreignKey = 'thread_id';
-
         return $this->belongsTo($related, $foreignKey);
     }
 }

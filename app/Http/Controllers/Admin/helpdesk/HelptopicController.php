@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // controllers
@@ -50,7 +49,6 @@ class HelptopicController extends Controller
     {
         try {
             $topics = $topic->get();
-
             return view('themes.default1.admin.helpdesk.manage.helptopic.index', compact('topics'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -88,7 +86,6 @@ class HelptopicController extends Controller
             $agents = $agent->where('role', '!=', 'user')->where('active', '=', 1)->orderBy('first_name')->get();
             $slas = $sla->get();
             $priority = Ticket_Priority::where('status', '=', 1)->get();
-
             return view('themes.default1.admin.helpdesk.manage.helptopic.create', compact('priority', 'departments', 'topics', 'forms', 'agents', 'slas'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
@@ -123,14 +120,14 @@ class HelptopicController extends Controller
             return redirect('helptopic')->with('success', Lang::get('lang.helptopic_created_successfully'));
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('helptopic')->with('fails', Lang::get('lang.helptopic_can_not_create').'<li>'.$e->getMessage().'</li>');
+            return redirect('helptopic')->with('fails', Lang::get('lang.helptopic_can_not_create') . '<li>' . $e->getMessage() . '</li>');
         }
     }
 
     /**
      * Show the form for editing the specified helptopic.
      *
-     * @param type            $id
+     * @param type $id
      * @param type Priority   $priority
      * @param type Department $department
      * @param type Help_topic $topic
@@ -150,19 +147,18 @@ class HelptopicController extends Controller
             $slas = $sla->get();
             $priority = Ticket_Priority::where('status', '=', 1)->get();
             $sys_help_topic = \DB::table('settings_ticket')
-                                ->select('help_topic')
-                                ->where('id', '=', 1)->first();
-
+                ->select('help_topic')
+                ->where('id', '=', 1)->first();
             return view('themes.default1.admin.helpdesk.manage.helptopic.edit', compact('priority', 'departments', 'topics', 'forms', 'agents', 'slas', 'sys_help_topic'));
         } catch (Exception $e) {
-            return redirect('helptopic')->with('fails', '<li>'.$e->getMessage().'</li>');
+            return redirect('helptopic')->with('fails', '<li>' . $e->getMessage() . '</li>');
         }
     }
 
     /**
      * Update the specified helptopic in storage.
      *
-     * @param type                 $id
+     * @param type $id
      * @param type Help_topic      $topic
      * @param type HelptopicUpdate $request
      *
@@ -196,7 +192,7 @@ class HelptopicController extends Controller
             return redirect('helptopic')->with('success', Lang::get('lang.helptopic_updated_successfully'));
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('helptopic')->with('fails', Lang::get('lang.helptopic_can_not_update').'<li>'.$e->getMessage().'</li>');
+            return redirect('helptopic')->with('fails', Lang::get('lang.helptopic_can_not_update') . '<li>' . $e->getMessage() . '</li>');
         }
     }
 
@@ -221,31 +217,31 @@ class HelptopicController extends Controller
                 } else {
                     $text_tickets = 'Ticket';
                 }
-                $ticket = '<li>'.$tickets.' '.$text_tickets.Lang::get('lang.have_been_moved_to_default_help_topic').' </li>';
+                $ticket = '<li>' . $tickets . ' ' . $text_tickets . Lang::get('lang.have_been_moved_to_default_help_topic') . ' </li>';
             } else {
                 $ticket = '';
             }
-            $emails = DB::table('emails')->where('help_topic', '=', $id)->update(['help_topic' => $ticket_settings->help_topic]);
-            if ($emails > 0) {
-                if ($emails > 1) {
+            $mailboxes = DB::table('emails')->where('help_topic', '=', $id)->update(['help_topic' => $ticket_settings->help_topic]);
+            if ($mailboxes > 0) {
+                if ($mailboxes > 1) {
                     $text_emails = 'Emails';
                 } else {
                     $text_emails = 'Email';
                 }
-                $email = '<li>'.$emails.' System '.$text_emails.Lang::get('lang.have_been_moved_to_default_help_topic').' </li>';
+                $email = '<li>' . $mailboxes . ' System ' . $text_emails . Lang::get('lang.have_been_moved_to_default_help_topic') . ' </li>';
             } else {
                 $email = '';
             }
-            $message = $ticket.$email;
+            $message = $ticket . $email;
             $topics = $topic->whereId($id)->first();
             /* Check whether function success or not */
             try {
                 $topics->delete();
                 /* redirect to Index page with Success Message */
-                return redirect('helptopic')->with('success', Lang::get('lang.helptopic_deleted_successfully').$message);
+                return redirect('helptopic')->with('success', Lang::get('lang.helptopic_deleted_successfully') . $message);
             } catch (Exception $e) {
                 /* redirect to Index page with Fails Message */
-                return redirect('helptopic')->with('fails', Lang::get('lang.helptopic_can_not_update').'<li>'.$e->getMessage().'</li>');
+                return redirect('helptopic')->with('fails', Lang::get('lang.helptopic_can_not_update') . '<li>' . $e->getMessage() . '</li>');
             }
         }
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Settings;
 
 use App\BaseModel;
@@ -7,7 +6,6 @@ use App\BaseModel;
 class Alert extends BaseModel
 {
     /* Using alert_notice table  */
-
     protected $table = 'settings_alert_notice';
     /* Set fillable fields in table */
     protected $fillable = ['key', 'value'];
@@ -19,7 +17,6 @@ class Alert extends BaseModel
         if ($row) {
             $value = $row->value;
         }
-
         return $value;
     }
 
@@ -31,7 +28,6 @@ class Alert extends BaseModel
         if ($row) {
             $check = true;
         }
-
         return $check;
     }
 }

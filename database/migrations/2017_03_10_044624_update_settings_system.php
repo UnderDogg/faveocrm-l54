@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -35,7 +34,6 @@ class UpdateSettingsSystem extends Migration
             $table->string('version');
             $table->timestamps();
         });
-
         App\Model\helpdesk\Settings\System::create(['id' => '1', 'status' => '1', 'department' => '1', 'date_time_format' => 'Y-d-m H:m:i', 'time_zone' => 'UTC']);
     }
 

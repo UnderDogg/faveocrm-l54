@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Exceptions;
 
 // controller
@@ -8,6 +7,7 @@ use Bugsnag;
 use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
+
 // use Symfony\Component\HttpKernel\Exception\HttpException;
 // use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -23,7 +23,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-//        'Symfony\Component\HttpKernel\Exception\HttpException',
+        //        'Symfony\Component\HttpKernel\Exception\HttpException',
         \Illuminate\Http\Exception\HttpResponseException::class,
         ValidationException::class,
         AuthorizationException::class,
@@ -55,14 +55,13 @@ class Handler extends ExceptionHandler
             $version = \Config::get('app.version');
             Bugsnag::setAppVersion($version);
         }
-
         return parent::report($e);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
-     * @param type      $request
+     * @param type $request
      * @param Exception $e
      *
      * @return type mixed
@@ -102,8 +101,7 @@ class Handler extends ExceptionHandler
         } elseif ($e instanceof \Illuminate\Validation\ValidationException) {
             return parent::render($request, $e);
         }
-
-        return  response()->view('errors.500');
+        return response()->view('errors.500');
         //return redirect()->route('error500', []);
     }
 
@@ -125,10 +123,8 @@ class Handler extends ExceptionHandler
             if ($e->getStatusCode() == '404') {
                 return redirect()->route('error404', []);
             }
-
             return parent::render($request, $e);
         }
-
         return redirect()->route('error404', []);
     }
 
@@ -149,7 +145,6 @@ class Handler extends ExceptionHandler
         if (config('app.debug') == true) {
             return parent::render($request, $e);
         }
-
         return redirect()->route('error404', []);
     }
 
@@ -174,22 +169,20 @@ class Handler extends ExceptionHandler
                 } else {
                     return $this->render500($request, $e);
                 }
-//            case $e instanceof ErrorException:
-//                if($e->getMessage() == 'Breadcrumb not found with name "" ') {
-//                    return $this->render404($request, $e);
-//                } else {
-//                    return parent::render($request, $e);
-//                }
+            //            case $e instanceof ErrorException:
+            //                if($e->getMessage() == 'Breadcrumb not found with name "" ') {
+            //                    return $this->render404($request, $e);
+            //                } else {
+            //                    return parent::render($request, $e);
+            //                }
             case $e instanceof TokenMismatchException:
                 if ($request->ajax()) {
-                    return response()->json(['message'=>\Lang::get('lang.session-expired')], 402);
+                    return response()->json(['message' => \Lang::get('lang.session-expired')], 402);
                 }
-
                 return redirect()->back()->with('fails', \Lang::get('lang.session-expired'));
             default:
                 return $this->render500($request, $e);
         }
-
         return parent::render($request, $e);
     }
 }

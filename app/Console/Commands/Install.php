@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Console\Commands;
 
 use App\Http\Controllers\Installer\helpdesk\InstallController;
@@ -44,8 +43,8 @@ class Install extends Command
             $this->appEnv();
             if ($this->confirm('Do you want to intall faveo?')) {
                 $default = $this->choice(
-                            'Which sql engine would you like to use?', ['mysql']
-                    );
+                    'Which sql engine would you like to use?', ['mysql']
+                );
                 $host = $this->ask('Enter your sql host');
                 $database = $this->ask('Enter your database name');
                 $dbusername = $this->ask('Enter your database username');
@@ -79,13 +78,13 @@ class Install extends Command
             'mysqli',
             'bcmath',
             'iconv',
-                //'ioncube_loader_dar_5.6',
+            //'ioncube_loader_dar_5.6',
         ];
         $result = [];
         foreach ($extensions as $key => $extension) {
             $result[$key]['extension'] = $extension;
             if (!extension_loaded($extension)) {
-                $result[$key]['status'] = "Not Loading, Please open '".php_ini_loaded_file()."' and add 'extension = ".$extension;
+                $result[$key]['status'] = "Not Loading, Please open '" . php_ini_loaded_file() . "' and add 'extension = " . $extension;
             } else {
                 $result[$key]['status'] = 'Loading';
             }
@@ -96,7 +95,6 @@ class Install extends Command
         } else {
             $result['php']['status'] = "PHP version doesn't supports please upgrade to 5.6+";
         }
-
         $headers = ['Extension', 'Status'];
         $this->table($headers, $result);
     }

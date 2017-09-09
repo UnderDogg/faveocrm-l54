@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Common\PhpMailController;
@@ -29,7 +28,6 @@ class TokenAuthController extends Controller
     public function __construct()
     {
         $this->middleware('api');
-
         $PhpMailController = new PhpMailController();
         $this->PhpMailController = $PhpMailController;
     }
@@ -46,21 +44,17 @@ class TokenAuthController extends Controller
         $usernameinput = $request->input('username');
         $password = $request->input('password');
         $field = filter_var($usernameinput, FILTER_VALIDATE_EMAIL) ? 'email' : 'user_name';
-
         //$credentials = $request->only('email', 'password');
-
         try {
-            if (!$token = JWTAuth::attempt([$field => $usernameinput, 'password' => $password, 'active'=>1])) {
+            if (!$token = JWTAuth::attempt([$field => $usernameinput, 'password' => $password, 'active' => 1])) {
                 return response()->json(['error' => 'invalid_credentials', 'status_code' => 401]);
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token', 500]);
         } catch (\Exception $e) {
             $error = $e->getMessage();
-
             return response()->json(compact('error'));
         }
-
         $user_id = \Auth::user()->id;
         // if no errors are encountered we can return a JWT
         return response()->json(compact('token', 'user_id'));
@@ -85,7 +79,6 @@ class TokenAuthController extends Controller
             return response()->json(['token_absent', $e->getStatusCode()]);
         } catch (\Exception $e) {
             $error = $e->getMessage();
-
             return response()->json(compact('error'));
         }
         //dd($user);
@@ -99,31 +92,30 @@ class TokenAuthController extends Controller
      *
      * @return type json
      */
-//    public function register(Request $request)
-//    {
-//        try {
-//            $v = \Validator::make($request->all(), [
-//                        'email'    => 'required|email|unique:users',
-//                        'password' => 'required',
-//            ]);
-//            if ($v->fails()) {
-//                $error = $v->errors();
-//
-//                return response()->json(compact('error'));
-//            }
-//            $newuser = $request->all();
-//            $password = Hash::make($request->input('password'));
-//
-//            $newuser['password'] = $password;
-//
-//            return User::create($newuser);
-//        } catch (\Exception $e) {
-//            $error = $e->getMessage();
-//
-//            return response()->json(compact('error'));
-//        }
-//    }
-
+    //    public function register(Request $request)
+    //    {
+    //        try {
+    //            $v = \Validator::make($request->all(), [
+    //                        'email'    => 'required|email|unique:users',
+    //                        'password' => 'required',
+    //            ]);
+    //            if ($v->fails()) {
+    //                $error = $v->errors();
+    //
+    //                return response()->json(compact('error'));
+    //            }
+    //            $newuser = $request->all();
+    //            $password = Hash::make($request->input('password'));
+    //
+    //            $newuser['password'] = $password;
+    //
+    //            return User::create($newuser);
+    //        } catch (\Exception $e) {
+    //            $error = $e->getMessage();
+    //
+    //            return response()->json(compact('error'));
+    //        }
+    //    }
     /**
      * verify the url is existing or not.
      *
@@ -133,19 +125,16 @@ class TokenAuthController extends Controller
     {
         try {
             $v = \Validator::make($request->all(), [
-                        'url' => 'required|url',
+                'url' => 'required|url',
             ]);
             if ($v->fails()) {
                 $error = $v->errors();
-
                 return response()->json(compact('error'));
             }
-
             $url = $this->request->input('url');
-            $url = $url.'/api/v1/helpdesk/check-url';
+            $url = $url . '/api/v1/helpdesk/check-url';
         } catch (Exception $ex) {
             $error = $e->getMessage();
-
             return response()->json(compact('error'));
         }
     }
@@ -154,14 +143,12 @@ class TokenAuthController extends Controller
     {
         try {
             $v = \Validator::make($request->all(), [
-                        'email' => 'required|email|exists:users,email',
+                'email' => 'required|email|exists:users,email',
             ]);
             if ($v->fails()) {
                 $error = $v->errors();
-
                 return response()->json(compact('error'));
             }
-
             $date = date('Y-m-d H:i:s');
             $user = User::where('email', '=', $request->only('email'))->first();
             if (isset($user)) {
@@ -172,19 +159,16 @@ class TokenAuthController extends Controller
                 if (isset($password_reset_table)) {
                     $password_reset_table = \DB::table('password_resets')->where('email', '=', $user->email)->update(['token' => $code, 'created_at' => $date]);
                     // $password_reset_table->token = $code;
-                // $password_reset_table->update(['token' => $code]);
+                    // $password_reset_table->update(['token' => $code]);
                 } else {
                     $create_password_reset = \DB::table('password_resets')->insert(['email' => $user->email, 'token' => $code, 'created_at' => $date]);
                 }
-
-                $this->PhpMailController->sendmail($from = $this->PhpMailController->mailfrom('1', '0'), $to = ['name' => $user->user_name, 'email' => $user->email], $message = ['subject' => 'Your Password Reset Link', 'scenario' => 'reset-password'], $template_variables = ['user' => $user->user_name, 'email_address' => $user->email, 'password_reset_link' => url('password/reset/'.$code)]);
+                $this->PhpMailController->sendmail($from = $this->PhpMailController->mailfrom('1', '0'), $to = ['name' => $user->user_name, 'email' => $user->email], $message = ['subject' => 'Your Password Reset Link', 'scenario' => 'reset-password'], $template_variables = ['user' => $user->user_name, 'email_address' => $user->email, 'password_reset_link' => url('password/reset/' . $code)]);
                 $result = 'We have e-mailed your password reset link!';
-
                 return response()->json(compact('result'));
             }
         } catch (Exception $ex) {
             $error = $e->getMessage();
-
             return response()->json(compact('error'));
         }
     }

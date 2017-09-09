@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\Api;
 
 use App\BaseModel;

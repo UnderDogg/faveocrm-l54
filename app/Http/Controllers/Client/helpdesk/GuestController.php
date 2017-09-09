@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Client\helpdesk;
 
 // controllers
@@ -64,16 +63,15 @@ class GuestController extends Controller
         $phonecode = $code->where('iso', '=', $location->iso_code)->first();
         $settings = CommonSettings::select('status')->where('option_name', '=', 'send_otp')->first();
         $status = $settings->status;
-
         return view('themes.default1.client.helpdesk.profile', compact('user'))
-                        ->with(['phonecode' => $phonecode->phonecode,
-                            'verify'        => $status, ]);
+            ->with(['phonecode' => $phonecode->phonecode,
+                'verify' => $status,]);
     }
 
     /**
      * Save profile data.
      *
-     * @param type                $id
+     * @param type $id
      * @param type ProfileRequest $request
      *
      * @return type Response
@@ -101,7 +99,7 @@ class GuestController extends Controller
                 // fetching upload destination path
                 $destinationPath = 'uploads/profilepic';
                 // adding a random value to profile picture filename
-                $fileName = rand(0000, 9999).'.'.str_replace(' ', '_', $name);
+                $fileName = rand(0000, 9999) . '.' . str_replace(' ', '_', $name);
                 // moving the picture to a destination folder
                 Input::file('profile_pic')->move($destinationPath, $fileName);
                 // saving filename to database
@@ -123,11 +121,11 @@ class GuestController extends Controller
     }
 
     /**
-     *@category fucntion to check if mobile number is unqique or not
+     * @category fucntion to check if mobile number is unqique or not
      *
-     *@param string $mobile
+     * @param string $mobile
      *
-     *@return bool true(if mobile exists in users table)/false (if mobile does not exist in user table)
+     * @return bool true(if mobile exists in users table)/false (if mobile does not exist in user table)
      */
     public function checkMobile($mobile)
     {
@@ -139,7 +137,6 @@ class GuestController extends Controller
                 return true;
             }
         }
-
         return false;
     }
 
@@ -153,7 +150,6 @@ class GuestController extends Controller
     public function getTicket(Help_topic $topic)
     {
         $topics = $topic->get();
-
         return view('themes.default1.client.helpdesk.tickets.form', compact('topics'));
     }
 
@@ -171,7 +167,6 @@ class GuestController extends Controller
         }
         if (System::first()->status == 1) {
             $topics = $topic->get();
-
             return view('themes.default1.client.helpdesk.form', compact('topics'));
         } else {
             return \Redirect::route('home');
@@ -226,7 +221,7 @@ class GuestController extends Controller
     /**
      * Post porfile password.
      *
-     * @param type                 $id
+     * @param type $id
      * @param type ProfilePassword $request
      *
      * @return type Response
@@ -237,10 +232,8 @@ class GuestController extends Controller
         //echo $user->password;
         if (Hash::check($request->input('old_password'), $user->getAuthPassword())) {
             $user->password = Hash::make($request->input('new_password'));
-
             try {
                 $user->save();
-
                 return redirect()->back()->with('success2', Lang::get('lang.password_updated_sucessfully'));
             } catch (Exception $e) {
                 return redirect()->back()->with('fails2', $e->getMessage());
@@ -269,8 +262,7 @@ class GuestController extends Controller
         $ticket_id = $request->input('ticket_ID');
         $tickets = Tickets::where('id', '=', $ticket_id)->first();
         $thread = Ticket_Thread::where('ticket_id', '=', $ticket_id)->first();
-
-        return Redirect('thread/'.$ticket_id);
+        return Redirect('thread/' . $ticket_id);
     }
 
     /**
@@ -299,14 +291,14 @@ class GuestController extends Controller
     public function PostCheckTicket(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-                    'email'         => 'required|email',
-                    'ticket_number' => 'required',
+            'email' => 'required|email',
+            'ticket_number' => 'required',
         ]);
         if ($validator->fails()) {
             return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput()
-                            ->with('check', '1');
+                ->withErrors($validator)
+                ->withInput()
+                ->with('check', '1');
         }
         $Email = $request->input('email');
         $Ticket_number = $request->input('ticket_number');
@@ -319,22 +311,19 @@ class GuestController extends Controller
             if ($user->role == 'user') {
                 $username = $user->first_name;
             } else {
-                $username = $user->first_name.' '.$user->last_name;
+                $username = $user->first_name . ' ' . $user->last_name;
             }
             if ($user->email != $Email) {
                 return \Redirect::route('form')->with('fails', Lang::get("lang.email_didn't_match_with_ticket_number"));
             } else {
                 $code = $ticket->id;
                 $code = \Crypt::encrypt($code);
-
                 $company = $this->company();
-
                 $this->PhpMailController->sendmail(
-                        $from = $this->PhpMailController->mailfrom('1', '0'), $to = ['name' => $username, 'email' => $user->email], $message = ['subject' => 'Ticket link Request ['.$Ticket_number.']', 'scenario' => 'check-ticket'], $template_variables = ['user' => $username, 'ticket_link_with_number' => \URL::route('check_ticket', $code)]
+                    $from = $this->PhpMailController->mailfrom('1', '0'), $to = ['name' => $username, 'email' => $user->email], $message = ['subject' => 'Ticket link Request [' . $Ticket_number . ']', 'scenario' => 'check-ticket'], $template_variables = ['user' => $username, 'ticket_link_with_number' => \URL::route('check_ticket', $code)]
                 );
-
                 return \Redirect::back()
-                                ->with('success', Lang::get('lang.we_have_sent_you_a_link_by_email_please_click_on_that_link_to_view_ticket'));
+                    ->with('success', Lang::get('lang.we_have_sent_you_a_link_by_email_please_click_on_that_link_to_view_ticket'));
             }
         }
     }
@@ -349,9 +338,8 @@ class GuestController extends Controller
     public function get_ticket_email($id, CommonSettings $common_settings)
     {
         $common_setting = $common_settings->select('status')
-                ->where('option_name', '=', 'user_set_ticket_status')
-                ->first();
-
+            ->where('option_name', '=', 'user_set_ticket_status')
+            ->first();
         return view('themes.default1.client.helpdesk.ckeckticket', compact('id', 'common_setting'));
     }
 
@@ -380,7 +368,6 @@ class GuestController extends Controller
         } else {
             $company = $company->company_name;
         }
-
         return $company;
     }
 
@@ -390,7 +377,6 @@ class GuestController extends Controller
             $sms = DB::table('sms')->get();
             if (count($sms) > 0) {
                 \Event::fire(new \App\Events\LoginEvent($request));
-
                 return 1;
             }
         } else {
@@ -403,7 +389,7 @@ class GuestController extends Controller
         // dd(Input::all());
         // $user = User::select('id', 'mobile', 'user_name')->where('email', '=', $request->input('email'))->first();
         $otp = Otp::select('otp', 'updated_at')->where('user_id', '=', Input::get('u_id'))
-                                ->first();
+            ->first();
         if ($otp != null) {
             $otp_length = strlen(Input::get('otp'));
             if (($otp_length == 6 && !preg_match('/[a-z]/i', Input::get('otp')))) {
@@ -415,7 +401,6 @@ class GuestController extends Controller
                 $interval = $time1->diff($time2);
                 if ($interval->i > 10 || $interval->h > 0) {
                     $message = Lang::get('lang.otp-expired');
-
                     return $message;
                 } else {
                     if (Hash::check(Input::get('otp'), $otp->otp)) {
@@ -427,18 +412,15 @@ class GuestController extends Controller
                         return 1;
                     } else {
                         $message = Lang::get('lang.otp-not-matched');
-
                         return $message;
                     }
                 }
             } else {
                 $message = Lang::get('lang.otp-invalid');
-
                 return $message;
             }
         } else {
             $message = Lang::get('lang.otp-not-matched');
-
             return $message;
         }
     }
@@ -456,11 +438,9 @@ class GuestController extends Controller
             $user['email'] = $users->email;
             $user['username'] = $users->nickname;
             $user['avatar'] = $users->avatar;
-
             return redirect('client-profile')->with('success', 'Additional informations fetched');
         } catch (Exception $ex) {
             dd($ex);
-
             return redirect('client-profile')->with('fails', $ex->getMessage());
         }
     }
@@ -468,14 +448,13 @@ class GuestController extends Controller
     public function getProvider()
     {
         $provider = \Session::get('provider');
-
         return $provider;
     }
 
     public function changeRedirect()
     {
         $provider = \Session::get('provider');
-        $url = \Session::get($provider.'redirect');
+        $url = \Session::get($provider . 'redirect');
         \Config::set("services.$provider.redirect", $url);
     }
 
@@ -483,7 +462,7 @@ class GuestController extends Controller
     {
         $provider = $this->getProvider();
         \Session::forget('provider');
-        \Session::forget($provider.'redirect');
+        \Session::forget($provider . 'redirect');
     }
 
     public function checkArray($key, $array)
@@ -492,7 +471,6 @@ class GuestController extends Controller
         if (array_key_exists($key, $array)) {
             $value = $array[$key];
         }
-
         return $value;
     }
 
@@ -502,7 +480,7 @@ class GuestController extends Controller
         $useremail = \Auth::user()->email;
         $email = $this->checkArray('email', $user); //$user['email'];
         if ($email !== '' && $email !== $useremail) {
-            throw new Exception('Sorry! your current email and '.ucfirst($user['provider']).' email is different so system can not sync');
+            throw new Exception('Sorry! your current email and ' . ucfirst($user['provider']) . ' email is different so system can not sync');
         }
         $this->update($userid, $user);
     }
@@ -534,10 +512,10 @@ class GuestController extends Controller
         if (count($user) > 0) {
             foreach ($user as $key => $value) {
                 $info->create([
-                    'owner'   => $id,
+                    'owner' => $id,
                     'service' => $provider,
-                    'key'     => $key,
-                    'value'   => $value,
+                    'key' => $key,
+                    'value' => $value,
                 ]);
             }
         }

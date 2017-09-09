@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -30,7 +29,7 @@ class SystemRequest extends Request
     {
         return [
             'name' => 'max:50',
-            'url'  => 'url',
+            'url' => 'url',
         ];
     }
 }

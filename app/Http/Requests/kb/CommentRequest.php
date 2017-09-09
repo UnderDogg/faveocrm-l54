@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\kb;
 
 use App\Http\Requests\Request;
@@ -24,8 +23,8 @@ class CommentRequest extends Request
     public function rules()
     {
         return [
-            'name'    => 'required|max:50',
-            'email'   => 'required|email',
+            'name' => 'required|max:50',
+            'email' => 'required|email',
             'website' => 'url',
             'comment' => 'required|max:500',
         ];

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // Controller
@@ -39,7 +38,6 @@ class SecurityController extends Controller
     {
         try {
             $security = $securitys->whereId('1')->first();
-
             return view('themes.default1.admin.helpdesk.settings.security.index', compact('security'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -63,11 +61,10 @@ class SecurityController extends Controller
      *
      * @return Response
      */
-//    public function show($id)
-//    {
-//        return view('themes.default1.admin.helpdesk.setting.security.preview', compact('id'));
-//    }
-
+    //    public function show($id)
+    //    {
+    //        return view('themes.default1.admin.helpdesk.setting.security.preview', compact('id'));
+    //    }
     /**
      * Update security details.
      *
@@ -84,7 +81,6 @@ class SecurityController extends Controller
             $securitys->lockout_period = $request->input('lockout_period');
             $securitys->days_to_keep_logs = $request->input('days_to_keep_logs');
             $securitys->save();
-
             return Redirect::back()->with('success', Lang::get('lang.security_settings_saved_successfully'));
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -94,9 +90,9 @@ class SecurityController extends Controller
     /**
      * Delete security details.
      *
-     * @param type                                            $id
-     * @param \App\Model\helpdesk\Settings\Security           $securitys
-     * @param type                                            $field
+     * @param type $id
+     * @param \App\Model\helpdesk\Settings\Security $securitys
+     * @param type $field
      * @param \App\Http\Controllers\Admin\helpdesk\Help_topic $help_topic
      *
      * @return type redirect
@@ -114,7 +110,6 @@ class SecurityController extends Controller
         }
         $securitys = $securitys->where('id', $id)->first();
         $securitys->delete();
-
         return redirect()->back()->with('success', 'Deleted Successfully');
     }
 }

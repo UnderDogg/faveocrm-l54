@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -29,9 +28,8 @@ class OrganizationUpdate extends Request
     public function rules()
     {
         return [
-
             'website' => 'url',
-                // 'phone' => 'size:10',
+            // 'phone' => 'size:10',
         ];
     }
 }

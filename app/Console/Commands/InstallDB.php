@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Console\Commands;
 
 use App\Http\Controllers\Installer\helpdesk\InstallController;
@@ -42,7 +41,7 @@ class InstallDB extends Command
     {
         try {
             if ($this->confirm('Do you want to migrate tables now?')) {
-                $env = base_path().DIRECTORY_SEPARATOR.'.env';
+                $env = base_path() . DIRECTORY_SEPARATOR . '.env';
                 if (!is_file($env)) {
                     throw new \Exception("Please run 'php artisan install:faveo'");
                 }
@@ -53,8 +52,8 @@ class InstallDB extends Command
                 $data = [
                     [
                         'user_name' => 'demo_admin',
-                        'email'     => '',
-                        'password'  => 'password',
+                        'email' => '',
+                        'password' => 'password',
                     ],
                 ];
                 $this->table($headers, $data);
@@ -74,8 +73,8 @@ class InstallDB extends Command
             $url = rtrim($url, '/ ');
         }
         $systems = new \App\Model\helpdesk\Settings\System();
-        $system = $systems->updateOrCreate(['id'=>1], [
-            'url'=> $url,
+        $system = $systems->updateOrCreate(['id' => 1], [
+            'url' => $url,
         ]);
         $this->info('Thank you! Faveo has been installed successfully');
     }

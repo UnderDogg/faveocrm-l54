@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\helpdesk;
 
 use App\Http\Requests\Request;
@@ -24,7 +23,7 @@ class ArticleRequest extends Request
     public function rules()
     {
         return [
-            'name'        => 'required',
+            'name' => 'required',
             'description' => 'required',
         ];
     }

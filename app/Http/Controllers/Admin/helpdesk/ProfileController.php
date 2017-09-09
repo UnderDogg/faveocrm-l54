@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // controllers
@@ -99,13 +98,12 @@ class ProfileController extends Controller
             //$extension = Input::file('profile_pic')->getClientOriginalExtension();
             $name = Input::file('profile_pic')->getClientOriginalName();
             $destinationPath = 'lb-faveo/profilepic';
-            $fileName = rand(0000, 9999).'.'.$name;
+            $fileName = rand(0000, 9999) . '.' . $name;
             //echo $fileName;
             Input::file('profile_pic')->move($destinationPath, $fileName);
             $user->profile_pic = $fileName;
         } else {
             $user->fill($request->except('profile_pic', 'gender'))->save();
-
             return redirect('guest')->with('success', 'Profile Updated sucessfully');
         }
         if ($user->fill($request->except('profile_pic'))->save()) {
@@ -129,7 +127,6 @@ class ProfileController extends Controller
         if (Hash::check($request->input('old_password'), $user->getAuthPassword())) {
             $user->password = Hash::make($request->input('new_password'));
             $user->save();
-
             return redirect('guest')->with('success', 'Password Updated sucessfully');
         } else {
             return redirect('guest')->with('fails', 'Password was not Updated');

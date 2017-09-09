@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // Controller
@@ -103,10 +102,8 @@ class FormController extends Controller
             //dd($form);
             if ($form) {
                 $fields = $form->fields();
-
                 return view('themes.default1.admin.helpdesk.manage.form.preview', compact('form', 'fields'));
             }
-
             throw new Exception("Sorry we can't find your request");
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -126,7 +123,6 @@ class FormController extends Controller
             $json = $collection->toJson();
             \DB::table('forms')->truncate();
             \DB::table('forms')->insert(['form' => 'ticket', 'json' => $json]);
-
             return response()->json('success');
         } catch (\Exception $ex) {
             return response()->json($ex->getMessage(), 500);
@@ -136,10 +132,10 @@ class FormController extends Controller
     /**
      * Delete Form.
      *
-     * @param type                           $id
+     * @param type $id
      * @param \App\Model\helpdesk\Form\Forms $forms
-     * @param type                           $field
-     * @param type                           $help_topic
+     * @param type $field
+     * @param type $help_topic
      *
      * @return type redirect
      */
@@ -156,7 +152,6 @@ class FormController extends Controller
         }
         $forms = $forms->where('id', $id)->first();
         $forms->delete();
-
         return redirect()->back()->with('success', Lang::get('lang.form_deleted_successfully'));
     }
 
@@ -172,7 +167,6 @@ class FormController extends Controller
                 //dd($fields);
                 return view('themes.default1.admin.helpdesk.manage.form.edit', compact('form', 'fields', 'select_forms'));
             }
-
             throw new Exception("Sorry we can't find your request");
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -191,7 +185,6 @@ class FormController extends Controller
                 //dd($fields);
                 return view('themes.default1.admin.helpdesk.manage.form.add-child', compact('form', 'fields', 'select_forms'));
             }
-
             throw new Exception("Sorry we can't find your request");
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -201,12 +194,11 @@ class FormController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, [
-            'formname' => 'required|unique:custom_forms,formname,'.$id,
-            'label.*'  => 'required',
-            'name.*'   => 'required',
-            'type.*'   => 'required',
+            'formname' => 'required|unique:custom_forms,formname,' . $id,
+            'label.*' => 'required',
+            'name.*' => 'required',
+            'type.*' => 'required',
         ]);
-
         try {
             if (!$request->input('formname')) {
                 throw new Exception(Lang::get('lang.please_fill_form_name'));
@@ -231,19 +223,17 @@ class FormController extends Controller
                 $name = str_slug(Input::get('name')[$i], '_');
                 $field = $field->create([
                     'forms_id' => $forms->id,
-                    'label'    => Input::get('label')[$i],
-                    'name'     => $name,
-                    'type'     => Input::get('type')[$i],
+                    'label' => Input::get('label')[$i],
+                    'name' => $name,
+                    'type' => Input::get('type')[$i],
                     'required' => Input::get('required')[$i],
                 ]);
                 $field_id = $field->id;
                 $this->createValues($field_id, Input::get('value')[$i], null, $name);
             }
-
             return redirect()->back()->with('success', 'updated');
         } catch (Exception $ex) {
             dd($ex);
-
             return redirect()->back()->with('fails', $ex->getMessage());
         }
     }
@@ -259,8 +249,7 @@ class FormController extends Controller
                 $html .= self::getForm($field);
             }
         }
-
-        return self::requiredStyle().$html;
+        return self::requiredStyle() . $html;
     }
 
     public static function getType($type)
@@ -322,21 +311,19 @@ class FormController extends Controller
             case 'select':
                 return self::selectForm($field_type, $field, $required, $required_class);
             case 'text':
-                return Form::label($field->label, $field->label, ['class' => $required_class]).
-                        Form::$field_type($field->name, null, ['class' => "form-control $field->id", 'id' => $field->id, 'required' => $required]);
+                return Form::label($field->label, $field->label, ['class' => $required_class]) .
+                Form::$field_type($field->name, null, ['class' => "form-control $field->id", 'id' => $field->id, 'required' => $required]);
             case 'email':
-                return Form::label($field->label, $field->label, ['class' => $required_class]).
-                        Form::$field_type($field->name, null, ['class' => "form-control $field->id", 'id' => $field->id, 'required' => $required]);
+                return Form::label($field->label, $field->label, ['class' => $required_class]) .
+                Form::$field_type($field->name, null, ['class' => "form-control $field->id", 'id' => $field->id, 'required' => $required]);
             case 'password':
-                return Form::label($field->label, $field->label, ['class' => $required_class]).
-                        Form::$field_type($field->name, ['class' => "form-control $field->id", 'id' => $field->id, 'required' => $required]);
-
+                return Form::label($field->label, $field->label, ['class' => $required_class]) .
+                Form::$field_type($field->name, ['class' => "form-control $field->id", 'id' => $field->id, 'required' => $required]);
             case 'textarea':
-                return Form::label($field->label, $field->label, ['class' => $required_class]).
-                        Form::$field_type($field->name, null, ['class' => "form-control $field->id", 'id' => $field->id, 'required' => $required]);
+                return Form::label($field->label, $field->label, ['class' => $required_class]) .
+                Form::$field_type($field->name, null, ['class' => "form-control $field->id", 'id' => $field->id, 'required' => $required]);
             case 'radio':
                 return self::radioForm($field_type, $field, $required, $required_class);
-
             case 'checkbox':
                 return self::checkboxForm($field_type, $field, $required, $required_class);
             case 'hidden':
@@ -358,9 +345,9 @@ class FormController extends Controller
             if (count($values_array) > 0) {
                 foreach ($values_array as $value) {
                     $field_values->create([
-                        'field_id'    => $fieldid,
-                        'child_id'    => $childid,
-                        'field_key'   => $key,
+                        'field_id' => $fieldid,
+                        'child_id' => $childid,
+                        'field_key' => $key,
                         'field_value' => str_slug($value, '_'),
                     ]);
                 }
@@ -371,7 +358,6 @@ class FormController extends Controller
     public function addChild($fieldid, Request $request)
     {
         $ids = $request->except('_token');
-
         try {
             foreach ($ids as $valueid => $formid) {
                 $field_value = new \App\Model\helpdesk\Form\FieldValue();
@@ -384,7 +370,6 @@ class FormController extends Controller
                     //}
                 }
             }
-
             return redirect()->back()->with('success', 'Updated');
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
@@ -406,7 +391,6 @@ class FormController extends Controller
         if ($child !== '') {
             $render = $this->renderForm($child);
         }
-
         return $render;
     }
 
@@ -418,23 +402,22 @@ class FormController extends Controller
         if ($type == 'checkbox') {
             return self::jqueryCheckboxScript($fieldid, $index);
         }
-
         return '<script>
-            $("#'.str_slug($value).'").on("change", function () {
-                var valueid = $("#'.str_slug($value).'").val();
-                var fieldid = $("#'.$fieldid.str_slug($value).'").val();
-                send'.$fieldid.str_slug($value).'(valueid,fieldid);
+            $("#' . str_slug($value) . '").on("change", function () {
+                var valueid = $("#' . str_slug($value) . '").val();
+                var fieldid = $("#' . $fieldid . str_slug($value) . '").val();
+                send' . $fieldid . str_slug($value) . '(valueid,fieldid);
             });
-            function send'.$fieldid.str_slug($value).'(valueid,fieldid) {
+            function send' . $fieldid . str_slug($value) . '(valueid,fieldid) {
                 $.ajax({
-                    url: "'.url('forms/render/child/').'",
+                    url: "' . url('forms/render/child/') . '",
                     dataType: "html",
                     data: {"valueid": valueid,"fieldid": fieldid},
                     success: function (response) {
-                        $("#'.$fieldname.'").html(response);
+                        $("#' . $fieldname . '").html(response);
                     },
                     error: function (response) {
-                        $("#'.$fieldname.'").html(response);
+                        $("#' . $fieldname . '").html(response);
                     }
                 });
             }
@@ -448,27 +431,27 @@ class FormController extends Controller
         $field = $fields->find($fieldid);
         if ($field) {
             return '<script>
-            $("#'.$session.$index.'").on("change", function () {
-                var valueid = $("#'.$session.$index.'").val();
-                var fieldid = $("#f'.$session.$index.'").val();
+            $("#' . $session . $index . '").on("change", function () {
+                var valueid = $("#' . $session . $index . '").val();
+                var fieldid = $("#f' . $session . $index . '").val();
                 if($(this).is(":checked")) {
-                    send'.$session.$index.'(valueid,fieldid);
+                    send' . $session . $index . '(valueid,fieldid);
                 }else{
-                    $("#div'.$session.'"+valueid).empty();
+                    $("#div' . $session . '"+valueid).empty();
                 }
             });
-            function send'.$session.$index.'(valueid,fieldid) {
+            function send' . $session . $index . '(valueid,fieldid) {
                 $.ajax({
-                    url: "'.url('forms/render/child/').'",
+                    url: "' . url('forms/render/child/') . '",
                     dataType: "html",
                     data: {"valueid": valueid,"fieldid": fieldid},
                     success: function (response) {
                         
-                        $("#div'.$session.'"+valueid).html(response);
+                        $("#div' . $session . '"+valueid).html(response);
                         
                     },
                     error: function (response) {
-                        $("#div'.$session.'"+valueid).html(response);
+                        $("#div' . $session . '"+valueid).html(response);
                     }
                 });
             }
@@ -484,24 +467,24 @@ class FormController extends Controller
         if ($field) {
             return '<script>
     $(document).ready(function () {
-        var valueid = $(".'.$session.$fieldid.'").val();
-       var fieldid = $("#hidden'.$session.$fieldid.'").val();
-                send'.$session.$fieldid.'(valueid,fieldid);
-        $(".'.$session.$fieldid.'").on("change", function () {
-            valueid = $(".'.$session.$fieldid.'").val();
-            var fieldid = $("#hidden'.$session.$fieldid.'").val();
-                send'.$session.$fieldid.'(valueid,fieldid);
+        var valueid = $(".' . $session . $fieldid . '").val();
+       var fieldid = $("#hidden' . $session . $fieldid . '").val();
+                send' . $session . $fieldid . '(valueid,fieldid);
+        $(".' . $session . $fieldid . '").on("change", function () {
+            valueid = $(".' . $session . $fieldid . '").val();
+            var fieldid = $("#hidden' . $session . $fieldid . '").val();
+                send' . $session . $fieldid . '(valueid,fieldid);
         });
-        function send'.$session.$fieldid.'(valueid,fieldid) {
+        function send' . $session . $fieldid . '(valueid,fieldid) {
             $.ajax({
-                url: "'.url('forms/render/child/').'",
+                url: "' . url('forms/render/child/') . '",
                 dataType: "html",
                  data: {"valueid": valueid,"fieldid": fieldid},
                 success: function (response) {
-                    $("#'.$session.$field->name.'").html(response);
+                    $("#' . $session . $field->name . '").html(response);
                 },
                 error: function (response) {
-                    $("#'.$session.$field->name.'").html(response);
+                    $("#' . $session . $field->name . '").html(response);
                 }
             });
         }
@@ -515,12 +498,11 @@ class FormController extends Controller
     {
         $session = self::getSession();
         $script = self::jqueryScript($field_value = '', $field->id, $field->name, $field_type);
-        $form_hidden = Form::hidden('fieldid[]', $field->id, ['id' => 'hidden'.$session.$field->id]).Form::label($field->label, $field->label, ['class' => $required_class]);
-        $select = Form::$field_type($field->name, ['' => 'Select', 'Selects' => self::removeUnderscoreFromDB($field->values()->pluck('field_value', 'field_value')->toArray())], null, ['class' => "form-control $session$field->id", 'id' => $session.$field->id, 'required' => $required]).'</br>';
-        $html = $script.$form_hidden.$select;
-        $response_div = '<div id='.$session.$field->name.'></div>';
-
-        return $html.$response_div;
+        $form_hidden = Form::hidden('fieldid[]', $field->id, ['id' => 'hidden' . $session . $field->id]) . Form::label($field->label, $field->label, ['class' => $required_class]);
+        $select = Form::$field_type($field->name, ['' => 'Select', 'Selects' => self::removeUnderscoreFromDB($field->values()->pluck('field_value', 'field_value')->toArray())], null, ['class' => "form-control $session$field->id", 'id' => $session . $field->id, 'required' => $required]) . '</br>';
+        $html = $script . $form_hidden . $select;
+        $response_div = '<div id=' . $session . $field->name . '></div>';
+        return $html . $response_div;
     }
 
     public static function radioForm($field_type, $field, $required, $required_class)
@@ -531,12 +513,11 @@ class FormController extends Controller
         if (count($values) > 0) {
             foreach ($values as $field_value) {
                 $script = self::jqueryScript($field_value, $field->id, $field->name, $field_type);
-                $radio .= '<div>'.Form::hidden('fieldid[]', $field->id, ['id' => $field->id.str_slug($field_value)]);
-                $radio .= Form::$field_type($field->name, $field_value, null, ['class' => "$field->id", 'id' => str_slug($field_value), 'required' => $required]).$script.'<span>   '.removeUnderscore($field_value).'</span></div>';
+                $radio .= '<div>' . Form::hidden('fieldid[]', $field->id, ['id' => $field->id . str_slug($field_value)]);
+                $radio .= Form::$field_type($field->name, $field_value, null, ['class' => "$field->id", 'id' => str_slug($field_value), 'required' => $required]) . $script . '<span>   ' . removeUnderscore($field_value) . '</span></div>';
             }
-            $html = Form::label($field->label, $field->label, ['class' => $required_class]).'</br>'.$radio.'<div id='.$field->name.'></br></div>';
+            $html = Form::label($field->label, $field->label, ['class' => $required_class]) . '</br>' . $radio . '<div id=' . $field->name . '></br></div>';
         }
-
         return $html;
     }
 
@@ -550,16 +531,15 @@ class FormController extends Controller
             $i = 1;
             foreach ($values as $field_value) {
                 $script = self::jqueryScript($field_value, $field->id, $field->name, $field_type, $i);
-                $checkbox .= Form::hidden('fieldid[]', $field->id, ['id' => 'f'.$session.$i]);
-                $checkbox .= Form::$field_type($field->name, $field_value, null, ['class' => "$field->id", 'id' => $session.$i, 'required' => $required]);
-                $checkbox .= '<span>   '.removeUnderscore($field_value).'</span>';
+                $checkbox .= Form::hidden('fieldid[]', $field->id, ['id' => 'f' . $session . $i]);
+                $checkbox .= Form::$field_type($field->name, $field_value, null, ['class' => "$field->id", 'id' => $session . $i, 'required' => $required]);
+                $checkbox .= '<span>   ' . removeUnderscore($field_value) . '</span>';
                 //$checkbox .="</br>";
-                $checkbox .= '<div>'.$script.'<div id=div'.$session.$field_value.'></div></div>';
+                $checkbox .= '<div>' . $script . '<div id=div' . $session . $field_value . '></div></div>';
                 $i++;
             }
-            $html = Form::label($field->label, $field->label, ['class' => $required_class]).'</br>'.$checkbox;
+            $html = Form::label($field->label, $field->label, ['class' => $required_class]) . '</br>' . $checkbox;
         }
-
         return $html;
     }
 
@@ -572,7 +552,6 @@ class FormController extends Controller
                                         display:inline !important;
                                     }
                     </style>";
-
         return $style;
     }
 
@@ -582,7 +561,6 @@ class FormController extends Controller
         if ($required === '1') {
             $class = 'required';
         }
-
         return $class;
     }
 
@@ -599,7 +577,6 @@ class FormController extends Controller
         if (\Session::has('fromid')) {
             $form = \Session::get('fromid');
         }
-
         return $form;
     }
 
@@ -611,7 +588,6 @@ class FormController extends Controller
                 $result[$key] = removeUnderscore($value);
             }
         }
-
         return $result;
     }
 }

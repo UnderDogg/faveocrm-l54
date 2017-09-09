@@ -1,5 +1,4 @@
 <?php
-
 return [
     // --- The default avatar size
     'size' => 80,

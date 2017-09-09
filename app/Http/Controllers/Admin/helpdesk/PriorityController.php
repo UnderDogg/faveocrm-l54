@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin\helpdesk;
 
 // controllers
@@ -45,7 +44,6 @@ class PriorityController extends Controller
     {
         $user_status = CommonSettings::where('option_name', '=', 'user_priority')->first();
         // dd( $user_status);
-
         return view('themes.default1.admin.helpdesk.manage.ticket_priority.index', compact('user_status'));
     }
 
@@ -58,9 +56,7 @@ class PriorityController extends Controller
     {
         try {
             $user_status = $request->user_settings_priority;
-
             CommonSettings::where('option_name', '=', 'user_priority')->update(['status' => $user_status]);
-
             return 'Your Status Updated';
         } catch (Exception $e) {
             return Redirect()->back()->with('fails', $e->getMessage());
@@ -75,32 +71,30 @@ class PriorityController extends Controller
         try {
             $ticket = new Ticket_Priority();
             $tickets = $ticket->select('priority_id', 'priority', 'priority_desc', 'priority_color', 'status', 'is_default', 'ispublic')->get();
-
             return \Datatable::Collection($tickets)
-                            ->showColumns('priority', 'priority_desc')
-                            ->addColumn('priority_color', function ($model) {
-                                return "<button class='btn' style = 'background-color:$model->priority_color'></button>";
-                            })
-                            ->addColumn('status', function ($model) {
-                                if ($model->status == 1) {
-                                    return "<a style='color:green'>active</a>";
-                                } elseif ($model->status == 0) {
-                                    Ticket_Priority::where('priority_id', '=', '$priority_id')
-                                    ->update(['priority_id' => '']);
-
-                                    return "<a style='color:red'>inactive</a>";
-                                }
-                            })
-                            ->addColumn('action', function ($model) {
-                                if ($model->is_default > 0) {
-                                    return '<a href='.url('ticket/priority/'.$model->priority_id.'/edit')." class='btn btn-info btn-xs' disabled='disabled'>Edit</a>&nbsp;<a href=".url('ticket/priority/'.$model->priority_id.'/destroy')." class='btn btn-warning btn-info btn-xs' disabled='disabled' > delete </a>";
-                                } else {
-                                    return '<a href='.url('ticket/priority/'.$model->priority_id.'/edit')." class='btn btn-info btn-xs'>Edit</a>&nbsp;<a class='btn btn-danger btn-xs' onclick='confirmDelete(".$model->priority_id.")'>Delete </a>";
-                                }
-                            })
-                            ->searchColumns('priority')
-                            ->orderColumns('priority', 'priority_color')
-                            ->make();
+                ->showColumns('priority', 'priority_desc')
+                ->addColumn('priority_color', function ($model) {
+                    return "<button class='btn' style = 'background-color:$model->priority_color'></button>";
+                })
+                ->addColumn('status', function ($model) {
+                    if ($model->status == 1) {
+                        return "<a style='color:green'>active</a>";
+                    } elseif ($model->status == 0) {
+                        Ticket_Priority::where('priority_id', '=', '$priority_id')
+                            ->update(['priority_id' => '']);
+                        return "<a style='color:red'>inactive</a>";
+                    }
+                })
+                ->addColumn('action', function ($model) {
+                    if ($model->is_default > 0) {
+                        return '<a href=' . url('ticket/priority/' . $model->priority_id . '/edit') . " class='btn btn-info btn-xs' disabled='disabled'>Edit</a>&nbsp;<a href=" . url('ticket/priority/' . $model->priority_id . '/destroy') . " class='btn btn-warning btn-info btn-xs' disabled='disabled' > delete </a>";
+                    } else {
+                        return '<a href=' . url('ticket/priority/' . $model->priority_id . '/edit') . " class='btn btn-info btn-xs'>Edit</a>&nbsp;<a class='btn btn-danger btn-xs' onclick='confirmDelete(" . $model->priority_id . ")'>Delete </a>";
+                    }
+                })
+                ->searchColumns('priority')
+                ->orderColumns('priority', 'priority_color')
+                ->make();
         } catch (Exception $ex) {
             return redirect()->back()->with('fails', $ex->getMessage());
         }
@@ -123,7 +117,6 @@ class PriorityController extends Controller
         $tk_priority->priority_color = $request->priority_color;
         $tk_priority->ispublic = $request->ispublic;
         $tk_priority->save();
-
         return \Redirect::route('priority.index')->with('success', Lang::get('lang.priority_successfully_created'));
     }
 
@@ -135,7 +128,6 @@ class PriorityController extends Controller
     public function priorityEdit($priority_id)
     {
         $tk_priority = Ticket_Priority::wherepriority_id($priority_id)->first();
-
         return view('themes.default1.admin.helpdesk.manage.ticket_priority.edit', compact('tk_priority'));
     }
 
@@ -156,11 +148,10 @@ class PriorityController extends Controller
         $tk_priority->save();
         if ($request->input('default_priority') == 'on') {
             Ticket_Priority::where('is_default', '>', 0)
-                    ->update(['is_default' => 0]);
+                ->update(['is_default' => 0]);
             Ticket_Priority::where('priority_id', '=', $priority_id)
-                    ->update(['is_default' => 1]);
+                ->update(['is_default' => 1]);
         }
-
         return \Redirect::route('priority.index')->with('success', (Lang::get('lang.priority_successfully_updated')));
     }
 
@@ -186,9 +177,7 @@ class PriorityController extends Controller
         // }
         // dd('llll');
         $tk_priority = Ticket_Priority::findOrFail($priority_id);
-
         $tk_priority->delete();
-
         return \Redirect::route('priority.index')->with('success', (Lang::get('lang.delete_successfully')));
     }
 }

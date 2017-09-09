@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\helpdesk\Ticket;
 
 use Illuminate\Database\Eloquent\Model;
@@ -35,12 +34,11 @@ class Ticket_attachments extends Model
                 $value = base64_encode($content);
                 //dd($content);
                 if (mime($this->type) != 'image') {
-                    $root = $root.'/'.$name;
+                    $root = $root . '/' . $name;
                     chmod($root, 1204);
                 }
             }
         }
-
         return $value;
     }
 
@@ -52,18 +50,15 @@ class Ticket_attachments extends Model
         $root = $this->path;
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         $power = $size > 0 ? floor(log($size, 1024)) : 0;
-        $value = number_format($size / pow(1024, $power), 2, '.', ',').' '.$units[$power];
-
+        $value = number_format($size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
         if ($this->poster == 'ATTACHMENT' || $this->poster == 'attachment') {
             if (mime($this->type) == 'image') {
-                $var = '<a href="'.\URL::route('image', ['image_id' => $this->id]).'" target="_blank"><img style="max-width:200px;height:133px;" src="data:image/jpg;base64,'.$this->file.'"/></a>';
-
-                return '<li style="background-color:#f4f4f4;"><span class="mailbox-attachment-icon has-img">'.$var.'</span><div class="mailbox-attachment-info"><b style="word-wrap: break-word;">'.$this->name.'</b><br/><p>'.$value.'</p></div></li>';
+                $var = '<a href="' . \URL::route('image', ['image_id' => $this->id]) . '" target="_blank"><img style="max-width:200px;height:133px;" src="data:image/jpg;base64,' . $this->file . '"/></a>';
+                return '<li style="background-color:#f4f4f4;"><span class="mailbox-attachment-icon has-img">' . $var . '</span><div class="mailbox-attachment-info"><b style="word-wrap: break-word;">' . $this->name . '</b><br/><p>' . $value . '</p></div></li>';
             } else {
                 //$var = '<a href="' . URL::route('image', array('image_id' => $attachment->id)) . '" target="_blank"><img style="max-width:200px;height:133px;" src="data:'.$attachment->type.';base64,' . base64_encode($data) . '"/></a>';
-                $var = '<a style="max-width:200px;height:133px;color:#666;" href="'.\URL::route('image', ['image_id' => $this->id]).'" target="_blank"><span class="mailbox-attachment-icon" style="background-color:#fff; font-size:18px;">'.strtoupper(str_limit($this->type, 15)).'</span><div class="mailbox-attachment-info"><span ><b style="word-wrap: break-word;">'.$this->name.'</b><br/><p>'.$value.'</p></span></div></a>';
-
-                return '<li style="background-color:#f4f4f4;">'.$var.'</li>';
+                $var = '<a style="max-width:200px;height:133px;color:#666;" href="' . \URL::route('image', ['image_id' => $this->id]) . '" target="_blank"><span class="mailbox-attachment-icon" style="background-color:#fff; font-size:18px;">' . strtoupper(str_limit($this->type, 15)) . '</span><div class="mailbox-attachment-info"><span ><b style="word-wrap: break-word;">' . $this->name . '</b><br/><p>' . $value . '</p></span></div></a>';
+                return '<li style="background-color:#f4f4f4;">' . $var . '</li>';
             }
         }
     }

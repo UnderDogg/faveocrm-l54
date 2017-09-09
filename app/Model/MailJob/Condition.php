@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\MailJob;
 
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +19,6 @@ class Condition extends Model
                 $value = ['condition' => $this->checkArray(0, $condition_value), 'at' => $this->checkArray(1, $condition_value)];
             }
         }
-
         return $value;
     }
 
@@ -32,15 +30,14 @@ class Condition extends Model
                 $value = $array[$key];
             }
         }
-
         return $value;
     }
 
     public function checkActiveJob()
     {
         $result = ['fetching' => '', 'notification' => '', 'work' => '', 'message' => '', 'remind' => ''];
-        $emails = new \App\Model\helpdesk\Settings\Email();
-        $email = $emails->find(1);
+        $mailboxes = new \App\Model\helpdesk\Settings\Email();
+        $email = $mailboxes->find(1);
         if ($email) {
             if ($email->email_fetching == 1) {
                 $result['fetching'] = true;
@@ -57,7 +54,6 @@ class Condition extends Model
                 $result['work'] = true;
             }
         }
-
         return $result;
     }
 }

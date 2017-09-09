@@ -2,7 +2,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUserAdditionalInfosTable extends Migration
+class CreateStaffAdditionalInfosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -11,7 +11,7 @@ class CreateUserAdditionalInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_additional_infos', function (Blueprint $table) {
+        Schema::create('staff_additional_infos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('owner');
             $table->string('service');
@@ -28,6 +28,6 @@ class CreateUserAdditionalInfosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_additional_infos');
+        Schema::drop('staff_additional_infos');
     }
 }

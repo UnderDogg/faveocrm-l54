@@ -88,7 +88,7 @@
                 @if($topic->status=='1')
                   <span style="color:green">{!! Lang::get('lang.active') !!}</span>
                 @else
-                  <span style="color:red">{!! Lang::get('lang.disable') !!}</span>
+                  <span style="color:red">{!! Lang::get('lang.disabled') !!}</span>
                 @endif
               </td>
 
@@ -102,12 +102,12 @@
                 @endif
               </td>
               <!-- Priority -->
-              <?php $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $topic->priority)->first(); ?>
+              <?php $priority = App\Model\helpdesk\Ticket\TicketPriority::where('priority_id', '=', $topic->priority)->first(); ?>
               <td>{!! $priority->priority_desc !!}</td>
               <!-- Department -->
               @if($topic->department != null)
                 <?php
-                $dept = App\Model\helpdesk\Agent\Department::where('id', '=', $topic->department)->first();
+                $dept = App\Model\helpdesk\Staff\Department::where('id', '=', $topic->department)->first();
                 $dept = $dept->name;
                 ?>
               @elseif($topic->department == null)

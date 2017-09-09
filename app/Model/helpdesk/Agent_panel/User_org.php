@@ -6,7 +6,7 @@ use App\BaseModel;
 class User_org extends BaseModel
 {
     /* define table name  */
-    protected $table = 'user_assign_organization';
+    protected $table = 'user_assign_relation';
 
     /* define fillable fields */
     protected $fillable = ['id', 'org_id', 'user_id'];

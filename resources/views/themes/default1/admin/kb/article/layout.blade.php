@@ -59,19 +59,19 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               @if(Auth::user()->profile_pic==NULL)
-                <img src="{{asset('dist/img/avatar.png')}}" class="user-image" alt="User Image"/>
+                <img src="{{asset('dist/img/avatar.png')}}" class="user-image" alt="Staff Image"/>
               @else
-                <img src="{{asset('dist')}}{{'/'}}{{Auth::user()->profile_pic}}" class="user-image" alt="User Image"/>
+                <img src="{{asset('dist')}}{{'/'}}{{Auth::user()->profile_pic}}" class="user-image" alt="Staff Image"/>
               @endif
               <span class="hidden-xs">{{Auth::user()->name}}</span>
             </a>
             <ul class="dropdown-menu">
-              <!-- User image -->
+              <!-- Staff image -->
               <li class="user-header">
                 @if(Auth::user()->profile_pic==NULL)
-                  <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="User Image"/>
+                  <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="Staff Image"/>
                 @else
-                  <img src="{{asset('dist')}}{{'/'}}{{Auth::user()->profile_pic}}" class="img-circle" alt="User Image"/>
+                  <img src="{{asset('dist')}}{{'/'}}{{Auth::user()->profile_pic}}" class="img-circle" alt="Staff Image"/>
                 @endif
                 <p>
                   {{Auth::user()->name}}

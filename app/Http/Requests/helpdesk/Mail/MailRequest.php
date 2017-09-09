@@ -23,13 +23,13 @@ class MailRequest extends Request
     public function rules()
     {
         $id = $this->segment(2);
-        $email_address_rule = 'required|email|unique:emails';
+        $email_address_rule = 'required|email|unique:mailboxes';
         if ($id) {
-            $email_address_rule = 'required|email|unique:emails,id,' . $id;
+            $email_address_rule = 'required|email|unique:mailboxes,id,' . $id;
         }
         $rules = [
             'email_address' => $email_address_rule,
-            'email_name' => 'required',
+            'mailbox_name' => 'required',
             'password' => 'required',
             'sending_protocol' => 'required_if:sending_status,on',
         ];

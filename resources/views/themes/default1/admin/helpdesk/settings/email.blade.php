@@ -1,6 +1,6 @@
 @extends('themes.default1.admin.layout.admin')
 
-@section('Emails')
+@section('Mailboxes')
   active
 @stop
 
@@ -16,7 +16,7 @@
   @stop
     <!-- header -->
 @section('PageHeader')
-  <h1>{{Lang::get('lang.emails')}}</h1>
+  <h1>{{Lang::get('lang.mailboxes')}}</h1>
   @stop
     <!-- /header -->
   <!-- breadcrumbs -->
@@ -66,7 +66,7 @@
 
           <div class="row">
           </div>
-          <!-- Accept All Emails:	CHECKBOX: Accept email from unknown Users  -->
+          <!-- Accept All Mailboxes:	CHECKBOX: Accept email from unknown Users  -->
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -74,10 +74,10 @@
               </div>
             </div>
           </div>
-          <!-- Admin's Email Address:	  Text : Required  -->
+          <!-- Admin's Mailboxes Address:	  Text : Required  -->
           <div class="row">
           </div>
-          <!-- Accept Email Collaborators: CHECKBOX : Automatically add collaborators from email fields   -->
+          <!-- Accept Mailboxes Collaborators: CHECKBOX : Automatically add collaborators from email fields   -->
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
@@ -85,7 +85,7 @@
               </div>
             </div>
           </div>
-          <!-- Attachments: CHECKBOX	: Email attachments to the user  -->
+          <!-- Attachments: CHECKBOX	: Mailboxes attachments to the user  -->
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">

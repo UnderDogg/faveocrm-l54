@@ -6,18 +6,18 @@ use App\Http\Controllers\Controller;
 // request
 use App\Http\Requests\helpdesk\WorkflowCreateRequest;
 use App\Http\Requests\helpdesk\WorkflowUpdateRequest;
-use App\Model\helpdesk\Agent\Department;
+use App\Model\helpdesk\Staff\Department;
 // model
-use App\Model\helpdesk\Agent\Teams;
-use App\Model\helpdesk\Email\Emails;
-use App\Model\helpdesk\Manage\Help_topic;
+use App\Model\helpdesk\Staff\Teams;
+use App\Model\helpdesk\Mailboxes\Mailboxes;
+use App\Model\helpdesk\Manage\HelpTopic;
 use App\Model\helpdesk\Manage\Sla_plan;
-use App\Model\helpdesk\Ticket\Ticket_Priority;
-use App\Model\helpdesk\Ticket\Ticket_Status;
+use App\Model\helpdesk\Ticket\TicketPriority;
+use App\Model\helpdesk\Ticket\TicketStatus;
 use App\Model\helpdesk\Workflow\WorkflowAction;
 use App\Model\helpdesk\Workflow\WorkflowName;
 use App\Model\helpdesk\Workflow\WorkflowRules;
-use App\User;
+use App\Staff;
 use Datatable;
 //classes
 use Exception;
@@ -37,7 +37,7 @@ class WorkflowController extends Controller
      * constructor to check
      * 1. authentication
      * 2. user roles
-     * 3. roles must be agent.
+     * 3. roles must be staff.
      *
      * @return void
      */
@@ -107,12 +107,12 @@ class WorkflowController extends Controller
                     } elseif ($target1[1] == 1) {
                         return 'Web Forms';
                     } elseif ($target1[1] == 2) {
-                        return 'Email';
+                        return 'Mailboxes';
                     } elseif ($target1[1] == 4) {
                         return 'API';
                     }
                 } elseif ($target1[0] == 'E') {
-                    $mailboxes = Emails::where('id', '=', $target1[1])->first();
+                    $mailboxes = Mailboxes::where('id', '=', $target1[1])->first();
                     return $mailboxes->email_address;
                 }
             })
@@ -137,15 +137,15 @@ class WorkflowController extends Controller
      *
      * @return type Response
      */
-    public function create(Emails $mailboxes)
+    public function create(Mailboxes $mailboxes)
     {
         $email_data = '';
-        foreach ($mailboxes->pluck('email_address', 'id') as $key => $email) {
-            $email_data["E-$key"] = $email;
+        foreach ($mailboxes->pluck('email_address', 'id') as $key => $mailbox) {
+            $email_data["E-$key"] = $mailbox;
         }
         $mailboxes = $email_data;
         try {
-            return view('themes.default1.admin.helpdesk.manage.workflow.create', compact('emails'));
+            return view('themes.default1.admin.helpdesk.manage.workflow.create', compact('mailboxes'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -198,18 +198,18 @@ class WorkflowController extends Controller
      * Editing the details of the banned users.
      *
      * @param type $id
-     * @param User $ban
+     * @param Staff $ban
      *
      * @return type Response
      */
-    public function edit($id, WorkflowName $work_flow_name, Emails $mailboxes, WorkflowRules $workflow_rule, WorkflowAction $workflow_action)
+    public function edit($id, WorkflowName $work_flow_name, Mailboxes $mailboxes, WorkflowRules $workflow_rule, WorkflowAction $workflow_action)
     {
         try {
             $mailboxes = $mailboxes->get();
             $workflow = $work_flow_name->whereId($id)->first();
             $workflow_rules = $workflow_rule->whereWorkflow_id($id)->get();
             $workflow_actions = $workflow_action->whereWorkflow_id($id)->get();
-            return view('themes.default1.admin.helpdesk.manage.workflow.edit', compact('id', 'workflow', 'emails', 'workflow_rules', 'workflow_actions'));
+            return view('themes.default1.admin.helpdesk.manage.workflow.edit', compact('id', 'workflow', 'mailboxes', 'workflow_rules', 'workflow_actions'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -300,7 +300,7 @@ class WorkflowController extends Controller
             return $this->slaPlan($id);
         } elseif ($request->option == 'team') {
             return $this->assignTeam($id);
-        } elseif ($request->option == 'agent') {
+        } elseif ($request->option == 'staff') {
             return $this->assignAgent($id);
         } elseif ($request->option == 'helptopic') {
             return $this->helptopic($id);
@@ -343,7 +343,7 @@ class WorkflowController extends Controller
      */
     public function priority($id)
     {
-        $priorities = Ticket_Priority::where('status', '=', 1)->get();
+        $priorities = TicketPriority::where('status', '=', 1)->get();
         $var = "<select name='action[" . $id . "][b]' class='form-control' required>";
         foreach ($priorities as $priority) {
             $var .= "<option value='" . $priority->priority_id . "'>" . $priority->priority_desc . '</option>';
@@ -385,13 +385,13 @@ class WorkflowController extends Controller
     }
 
     /**
-     * function to get system agents select option.
+     * function to get system staff select option.
      *
      * @return type string
      */
     public function assignAgent($id)
     {
-        $users = User::where('role', '!=', 'user')->where('active', '=', 1)->get();
+        $users = Staff::where('role', '!=', 'user')->where('active', '=', 1)->get();
         $var = "<select name='action[" . $id . "][b]' class='form-control' required>";
         foreach ($users as $user) {
             $var .= "<option value='" . $user->id . "'>" . $user->first_name . ' ' . $user->last_name . '</option>';
@@ -407,7 +407,7 @@ class WorkflowController extends Controller
      */
     public function helptopic($id)
     {
-        $help_topics = Help_topic::where('status', '=', 1)->get();
+        $help_topics = HelpTopic::where('status', '=', 1)->get();
         $var = "<select name='action[" . $id . "][b]' class='form-control' required>";
         foreach ($help_topics as $help_topic) {
             $var .= "<option value='" . $help_topic->id . "'>" . $help_topic->topic . '</option>';
@@ -423,7 +423,7 @@ class WorkflowController extends Controller
      */
     public function ticketStatus($id)
     {
-        $ticket_status = Ticket_Status::all();
+        $ticket_status = TicketStatus::all();
         $var = "<select name='action[" . $id . "][b]' class='form-control' required>";
         foreach ($ticket_status as $status) {
             $var .= "<option value='" . $status->id . "'>" . $status->name . '</option>';

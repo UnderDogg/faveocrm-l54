@@ -37,7 +37,7 @@ class ClientRequest extends Request
         }
         $current_rule = [
             'Name' => 'required',
-            'Email' => 'required|email',
+            'Mailboxes' => 'required|email',
             'Subject' => 'required',
             'Details' => 'required',
         ];
@@ -48,7 +48,7 @@ class ClientRequest extends Request
 
     public function getHelpTopic()
     {
-        $help_topics = new \App\Model\helpdesk\Manage\Help_topic();
+        $help_topics = new \App\Model\helpdesk\Manage\HelpTopic();
         $topic = $this->input('helptopic');
         $help_topic = $help_topics->where('id', $topic)->first();
         return $help_topic;
@@ -122,7 +122,7 @@ class ClientRequest extends Request
             if (!\Auth::check()) {
                 return [
                     'Name' => 'required',
-                    'Email' => 'email',
+                    'Mailboxes' => 'email',
                     'Subject' => 'required',
                     'Details' => 'required',
                     'mobile' => 'required',

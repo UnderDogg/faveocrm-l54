@@ -1,5 +1,5 @@
-@extends('themes.default1.agent.layout.agent')
-@extends('themes.default1.agent.layout.sidebar')
+@extends('themes.default1.staff.layout.staff')
+@extends('themes.default1.staff.layout.sidebar')
 
 @section('widget')
   active

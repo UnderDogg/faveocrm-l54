@@ -20,9 +20,9 @@ class CheckRole
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->role == 'admin') {
+        if ($request->user()->role == 'admin' || $request->user()->role == 'staff') {
             return $next($request);
         }
-        return redirect('guest')->with('fails', 'You are not Autherised');
+        return redirect('guest')->with('fails', 'You are not Authorized');
     }
 }

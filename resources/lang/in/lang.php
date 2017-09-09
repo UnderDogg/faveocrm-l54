@@ -57,10 +57,10 @@ return [
     'woops' => 'Ups!',
     'theirisproblem' => 'Ada masalah dengan input Anda.',
     'login' => 'Login',
-    'e-mail' => 'Email',
+    'e-mail' => 'Mailboxes',
     'reg_new_member' => 'Daftar jadi anggota baru',
     'this_account_is_currently_inactive' => 'Akun ini belum aktif!',
-    'not-registered' => 'Email/username tidak terdaftar',
+    'not-registered' => 'Mailboxes/username tidak terdaftar',
     'verify' => 'Verifikasi',
     'enter-otp' => 'Masukkan OTP',
     'did-not-recive-code' => 'Tidak menerima kodenya?',
@@ -91,7 +91,7 @@ return [
     'see-profile1' => 'Klik disini untuk melihat profil ',
     'see-profile2' => ' ',
     'activate_your_account_click_on_Link_that_send_to_your_mail' => 'Aktifkan akun Anda! Klik tautan yang kami kirim ke email Anda',
-    'activate_your_account_click_on_Link_that_send_to_your_mail_and_moble' => 'Aktifkan akun Anda! Klik tautan yang kami kirim ke email Anda atau login ke akun Anda dan masukkan kode OTP yang kami kirim ke nomor ponsel Anda',
+    'activate_your_account_click_on_Link_that_send_to_your_mail_and_mobile' => 'Aktifkan akun Anda! Klik tautan yang kami kirim ke email Anda atau login ke akun Anda dan masukkan kode OTP yang kami kirim ke nomor ponsel Anda',
     'activate_your_account_click_on_Link_that_send_to_your_mail_sms_plugin_inactive_or_not_setup' => 'Akun sudah dibuat, mohon hubungi administrator karena kami tidak dapat mengirimkan kode OTP ke nomor ponsel Anda dan email ke alamat email Anda.',
     'this_field_do_not_match_our_records' => 'Bidang ini tidak sesuai dengan data kami.',
     'we_have_e-mailed_your_password_reset_link' => 'Kami sudah mengirimkan tautan reset password Anda!',
@@ -114,13 +114,13 @@ return [
     'send_password_reset_link' => 'Kirim tautan reset password',
     'enter_email_to_reset_password' => 'Masukkan email/nomor ponsel untuk reset password',
     'link' => 'Tautan',
-    'email_or_mobile' => 'Email atau nomor ponsel',
+    'email_or_mobile' => 'Mailboxes atau nomor ponsel',
     /*
       |----------------------------------------------------------------------------------------
-      | Emails Pages [English(en)]
+      | Mailboxes Pages [English(en)]
       |----------------------------------------------------------------------------------------
       |
-      | The following language lines are used in all Emails related issues to translate
+      | The following language lines are used in all Mailboxes related issues to translate
       | some words in view to English. You are free to change them to anything you want to
       | customize your views to better match your application.
       |
@@ -128,16 +128,16 @@ return [
     'admin_panel' => 'Panel Admin',
     /*
       |--------------------------------------
-      |  Emails Create Page
+      |  Mailboxes Create Page
       |--------------------------------------
      */
-    'emails' => 'Email',
-    'incoming_emails' => 'Email masuk',
+    'mailboxes' => 'Mailboxes',
+    'incoming_emails' => 'Mailboxes masuk',
     'reuired_authentication' => 'Membutuhkan otentikasi',
     'fetching_email_via_imap' => 'Ambil email via IMAP',
-    'create_email' => 'Buat email',
+    'create_mailbox' => 'Buat email',
     'email_address' => 'Alamat email',
-    'email_name' => 'Nama email',
+    'mailbox_name' => 'Nama email',
     'help_topic' => 'Topik bantuan',
     'auto_response' => 'Respon otomatis',
     'host_name' => 'Nama host',
@@ -149,7 +149,7 @@ return [
     'header_spoofing' => 'Header samaran',
     'allow_for_this_email' => 'Izinkan untuk email ini',
     'imap_config' => 'Konfigurasi IMAP',
-    'email_information_and_settings' => 'Informasi dan pengaturan email',
+    'mailbox_information_and_settings' => 'Informasi dan pengaturan email',
     'incoming_email_information' => 'Informasi email masuk',
     'outgoing_email_information' => 'Informasi email keluar',
     'new_ticket_settings' => 'Pengaturan tiket baru',
@@ -165,27 +165,27 @@ return [
     'incoming_email_connection_failed_please_check_email_credentials_or_imap_settings' => 'Koneksi email masuk gagal! Mohon periksa kembali tanda pengenal email atau Pengaturan IMAP',
     'outgoing_email_connection_failed' => 'Koneksi email keluar gagal',
     'you_cannot_delete_system_default_email' => 'Anda tidak dapat menghapus email default sistem',
-    'email_deleted_sucessfully' => 'Email berhasil dihapus',
-    'email_can_not_delete' => 'Email tidak bisa dihapus',
-    'outgoing_email_failed' => 'Email keluar gagal',
+    'email_deleted_sucessfully' => 'Mailboxes berhasil dihapus',
+    'email_can_not_delete' => 'Mailboxes tidak bisa dihapus',
+    'outgoing_email_failed' => 'Mailboxes keluar gagal',
     'system-email-not-configured' => 'Kami tidak dapat memproses permintaan email karena konfigurasi untuk sistem pengiriman email belum diatur.',
     /*
       |--------------------------------------
-      |  Ban Emails Create Page
+      |  Ban Mailboxes Create Page
       |--------------------------------------
      */
     'ban_lists' => 'Daftar blokir',
-    'ban_email' => 'Email terbokir',
+    'ban_email' => 'Mailboxes terbokir',
     'banlists' => 'Daftar blokiran',
     'ban_status' => 'Status blokir',
     'list_of_banned_emails' => 'Daftar email terblokir',
     'edit_banned_email' => 'Edit email terblokir',
     'create_a_banned_email' => 'Buat email yang diblokir',
-    'email_banned_sucessfully' => 'Email berhasil diblokir',
-    'email_can_not_ban' => 'Email tidak dapat diblokir',
-    'banned_email_updated_sucessfully' => 'Email terblokir berhasil diperbarui',
-    'banned_email_not_updated' => 'Email terblokir belum diperbarui',
-    'banned_removed_sucessfully' => 'Email yang diblokir berhasil dihapus',
+    'email_banned_sucessfully' => 'Mailboxes berhasil diblokir',
+    'email_can_not_ban' => 'Mailboxes tidak dapat diblokir',
+    'banned_email_updated_sucessfully' => 'Mailboxes terblokir berhasil diperbarui',
+    'banned_email_not_updated' => 'Mailboxes terblokir belum diperbarui',
+    'banned_removed_sucessfully' => 'Mailboxes yang diblokir berhasil dihapus',
     /*
       |--------------------------------------
       |  Templates Index Page
@@ -205,18 +205,18 @@ return [
     'you_have_successfully_activated_this_set' => 'Anda telah mengaktifkan set ini',
     'template_set_deleted_successfully' => 'Set template berhasil dihapus',
     //Template Description
-    'Create ticket agent' => 'Email notifikasi yang dikirim ke agen dan admin saat tiket baru dibuat',
+    'Create ticket staff' => 'Mailboxes notifikasi yang dikirim ke agen dan admin saat tiket baru dibuat',
     'Assign ticket' => 'Tiket ditugaskan ke agen',
-    'Create ticket' => 'Email dikirim ke klien saat pembuatan tiket baru berhasil',
+    'Create ticket' => 'Mailboxes dikirim ke klien saat pembuatan tiket baru berhasil',
     'Check ticket' => 'Jika klien ingin memeriksa tiket melalui portal pelanggan maka tautan akan dikirim ke klien. Tautan ini ditujukan agar klien bisa melihat rincian tiket tanpa harus login ke sistem',
-    'Ticket reply agent' => 'Notifikasi dikirim ke email agen saat klien membalas tiket',
+    'Ticket reply staff' => 'Notifikasi dikirim ke email agen saat klien membalas tiket',
     'Registration notification' => 'Password dan username dikirim ke email saat pendaftaran pertama',
-    'Reset password' => 'Email dengan tautan reset password',
+    'Reset password' => 'Mailboxes dengan tautan reset password',
     'Error report' => 'Laporan error',
     'Ticket creation' => 'Notifikasi pertama yang dikirim oleh sistem tentang pembuatan tiket untuk klien',
     'Ticket reply' => 'Balasan yang dilakukan oleh agen pada tiket klien, email notifikasi dikirim untuk klien dan kolaborator',
-    'Close ticket' => 'Email dikirim ke klien saat tiket ditutup',
-    'Create ticket by agent' => 'Agen membuatkan tiket untuk klien',
+    'Close ticket' => 'Mailboxes dikirim ke klien saat tiket ditutup',
+    'Create ticket by staff' => 'Agen membuatkan tiket untuk klien',
     /*
       |--------------------------------------
       |  Templates Create Page
@@ -302,13 +302,13 @@ return [
     'system_can_not_updated' => 'Sistem tidak dapat diperbarui',
     'ticket_updated_successfully' => 'Tiket berhasil diperbarui',
     'ticket_can_not_updated' => 'Tiket tidak dapat diperbarui',
-    'email_updated_successfully' => 'Email berhasil dibuat',
-    'email_can_not_updated' => 'Email tidak dapat diperbarui',
+    'email_updated_successfully' => 'Mailboxes berhasil dibuat',
+    'email_can_not_updated' => 'Mailboxes tidak dapat diperbarui',
     'select_a_time_zone' => 'Pilih zona waktu',
     'select_a_date_time_format' => 'Pilih format tanggal dan jam',
     'Ticket-has-been-created-successfully-your-ticket-number-is' => 'Tiket berhasil dibuat, nomor tiket Anda adalah',
     'Please-save-this-for-future-reference' => 'Mohon disimpan untuk referensi',
-    'email-moble-already-taken' => 'Email atau nomor ponsel sudah ada',
+    'email-moble-already-taken' => 'Mailboxes atau nomor ponsel sudah ada',
     'mobile-has-been-taken' => 'Nomor ponsel ini sudah ada',
     'failed-to-create-user-tcket-as-mobile-has-been-taken' => 'Gagal membuat tiket baru karena nomor ponsel yang Anda masukkan berhubungan dengan seorang pengguna. Tapi rincian lainnya yang dimasukkan tidak sesuai dengan rincian pengguna tersebut. Mohon verifikasi rincian pengguna atau buatlah pengguna baru.',
     'rtl' => 'RTL (Right to left)',
@@ -322,16 +322,16 @@ return [
     'email_man_info' => 'Jika Anda tidak menjadikan email sebagai hal yang wajib, pengguna bisa mendaftar tanpa menggunakan email. Kami sarankan agar pengguna yang belum verifikasi tidak diizinkan membuat tiket agar pengguna bisa menerima notifikasi melalui nomor ponsel mereka dan login menggunakan username dan password yang mereka terima dari ponsel.',
     /*
       |--------------------------------------
-      |   Email Settings Page
+      |   Mailbox settings Page
       |--------------------------------------
      */
-    'email' => 'Email',
+    'email' => 'Mailboxes',
     'email-settings' => 'Pengaturan email',
     'default_template' => 'Set template default:',
-    'default_system_email' => 'Email default sistem:',
-    'default_alert_email' => 'Email alert default:',
+    'default_system_email' => 'Mailboxes default sistem:',
+    'default_alert_email' => 'Mailboxes alert default:',
     'admin_email' => 'Alamat email admin:',
-    'email_fetch' => 'Email pengambilan:',
+    'email_fetch' => 'Mailboxes pengambilan:',
     'enable' => 'Aktifkan',
     'default_MTA' => 'MTA default',
     'fetch_auto-corn' => 'Ambil pada auto-cron',
@@ -341,7 +341,7 @@ return [
     'accept_email_unknown' => 'Terima email dari pengguna tak dikenal',
     'accept_email_collab' => 'Terima email kolaborator',
     'automatically_and_collab_from_email' => 'Otomatis menambahkan kolaborator dari bidang email',
-    'default_alert_email' => 'Email alert default',
+    'default_alert_email' => 'Mailboxes alert default',
     'attachments' => 'Lampiran',
     'email_attahment_user' => 'Kirim lampiran email ke pengguna',
     'cron_notification' => 'Aktifkan notifikasi cron',
@@ -429,13 +429,13 @@ return [
       |--------------------------------------
      */
     'disable' => 'Matikan',
-    'admin_email_2' => 'Email admin',
+    'admin_email_2' => 'Mailboxes admin',
     'alert_notices' => 'Alert dan pemberitahuan',
     'alert_notices_setitngs' => 'Pengaturan alert dan pemberitahuan',
     'new_ticket_alert' => 'Alert tiket baru',
     'department_manager' => 'Manajer departemen',
     'department_members' => 'Anggota departemen',
-    'organization_account_manager' => 'Manajer akun organisasi',
+    'relation_account_manager' => 'Manajer akun organisasi',
     'new_message_alert' => 'Alert pesan baru',
     'last_respondent' => 'Responden terakhir',
     'assigned_agent_team' => 'Agen/tim yang ditugaskan',
@@ -750,7 +750,7 @@ return [
     'lastlogin' => 'Login terakhir',
     'createagent' => 'Buat agen',
     'delete' => 'Hapus',
-    'agents' => 'Agen',
+    'staff' => 'Agen',
     'create' => 'Buat',
     'edit' => 'Edit',
     'departments' => 'Departement',
@@ -770,7 +770,7 @@ return [
     'account_status_setting' => 'Status dan pengaturan akun',
     'account_type' => 'Tipe akun',
     'admin' => 'Admin',
-    'agent' => 'Agen',
+    'staff' => 'Agen',
     'account_status' => 'Status akun',
     'locked' => 'Terkunci',
     'assigned_group' => 'Grup',
@@ -801,12 +801,12 @@ return [
     'manager' => 'Manajer',
     'ticket_assignment' => 'Penugasan tiket ',
     'restrict_ticket_assignment_to_department_members' => 'Batasi penugasan tiket ke anggota departemen',
-    'outgoing_emails' => 'Email keluar',
-    'outgoing_email' => 'Email keluar',
+    'outgoing_emails' => 'Mailboxes keluar',
+    'outgoing_email' => 'Mailboxes keluar',
     'template_set' => 'Set template',
     'auto_responding_settings' => 'Pengaturan Balasan Otomatis',
     'disable_for_this_department' => 'Matikan untuk departemen ini',
-    'auto_response_email' => 'Email balasan otomatis',
+    'auto_response_email' => 'Mailboxes balasan otomatis',
     'recipient' => 'Penerima',
     'group_access' => 'Akses grup',
     'department_signature' => 'Tanda tangan departemen',
@@ -895,10 +895,10 @@ return [
     'encryption' => 'Enkripsi',
     /*
       |----------------------------------------------------------------------------------------
-      | Agent Panel [English(en)]
+      | Staff Panel [English(en)]
       |----------------------------------------------------------------------------------------
       |
-      | The following language lines are used in all Agent Panel related issues to translate
+      | The following language lines are used in all Staff Panel related issues to translate
       | some words in view to English. You are free to change them to anything you want to
       | customize your views to better match your application.
       |
@@ -941,7 +941,7 @@ return [
     'your_ticket_have_been_resolved' => 'Tiket Anda sudah tuntas',
     'your_ticket_have_been_opened' => 'Tiket Anda sudah dibuka',
     'your_ticket_have_been_moved_to_trash' => 'Tiket Anda sudah dipindahkan ke tong sampah',
-    'this_email_have_been_banned' => 'Email ini sudah diblokir',
+    'this_email_have_been_banned' => 'Mailboxes ini sudah diblokir',
     'ticket_updated_successfully' => 'Tiket berhasil diperbarui',
     'you_have_successfully_replied_to_your_ticket' => 'Anda telah membalas tiket Anda sendiri',
     'for_some_reason_your_message_was_not_posted_please_try_again_later' => 'Untuk alasan tertentu pesan Anda tidak ditampilkan. Mohon coba beberapa saat lagi',
@@ -1021,28 +1021,28 @@ return [
     'country_code' => 'Kode negara',
     /*
       |------------------------------------------------
-      |Organization Page
+      |Relation Page
       |------------------------------------------------
      */
-    'organizations' => 'Organisasi',
-    'organization' => 'Organisasi',
-    'organization_list' => 'Daftar organisasi',
-    'view_organization_profile' => 'Lihat profil organisasi',
+    'relations' => 'Organisasi',
+    'relation' => 'Organisasi',
+    'relation_list' => 'Daftar organisasi',
+    'view_relation_profile' => 'Lihat profil organisasi',
     'create_organization' => 'Buat organisasi',
     'account_manager' => 'Manajer akun',
     'update' => 'Perbarui',
     'please_select_an_organization' => 'Pilih organisasi',
     'please_select_an_user' => 'Pilih pengguna',
-    'organization_profile' => 'Profil organisasi',
-    'organization-s_head' => 'Pimpinan organisasi',
+    'relation_profile' => 'Profil organisasi',
+    'relation-s_head' => 'Pimpinan organisasi',
     'select_department_manager' => 'Pilih manajer departemen',
-    'select_organization_manager' => 'Pilih manajer organisasi',
+    'select_relation_manager' => 'Pilih manajer organisasi',
     'users_of' => 'Pengguna dari',
-    'organization_created_successfully' => 'Organisasi berhasil dibuat',
-    'organization_can_not_create' => 'Organisasi tidak bisa dibuat',
-    'organization_updated_successfully' => 'Organisasi berhasil diperbarui',
-    'organization_can_not_update' => 'Organisasi tidak bisa diperbarui',
-    'organization_deleted_successfully' => 'Organisasi berhasil dihapus',
+    'relation_created_successfully' => 'Organisasi berhasil dibuat',
+    'relation_can_not_create' => 'Organisasi tidak bisa dibuat',
+    'relation_updated_successfully' => 'Organisasi berhasil diperbarui',
+    'relation_can_not_update' => 'Organisasi tidak bisa diperbarui',
+    'relation_deleted_successfully' => 'Organisasi berhasil dihapus',
     'report_of' => 'Laporan dari',
     'ticket_of' => 'Tiket dari',
     /*
@@ -1087,7 +1087,7 @@ return [
     'attachment' => 'Lampiran',
     'internal_note' => 'Catatan internal',
     'this_ticket_is_under_banned_user' => 'Tiket ini berada dibawah pengguna yang diblokir',
-    'ticket_source' => 'Sumber tiket',
+    'tickets_sources' => 'Sumber tiket',
     'are_you_sure_to_ban' => 'Yakin ingin memblokir',
     'whome_do_you_want_to_assign_ticket' => 'Kepada siapa Anda ingin menugaskan tiket ini',
     'are_you_sure_you_want_to_surrender_this_ticket' => 'Yakin ingin menyerahkan tiket ini',
@@ -1331,7 +1331,7 @@ return [
       |--------------------------------------------------------------------------------------
       |  Client Panel [English(en)]
       |--------------------------------------------------------------------------------------
-      | The following language lines are used in all Agent Panel related issues to translate
+      | The following language lines are used in all Staff Panel related issues to translate
       | some words in view to English. You are free to change them to anything you want to
       | customize your views to better match your application.
       |
@@ -1346,7 +1346,7 @@ return [
     'have_a_ticket' => 'Punya tiket',
     'check_ticket_status' => 'Cek status tiket',
     'choose_a_help_topic' => 'Pilih topik bantuan',
-    'ticket_status' => 'Status tiket',
+    'tickets__statuses' => 'Status tiket',
     'post_comment' => 'Kirim komentar',
     'plugin' => 'Plugin',
     'edit_profile' => 'Edit profil',
@@ -1360,7 +1360,7 @@ return [
     'password_updated_sucessfully' => 'Password berhasil diperbarui',
     'password_was_not_updated_incorrect_old_password' => 'Password tidak diperbarui. Password lama salah',
     'there_is_no_such_ticket_number' => 'Nomor tiket ini tidak ada',
-    "email_didn't_match_with_ticket_number" => 'Email tidak sesuai dengan nomor tiket',
+    "email_didn't_match_with_ticket_number" => 'Mailboxes tidak sesuai dengan nomor tiket',
     'we_have_sent_you_a_link_by_email_please_click_on_that_link_to_view_ticket' => 'Kami sudah mengirimkan tautan ke email Anda. Silahkan klik tautan tersebut untuk melihat tiket',
     'no_records_on_publish_time' => 'Tidak ada data pada waktu terbit tersebut',
     'your_details_send_to_system' => 'Rincian Anda dikirim ke sistem',
@@ -1410,7 +1410,7 @@ return [
      * Latest update 16-06-2016
      * -----------------------------------------------------------------------------------
      */
-    'that_email_is not_available_in_this_system' => 'Email tersebut tidak tersedia di sistem ini',
+    'that_email_is not_available_in_this_system' => 'Mailboxes tersebut tidak tersedia di sistem ini',
     'use_subject' => 'Gunakan subyek',
     'reopen' => 'Buka kembali',
     'invalid_attempt' => 'Usaha tidak sesuai',
@@ -1469,7 +1469,7 @@ return [
      * Ticket Priority
      * -----------------------------------------------------------------------------------
      */
-    'ticket_priority' => 'Prioritas tiket',
+    'tickets_priorities' => 'Prioritas tiket',
     'priority' => 'Prioritas',
     'priority_desc' => 'Deskripsi prioritas',
     'priority_urgency' => 'Urgensi prioritas',
@@ -1524,7 +1524,7 @@ return [
     'delete_user' => 'Hapus pengguna',
     'confirm_deletion' => 'Konfirmasi penghapusan',
     'delete_all_content' => 'Hapus semua konten',
-    'agent_profile' => 'Profil agen',
+    'staff_profile' => 'Profil agen',
     'change_role_to_admin' => 'Ganti peran menjadi admin',
     'change_role_to_user' => 'Ganti peran menjadi pengguna biasa',
     'change_role_to_agent' => 'Ganti peran menjadi agen',
@@ -1568,7 +1568,7 @@ return [
     //update 18-12-2016
     'account-created-contact-admin-as-we-were-not-able-to-send-opt' => 'Akun Anda berhasil dibuat. Mohon hubungi admin untuk aktivasi akun karena kami tidak dapat mengirimkan kode OTP.',
     //update 19-12-2016
-    'only-agents' => 'Pengguna agen',
+    'only-staff' => 'Pengguna agen',
     'only-users' => 'Pengguna klien',
     'banned-users' => 'Pengguna terblokir',
     'inactive-users' => 'Pengguna tidak aktif',
@@ -1582,7 +1582,7 @@ return [
     //update 1-2-2017
     'system-outgoing-incoming-mail-not-configured' => 'You have not configured system mail. Faveo can\'t fetch tickets from mail or send mail to users without it.',
     'confihure-the-mail-now' => 'Click here to configure the mail.',
-    'system-mail-not-configured-agent-message' => 'System incoming and outgoing email settings are not configured. Please contct the admin.',
+    'system-mail-not-configured-staff-message' => 'System incoming and outgoing email settings are not configured. Please contct the admin.',
     // arindam-14.2.2017
     // sla
     'min' => 'Min',
@@ -1600,7 +1600,7 @@ return [
      * ----------------------------------------------------------------
      */
     'client' => 'Client',
-    'send_email' => 'Send Email',
+    'send_email' => 'Send Mailboxes',
     'visibility_to_client' => 'Visibility to Client',
     'purpose_of_status' => 'Purpose of Status',
     'status_to_display' => 'Status to Display',
@@ -1631,20 +1631,20 @@ return [
     //updates 22-2-2017
     'invalid-date-range' => 'Invalid date range',
     //updates 14-4-2017
-    'notification.priority.update' => 'Updated by :agent - Prority changed from :old to :new',
-    'notification.source.update' => 'Updated by :agent - Source changed from :old to :new',
-    'notification.title.update' => 'Updated by :agent - Title changed from :old to :new',
-    'notification.helptopic.update' => 'Updated by :agent - Help topic changed from :old to :new',
-    'notification.sla.update' => 'Updated by :agent - Sla changed from :old to :new',
-    'notification.status.update' => 'Updated by :agent - Status changed from :old to :new',
-    'notification.assign.update' => 'Assigned by :agent - Ticket assigned to :new',
-    'notification.user.update' => 'Ticket ownership changed by :agent - from :old to :new',
-    'notification.department.update' => 'Updated by :agent - Department changed from :old to :new',
+    'notification.priority.update' => 'Updated by :staff - Prority changed from :old to :new',
+    'notification.source.update' => 'Updated by :staff - Source changed from :old to :new',
+    'notification.title.update' => 'Updated by :staff - Title changed from :old to :new',
+    'notification.helptopic.update' => 'Updated by :staff - Help topic changed from :old to :new',
+    'notification.sla.update' => 'Updated by :staff - Sla changed from :old to :new',
+    'notification.status.update' => 'Updated by :staff - Status changed from :old to :new',
+    'notification.assign.update' => 'Assigned by :staff - Ticket assigned to :new',
+    'notification.user.update' => 'Ticket ownership changed by :staff - from :old to :new',
+    'notification.department.update' => 'Updated by :staff - Department changed from :old to :new',
     'created.ticket' => 'A new ticket :subject has created',
     'mode' => 'Mode',
     'new_internal_activity_alert' => 'New Internal Activity Alert',
     'sms' => 'Sms',
-    'agent' => 'Agent',
+    'staff' => 'Staff',
     'all_department_manager' => 'All Department Manager',
     'all_team_lead' => 'All Team Lead',
     'registration_notification' => 'Registration Notification',
@@ -1659,12 +1659,12 @@ return [
     'notification.duedate.inapp' => 'Ticket :model on :new',
     'notification.note' => 'New :model added - :new',
     'notification.note.inapp' => 'added new :model in <b>:ticket</b> - :new',
-    'agent_reply' => 'Agent Reply',
+    'agent_reply' => 'Staff Reply',
     'client_reply' => 'Client Reply',
     'new-user-register' => 'registered',
     'reply.notification' => 'has replied in <b>:title</b>',
     'custom-format' => 'Custom Format',
-    'assigned_agent' => 'Assigned agent',
+    'assigned_agent' => 'Assigned staff',
     'in_app_system' => 'Notification',
     'new_ticket_confirmation_alert' => 'New Ticket Confirmation',
     'registration_verification' => 'Registration Verififcation',

@@ -11,7 +11,7 @@ class CreateTicketStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_status', function (Blueprint $table) {
+        Schema::create('tickets__statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('state');
@@ -33,6 +33,6 @@ class CreateTicketStatusTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ticket_status');
+        Schema::drop('tickets__statuses');
     }
 }

@@ -118,16 +118,16 @@ if (count($replaceside) == 0) {
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 @if(Auth::user())
 
-                  <img src="{{Auth::user()->profile_pic}}" class="user-image" alt="User Image"/>
+                  <img src="{{Auth::user()->profile_pic}}" class="user-image" alt="Staff Image"/>
 
                   <span class="hidden-xs">{!! Auth::user()->first_name." ".Auth::user()->last_name !!}</span>
                 @endif
               </a>
               <ul class="dropdown-menu">
-                <!-- User image -->
+                <!-- Staff image -->
                 <li class="user-header" style="background-color:#343F44;">
                   @if(Auth::user())
-                    <img src="{{Auth::user()->profile_pic}}" class="img-circle" alt="User Image"/>
+                    <img src="{{Auth::user()->profile_pic}}" class="img-circle" alt="Staff Image"/>
                     <p>
                       {!! Auth::user()->first_name !!}{!! " ". Auth::user()->last_name !!} - {{Auth::user()->role}}
                       <small></small>
@@ -160,7 +160,7 @@ if (count($replaceside) == 0) {
           <div class="col-xs-3"></div>
           <div class="col-xs-2" style="width:50%;">
             <a href="{!! url('profile') !!}">
-              <img src="{{Auth::user()->profile_pic}}" class="img-circle" alt="User Image"/>
+              <img src="{{Auth::user()->profile_pic}}" class="img-circle" alt="Staff Image"/>
             </a>
           </div>
         </div>
@@ -189,8 +189,8 @@ if (count($replaceside) == 0) {
                 class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li @yield('agents')><a href="{{ url('agents') }}"><i
-                    class="fa fa-user "></i>{!! Lang::get('lang.agents') !!}</a></li>
+              <li @yield('staff')><a href="{{ url('staff') }}"><i
+                    class="fa fa-user "></i>{!! Lang::get('lang.staff') !!}</a></li>
               <li @yield('departments')><a href="{{ url('departments') }}"><i
                     class="fa fa-sitemap"></i>{!! Lang::get('lang.departments') !!}</a></li>
               <li @yield('teams')><a href="{{ url('teams') }}"><i
@@ -200,15 +200,15 @@ if (count($replaceside) == 0) {
             </ul>
           </li>
 
-          <li class="treeview @yield('Emails')">
+          <li class="treeview @yield('Mailboxes')">
             <a href="#">
               <i class="fa fa-envelope-o"></i>
               <span>{!! Lang::get('lang.email') !!}</span>
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li @yield('emails')><a href="{{ url('emails') }}"><i
-                    class="fa fa-envelope"></i>{!! Lang::get('lang.emails') !!}</a></li>
+              <li @yield('mailboxes')><a href="{{ url('mailboxes') }}"><i
+                    class="fa fa-envelope"></i>{!! Lang::get('lang.mailboxes') !!}</a></li>
               <li @yield('ban')><a href="{{ url('banlist') }}"><i
                     class="fa fa-ban"></i>{!! Lang::get('lang.ban_pluck') !!}</a></li>
               <li @yield('template')><a href="{{ url('template-sets') }}"><i

@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Dashboard')
   class="active"
@@ -19,7 +19,7 @@
 @section('content')
   <div class="row">
     <div class="col-md-6">
-      {!! Form::model($user,['url'=>'agent-profile', 'id' => 'agent-profile', 'method' => 'PATCH','files'=>true]) !!}
+      {!! Form::model($user,['url'=>'staff-profile', 'id' => 'staff-profile', 'method' => 'PATCH','files'=>true]) !!}
       <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">
@@ -137,7 +137,7 @@
       </div>
     </div>
     <div class="col-md-6">
-      {!! Form::model($user,['url'=>'agent-profile-password/'.$user->id , 'method' => 'PATCH']) !!}
+      {!! Form::model($user,['url'=>'staff-profile-password/'.$user->id , 'method' => 'PATCH']) !!}
       <div class="box box-primary">
         <div class="box-header with-border">
           <h4 class="box-title">{!! Lang::get('lang.change_password') !!}</h4>
@@ -258,7 +258,7 @@
   </script>
   @if($verify == 1 || $verify == '1')
   <script type="text/javascript">
-    $('#agent-profile').on('submit', function (e) {
+    $('#staff-profile').on('submit', function (e) {
       var old_mobile = "<?php echo $user->mobile;?>";
       var email = "<?php echo $user->email;?>";
       var full_name = "<?php echo $user->first_name; ?>";
@@ -272,7 +272,7 @@
           e.preventDefault();
           $('#last-modal').css('display', 'block');
           $.ajax({
-            url: '{{URL::route("agent-verify-number")}}',
+            url: '{{URL::route("staff-verify-number")}}',
             type: 'post', // performing a POST request
             data: {
               mobile: mobile,
@@ -294,7 +294,7 @@
                 e.preventDefault();
                 var otp = document.getElementById('otp').value;
                 $.ajax({
-                  url: '{{URL::route("post-agent-verify-number")}}',
+                  url: '{{URL::route("post-staff-verify-number")}}',
                   type: 'POST',
                   data: {
                     otp: otp,
@@ -313,7 +313,7 @@
                       var message = "{{Lang::get('lang.number-verification-sussessfull')}}";
                       $('#success_message').html(message);
                       $('#verify-success').css('display', 'block');
-                      $('#agent-profile').unbind('submit').submit();
+                      $('#staff-profile').unbind('submit').submit();
                     } else {
                       $('#loader2').css('display', 'none');
                       $("#error_message").html(response);

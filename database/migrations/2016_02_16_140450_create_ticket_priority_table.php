@@ -11,7 +11,7 @@ class CreateTicketPriorityTable extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_priority', function (Blueprint $table) {
+        Schema::create('tickets_priorities', function (Blueprint $table) {
             $table->increments('priority_id');
             $table->string('priority');
             $table->string('status');
@@ -31,6 +31,6 @@ class CreateTicketPriorityTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ticket_priority');
+        Schema::drop('tickets_priorities');
     }
 }

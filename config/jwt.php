@@ -46,17 +46,17 @@ return [
     'algo' => 'HS256',
     /*
       |--------------------------------------------------------------------------
-      | User Model namespace
+      | Staff Model namespace
       |--------------------------------------------------------------------------
       |
-      | Specify the full namespace to your User model.
-      | e.g. 'Acme\Entities\User'
+      | Specify the full namespace to your Staff model.
+      | e.g. 'Acme\Entities\Staff'
       |
      */
     'user' => 'App\User',
     /*
       |--------------------------------------------------------------------------
-      | User identifier
+      | Staff identifier
       |--------------------------------------------------------------------------
       |
       | Specify a unique property of the user that will be added as the 'sub'
@@ -96,7 +96,7 @@ return [
     'providers' => [
         /*
           |--------------------------------------------------------------------------
-          | User Provider
+          | Staff Provider
           |--------------------------------------------------------------------------
           |
           | Specify the provider that is used to find the user based

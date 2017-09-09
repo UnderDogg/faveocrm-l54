@@ -1,5 +1,5 @@
 <?php
-function loging($context, $message, $level = 'error', $array = [])
+function logging($context, $message, $level = 'error', $array = [])
 {
     \Log::$level($message . ':-:-:-' . $context, $array);
 }
@@ -234,7 +234,7 @@ function utfEncoding($name)
 
 function role($id)
 {
-    $user = \App\User::where('id', $id)->select('role')->first();
+    $user = \App\Staff::where('id', $id)->select('role')->first();
     if ($user) {
         return $user->role;
     }

@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Users')
   class="active"
@@ -8,7 +8,7 @@
   active
 @stop
 
-@section('organizations')
+@section('relations')
   class="active"
 @stop
 
@@ -19,7 +19,7 @@
 @section('content')
   <div class="box box-primary">
     <div class="box-header with-border">
-      <h2 class="box-title">{{Lang::get('lang.organization_list')}}</h2>
+      <h2 class="box-title">{{Lang::get('lang.relation_list')}}</h2>
       <a href="{{route('organizations.create')}}"
          class="btn btn-primary pull-right">{{Lang::get('lang.create_organization')}}</a>
     </div>

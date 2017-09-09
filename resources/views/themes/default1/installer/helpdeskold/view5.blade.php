@@ -103,7 +103,7 @@
               </tr>
               <tr>
                 <td>
-                  <label for="box2">Email<span style="color
+                  <label for="box2">MailboxSettings<span style="color
                                 : red;font-size:12px;">*</span></label>
                 </td>
                 <td>
@@ -128,7 +128,7 @@
 
               <tr>
                 <td>
-                  <label for="box4">User Name <span style="color
+                  <label for="box4">Staff Name <span style="color
                                     : red;font-size:12px;">*</span>
                   </label>
                 </td>

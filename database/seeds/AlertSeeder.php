@@ -55,7 +55,7 @@ class AlertSeeder extends Seeder
             ],
             [
                 'key' => 'notification_alert_persons',
-                'value' => 'admin,agent,department_manager,team_lead',
+                'value' => 'admin,staff,department_manager,team_lead',
             ],
             [
                 'key' => 'internal_activity_alert',

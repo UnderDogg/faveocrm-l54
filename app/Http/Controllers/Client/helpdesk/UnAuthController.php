@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Client\helpdesk;
 use App\Http\Controllers\Common\PhpMailController;
 use App\Http\Controllers\Controller;
 // requests
-use App\Model\helpdesk\Email\Emails;
+use App\Model\helpdesk\Mailboxes\Mailboxes;
 // models
 use App\Model\helpdesk\Settings\CommonSettings;
 use App\Model\helpdesk\Settings\Followup;
-use App\Model\helpdesk\Ticket\Ticket_Status;
-use App\Model\helpdesk\Ticket\Ticket_Thread;
+use App\Model\helpdesk\Ticket\TicketStatus;
+use App\Model\helpdesk\Ticket\TicketThread;
 use App\Model\helpdesk\Ticket\Tickets;
 use App\Model\helpdesk\Ticket\TicketToken;
-use App\User;
+use App\Staff;
 use DB;
 // classes
 use Hash;
@@ -43,9 +43,9 @@ class UnAuthController extends Controller
      * Post Check ticket.
      *
      * @param type CheckTicket   $request
-     * @param type User          $user
+     * @param type Staff          $user
      * @param type Tickets       $ticket
-     * @param type Ticket_Thread $thread
+     * @param type TicketThread $thread
      *
      * @return type Response
      */
@@ -62,10 +62,10 @@ class UnAuthController extends Controller
                     ->withInput()
                     ->with('check', '1');
             }
-            $email = $request->input('email_address');
+            $mailbox = $request->input('email_address');
             $ticket_number = $request->input('ticket_number');
             // get user details
-            $user_details = User::where('email', '=', $email)->first();
+            $user_details = Staff::where('email', '=', $mailbox)->first();
             if ($user_details == null) {
                 return \Redirect::route('form')->with('fails', Lang::get('lang.sorry_that_email_is not_available_in_this_system'));
             }
@@ -191,7 +191,7 @@ class UnAuthController extends Controller
     }
 
     /**
-     * Store Client rating about reply of agent quality.
+     * Store Client rating about reply of staff quality.
      *
      * @return type Redirect
      */
@@ -235,32 +235,32 @@ class UnAuthController extends Controller
     {
         $tickets = Tickets::where('id', '=', $id)->first();
         $tickets->status = $status;
-        $ticket_status = Ticket_Status::where('id', '=', $status)->first();
+        $ticket_status = TicketStatus::where('id', '=', $status)->first();
         if ($ticket_status->state == 'closed') {
             $tickets->closed = $ticket_status->id;
             $tickets->closed_at = date('Y-m-d H:i:s');
         }
         $tickets->save();
-        $ticket_thread = Ticket_Thread::where('ticket_id', '=', $ticket_status->id)->first();
+        $ticket_thread = TicketThread::where('ticket_id', '=', $ticket_status->id)->first();
         $ticket_subject = $ticket_thread->title;
-        $user = User::where('id', '=', $tickets->user_id)->first();
-        $thread = new Ticket_Thread();
+        $user = Staff::where('id', '=', $tickets->user_id)->first();
+        $thread = new TicketThread();
         $thread->ticket_id = $tickets->id;
         $thread->user_id = $tickets->user_id;
         $thread->is_internal = 1;
         $thread->body = $ticket_status->message . ' ' . $user->user_name;
         $thread->save();
-        $email = $user->email;
+        $mailbox = $user->email;
         $user_name = $user->user_name;
         $ticket_number = $tickets->ticket_number;
-        $sending_emails = Emails::where('department', '=', $ticket_status->dept_id)->first();
+        $sending_emails = Mailboxes::where('department', '=', $ticket_status->dept_id)->first();
         if ($sending_emails == null) {
             $from_email = $this->system_mail();
         } else {
             $from_email = $sending_emails->id;
         }
         try {
-            $this->PhpMailController->sendmail($from = $this->PhpMailController->mailfrom('0', $tickets->dept_id), $to = ['name' => $user_name, 'email' => $email], $message = ['subject' => $ticket_subject . '[#' . $ticket_number . ']', 'scenario' => 'close-ticket'], $template_variables = ['ticket_number' => $ticket_number]);
+            $this->PhpMailController->sendmail($from = $this->PhpMailController->mailfrom('0', $tickets->dept_id), $to = ['name' => $user_name, 'email' => $mailbox], $message = ['subject' => $ticket_subject . '[#' . $ticket_number . ']', 'scenario' => 'close-ticket'], $template_variables = ['ticket_number' => $ticket_number]);
         } catch (\Exception $e) {
             return 0;
         }
@@ -288,7 +288,7 @@ class UnAuthController extends Controller
                         $overdue->closed_at = date('Y-m-d H:i:s');
                         $overdue->save();
                         //        if($workflow->send_email == 1) {
-                        //             $this->PhpMailController->sendmail($from = $this->PhpMailController->mailfrom('0', $overdue->dept_id), $to = ['name' => $user_name, 'email' => $email], $message = ['subject' => $ticket_subject.'[#'.$ticket_number.']', 'scenario' => 'close-ticket'], $template_variables = ['ticket_number' => $ticket_number]);
+                        //             $this->PhpMailController->sendmail($from = $this->PhpMailController->mailfrom('0', $overdue->dept_id), $to = ['name' => $user_name, 'email' => $mailbox], $message = ['subject' => $ticket_subject.'[#'.$ticket_number.']', 'scenario' => 'close-ticket'], $template_variables = ['ticket_number' => $ticket_number]);
                         //        }
                     }
                 }
@@ -384,7 +384,7 @@ class UnAuthController extends Controller
         if (array_key_exists($lang, \Config::get('languages')) && in_array($lang, scandir($path))) {
             if (\Auth::check()) {
                 $id = \Auth::user()->id;
-                $user = User::find($id);
+                $user = Staff::find($id);
                 $user->user_language = $lang;
                 $user->save();
             } else {

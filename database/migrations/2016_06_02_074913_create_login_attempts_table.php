@@ -13,7 +13,7 @@ class CreateLoginAttemptsTable extends Migration
     {
         Schema::create('login_attempts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('User');
+            $table->string('Staff');
             $table->string('IP');
             $table->string('Attempts');
             $table->datetime('LastLogin');

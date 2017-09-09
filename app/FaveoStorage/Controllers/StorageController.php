@@ -3,8 +3,8 @@ namespace App\FaveoStorage\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Model\helpdesk\Settings\CommonSettings;
-use App\Model\helpdesk\Ticket\Ticket_attachments;
-use App\Model\helpdesk\Ticket\Ticket_Thread;
+use App\Model\helpdesk\Ticket\TicketAttachments;
+use App\Model\helpdesk\Ticket\TicketThread;
 use Config;
 use Storage;
 
@@ -180,7 +180,7 @@ class StorageController extends Controller
 
     public function upload($data, $filename, $type, $size, $disposition, $thread_id, $attachment)
     {
-        $upload = new Ticket_attachments();
+        $upload = new TicketAttachments();
         $name = $upload->whereName($filename)->select('name')->first();
         if ($name) {
             $filename = str_random(5) . '_' . $filename;
@@ -220,13 +220,13 @@ class StorageController extends Controller
     public function saveAttachments($thread_id, $attachments = [], $inline = [])
     {
         if (is_array($attachments) || is_array($inline)) {
-            $ticket_thread = Ticket_Thread::find($thread_id);
+            $ticket_thread = TicketThread::find($thread_id);
             if (!$ticket_thread) {
                 throw new \Exception('Thread not found');
             }
             $PhpMailController = new \App\Http\Controllers\Common\PhpMailController();
             $NotificationController = new \App\Http\Controllers\Common\NotificationController();
-            $ticket_controller = new \App\Http\Controllers\Agent\helpdesk\TicketController($PhpMailController, $NotificationController);
+            $ticket_controller = new \App\Http\Controllers\Staff\helpdesk\TicketController($PhpMailController, $NotificationController);
             $thread = $ticket_controller->saveReplyAttachment($ticket_thread, $attachments, $inline);
         }
         return $thread;
@@ -268,7 +268,7 @@ class StorageController extends Controller
             if ($disposition == 'INLINE' || $disposition == 'inline') {
                 $id = str_replace('>', '', str_replace('<', '', $structure->id));
                 //dd($disposition,$filename,'cid:' . $id);
-                $threads = new Ticket_Thread();
+                $threads = new TicketThread();
                 $thread = $threads->find($thread_id);
                 $body = $thread->body;
                 $body = str_replace('cid:' . $id, $filename, $body);

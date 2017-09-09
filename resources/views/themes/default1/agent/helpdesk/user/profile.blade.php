@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Dashboard')
   class="active"
@@ -17,14 +17,14 @@
 @stop
 
 @section('profileimg')
-  <img src="{{Auth::user()->profile_pic}}" class="img-circle" alt="User Image" width="100%"/>
+  <img src="{{Auth::user()->profile_pic}}" class="img-circle" alt="Staff Image" width="100%"/>
 @stop
 
 @section('content')
   <div class="box box-primary">
     <div class="box-header with-border">
       <h3 class="box-title"><b>{!! Lang::get('lang.profile') !!}</b>&nbsp;&nbsp;<a
-          href="{{URL::route('agent-profile-edit')}}"><i class="fa fa-fw fa-edit"> </i></a></h3>
+          href="{{URL::route('staff-profile-edit')}}"><i class="fa fa-fw fa-edit"> </i></a></h3>
       @if(Session::has('success'))
         <br><br>
         <div class="alert alert-success alert-dismissable">
@@ -45,13 +45,13 @@
     </div>
     <?php
     if ($user->primary_dpt) {
-      $dept = App\Model\helpdesk\Agent\Department::where('id', '=', $user->primary_dpt)->first();
+      $dept = App\Model\helpdesk\Staff\Department::where('id', '=', $user->primary_dpt)->first();
       $dept = $dept->name;
     } else {
       $dept = "";
     }
     if ($user->assign_group) {
-      $grp = App\Model\helpdesk\Agent\Groups::where('id', '=', $user->assign_group)->first();
+      $grp = App\Model\helpdesk\Staff\Groups::where('id', '=', $user->assign_group)->first();
       $grp = $grp->name;
     } else {
       $grp = "";

@@ -23,6 +23,6 @@ class CheckRoleUser
         if ($request->user()->role == 'user') {
             return $next($request);
         }
-        return redirect('guest')->with('fails', 'You are not Autherised');
+        return redirect('guest')->with('fails', 'You are not Authorized');
     }
 }

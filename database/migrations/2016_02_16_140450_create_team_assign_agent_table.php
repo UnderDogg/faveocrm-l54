@@ -14,7 +14,7 @@ class CreateTeamAssignAgentTable extends Migration
         Schema::create('team_assign_agent', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('team_id')->unsigned()->nullable()->index('team_id');
-            $table->integer('agent_id')->unsigned()->nullable()->index('agent_id');
+            $table->integer('staff_id')->unsigned()->nullable()->index('staff_id');
             $table->timestamps();
         });
     }

@@ -20,9 +20,9 @@ class CheckRoleAgent
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->role == 'agent' || $request->user()->role == 'admin') {
+        if ($request->user()->role == 'staff' || $request->user()->role == 'admin') {
             return $next($request);
         }
-        return redirect('dashboard')->with('fails', 'You are not Autherised');
+        return redirect('dashboard')->with('fails', 'You are not Authorized');
     }
 }

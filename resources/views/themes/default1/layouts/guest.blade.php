@@ -278,7 +278,7 @@
         </li>
         <li>
           <a href="../mailbox/mailbox.html">
-            <i class="fa fa-envelope"></i> <span>Mailbox</span>
+            <i class="fa fa-envelope"></i> <span>MailboxSettings</span>
             <small class="label pull-right bg-yellow">12</small>
           </a>
         </li>

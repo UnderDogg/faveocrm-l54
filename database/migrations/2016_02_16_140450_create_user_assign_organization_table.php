@@ -2,7 +2,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUserAssignOrganizationTable extends Migration
+class CreateUserAssignRelationTable extends Migration
 {
     /**
      * Run the migrations.

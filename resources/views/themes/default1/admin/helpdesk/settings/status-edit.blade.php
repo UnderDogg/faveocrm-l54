@@ -85,7 +85,7 @@
         </div>
       </div>
       <div class="form-group">
-        <!-- Email user -->
+        <!-- Mailboxes user -->
         {!! Form::label('gender',Lang::get('lang.deleted_status')) !!}
         <div class="callout callout-default" style="font-style: oblique;">{!! Lang::get('lang.status_msg2') !!}</div>
         <div class="row">

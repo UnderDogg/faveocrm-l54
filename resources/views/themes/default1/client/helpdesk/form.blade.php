@@ -200,11 +200,11 @@
                                 </span>
                     <input type="email" name="requsEmail@{{$index}}" class="form-control"
                            style="border-radius:0;margin-top:10px;width:85%" ng-model="req.email"
-                           ng-pattern="emailFormat" placeholder="New Requester Email" id="requesterEmail"
+                           ng-pattern="emailFormat" placeholder="New Requester MailboxSettings" id="requesterEmail"
                            ng-required="@{{node.customer_email}}"/>
                                 <span style="color:red"
                                       ng-show="faveoClientForm.requsEmail@{{$index}}.$dirty && faveoClientForm.requsEmail@{{$index}}.$invalid">
-                                          <span ng-show="faveoClientForm.requsEmail@{{$index}}.$error.required">Email is required.</span>
+                                          <span ng-show="faveoClientForm.requsEmail@{{$index}}.$error.required">MailboxSettings is required.</span>
                                           <span ng-show="faveoClientForm.requsEmail@{{$index}}.$error.pattern">Invalid email address.</span>
                                 </span>
                     <div class="row" style="width:85%">

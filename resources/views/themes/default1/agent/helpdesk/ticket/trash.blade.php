@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Tickets')
   class="active"
@@ -45,8 +45,8 @@
   @section('content')
   <?php
   // $date_time_format = UTC::getDateTimeFormat();
-  if (Auth::user()->role == 'agent') {
-    $dept = App\Model\helpdesk\Agent\Department::where('id', '=', Auth::user()->primary_dpt)->first();
+  if (Auth::user()->role == 'staff') {
+    $dept = App\Model\helpdesk\Staff\Department::where('id', '=', Auth::user()->primary_dpt)->first();
     $tickets = App\Model\helpdesk\Ticket\Tickets::where('status', '=', 5)->where('dept_id', '=', $dept->id)->orderBy('id', 'DESC')->count();
   } else {
     $tickets = App\Model\helpdesk\Ticket\Tickets::where('status', '=', 5)->orderBy('id', 'DESC')->count();

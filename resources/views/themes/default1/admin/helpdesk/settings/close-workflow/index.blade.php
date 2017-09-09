@@ -111,12 +111,12 @@
         <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
           <div class="row">
             <div class="col-md-3">
-              <label for="title">{!! Lang::get('lang.ticket_status') !!}:</label>
+              <label for="title">{!! Lang::get('lang.tickets__statuses') !!}:</label>
             </div>
             <div class="col-md-6">
               <div class="callout callout-default" style="font-style: oblique;">{!! Lang::get('lang.close-msg3') !!}
               </div>
-              <?php $user = \App\Model\helpdesk\Ticket\Ticket_Status::where('state', '=', 'closed')->get(); ?>
+              <?php $user = \App\Model\helpdesk\Ticket\TicketStatus::where('state', '=', 'closed')->get(); ?>
               {!! Form::select('status',[ Lang::get('lang.status')=>$user->pluck('name','id')->toArray()],null,['class' => 'form-control']) !!}
             </div>
           </div>

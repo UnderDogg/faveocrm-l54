@@ -98,7 +98,7 @@ return [
     'see-profile1' => 'Haga clic aquí para ver ',
     'see-profile2' => 'Perfil de s',
     'activate_your_account_click_on_Link_that_send_to_your_mail' => 'Activa tu cuenta! Haga clic en el enlace que hemos enviado a su correo',
-    'activate_your_account_click_on_Link_that_send_to_your_mail_and_moble' => 'Activa tu cuenta! Haz clic en el enlace que hemos enviado a tu correo o accede a tu cuenta e ingresa el código de OTP que hemos enviado en tu número de móvil',
+    'activate_your_account_click_on_Link_that_send_to_your_mail_and_mobile' => 'Activa tu cuenta! Haz clic en el enlace que hemos enviado a tu correo o accede a tu cuenta e ingresa el código de OTP que hemos enviado en tu número de móvil',
     'activate_your_account_click_on_Link_that_send_to_your_mail_sms_plugin_inactive_or_not_setup' => 'Cuenta creada, póngase en contacto con el administrador del sistema, ya que no pudimos enviar el código de OTP a su móvil y lo enviamremos a su dirección de correo electrónico..',
     'this_field_do_not_match_our_records' => 'Este campo no coincide con nuestros registros.',
     'we_have_e-mailed_your_password_reset_link' => 'Hemos enviado su enlace de restablecimiento de contraseña por correo electrónico!',
@@ -138,13 +138,13 @@ return [
       |  Dirección de correo electrónicos Crear página
       |--------------------------------------
      */
-    'emails' => 'Dirección de correo electrónicos',
+    'mailboxes' => 'Dirección de correo electrónicos',
     'incoming_emails' => 'Correo electrónico entrante',
     'reuired_authentication' => 'Autenticación requerida',
     'fetching_email_via_imap' => 'Obtener correo electrónico a través de IMAP',
-    'create_email' => 'Crear correo electrónico',
+    'create_mailbox' => 'Crear correo electrónico',
     'email_address' => 'Dirección de correo electrónico',
-    'email_name' => 'Nombre de correo electrónico',
+    'mailbox_name' => 'Nombre de correo electrónico',
     'help_topic' => 'Tema de ayuda',
     'auto_response' => 'Respuesta automática',
     'host_name' => 'Nombre de host',
@@ -156,7 +156,7 @@ return [
     'header_spoofing' => 'Spoofing de encabezado',
     'allow_for_this_email' => 'Permitir este correo electrónico',
     'imap_config' => 'Configuración IMAP',
-    'email_information_and_settings' => 'Dirección de correo electrónico información y configuración',
+    'mailbox_information_and_settings' => 'Dirección de correo electrónico información y configuración',
     'incoming_email_information' => 'Información de correo electrónico entrante',
     'outgoing_email_information' => 'Información de correo saliente',
     'new_ticket_settings' => 'Configuración de nuevos tickets',
@@ -212,18 +212,18 @@ return [
     'you_have_successfully_activated_this_set' => 'Ha activado correctamente este conjunto',
     'template_set_deleted_successfully' => 'Conjunto de plantillas eliminado correctamente',
     //Template Description
-    'Create ticket agent' => 'Notificación de correo electrónico que se envía al agente y al admin cuando se crea el ticket',
+    'Create ticket staff' => 'Notificación de correo electrónico que se envía al agente y al admin cuando se crea el ticket',
     'Assign ticket' => 'Ticket asignado a un agente',
     'Create ticket' => 'Correo enviado al cliente exitosamente notificando la creación del ticket',
     'Check ticket' => 'Si un cliente quiere comprobar el ticket a través del portal del cliente, se enviará un enlace al cliente. Este enlace es para que el cliente pueda ver los detalles del ticket sin iniciar sesión en el sistema',
-    'Ticket reply agent' => 'Una notificación se envía al correo electrónico del agente una vez que el cliente responde al ticket',
+    'Ticket reply staff' => 'Una notificación se envía al correo electrónico del agente una vez que el cliente responde al ticket',
     'Registration notification' => 'Contraseña y nombre de usuario se envía por correo electrónico en el primer registro',
     'Restablecer la contraseña' => 'Dirección de Correo electrónico con el enlace de restablecimiento de contraseña',
     'Reporte de error' => 'Reporte de error',
     'Ticket creation' => 'Primera notificación enviada por el sistema sobre la creación del ticket al cliente',
     'Ticket reply' => 'Una respuesta hecha por el agente en un ticket, notificación por correo electrónico se envía al cliente y colaboradores',
     'Close ticket' => 'Correo enviado al cliente al cerrar un ticket',
-    'Create ticket by agent' => 'Un agente crea un ticket para el cliente en el nombre del cliente',
+    'Create ticket by staff' => 'Un agente crea un ticket para el cliente en el nombre del cliente',
     /*
       |--------------------------------------
       |  Plantillas Crear página
@@ -442,7 +442,7 @@ return [
     'new_ticket_alert' => 'Nueva alerta de Tickets',
     'department_manager' => 'gerente de departamento',
     'department_members' => 'Miembros del departamento',
-    'organization_account_manager' => 'Administrador de cuentas de la organización',
+    'relation_account_manager' => 'Administrador de cuentas de la organización',
     'new_message_alert' => 'Alerta de nuevo mensaje',
     'last_respondent' => 'Último encuestado',
     'assigned_agent_team' => 'Agente / equipo asignado',
@@ -757,7 +757,7 @@ return [
     'lastlogin' => 'Último acceso',
     'createagent' => 'Crear un agente',
     'delete' => 'Borrar',
-    'agents' => 'Agentes',
+    'staff' => 'Agentes',
     'create' => 'Creado',
     'edit' => 'Editar',
     'departments' => 'Departmentos',
@@ -777,7 +777,7 @@ return [
     'account_status_setting' => 'Estado y configuración de la cuenta',
     'account_type' => 'Tipo de cuenta',
     'admin' => 'Admin',
-    'agent' => 'Agente',
+    'staff' => 'Agente',
     'account_status' => 'Estado de la cuenta',
     'locked' => 'Bloqueado',
     'assigned_group' => 'Grupo asignado',
@@ -905,7 +905,7 @@ return [
       | Agente Panel [Español(es)]
       |----------------------------------------------------------------------------------------
       |
-      | The following language lines are used in all Agent Panel related issues to translate
+      | The following language lines are used in all Staff Panel related issues to translate
       | some words in view to English. You are free to change them to anything you want to
       | customize your views to better match your application.
       |
@@ -975,8 +975,8 @@ return [
     'phone_number' => 'Número de teléfono',
     'contact_information' => 'Información del contacto',
     'Profile-Updated-sucessfully' => 'perfil actualizado con éxito.',
-    'User-profile-Updated-Successfully' => 'Perfil del usuario actualizado con éxito.',
-    'User-Creado-Successfully' => 'Usuario creado correctamente.',
+    'Staff-profile-Updated-Successfully' => 'Perfil del usuario actualizado con éxito.',
+    'Staff-Creado-Successfully' => 'Usuario creado correctamente.',
     /*
       |-----------------------------------------------
       | Tablero
@@ -1031,25 +1031,25 @@ return [
       |Página de la organización
       |------------------------------------------------
      */
-    'organizations' => 'Organizaciones',
-    'organization' => 'Organización',
-    'organization_list' => 'Lista de organizaciones',
-    'view_organization_profile' => 'Ver perfil de la organización',
+    'relations' => 'Organizaciones',
+    'relation' => 'Organización',
+    'relation_list' => 'Lista de organizaciones',
+    'view_relation_profile' => 'Ver perfil de la organización',
     'create_organization' => 'Crear organización',
     'account_manager' => 'Gerente de cuentas',
     'update' => 'Actualizar',
     'please_select_an_organization' => 'Seleccione una organización',
     'please_select_an_user' => 'Seleccione un usuario',
-    'organization_profile' => 'Perfil de la organización',
-    'organization-s_head' => 'Cabeza de la organización',
+    'relation_profile' => 'Perfil de la organización',
+    'relation-s_head' => 'Cabeza de la organización',
     'select_department_manager' => 'Seleccionar director de departamento',
-    'select_organization_manager' => 'Seleccione el administrador de la organización',
+    'select_relation_manager' => 'Seleccione el administrador de la organización',
     'users_of' => 'Los usuarios de',
-    'organization_created_successfully' => 'Organización creada correctamente',
-    'organization_can_not_create' => 'No se puede crear la organización',
-    'organization_updated_successfully' => 'Organización actualizada con éxito',
-    'organization_can_not_update' => 'La organización no se puede actualizar',
-    'organization_deleted_successfully' => 'Organización eliminada correctamente',
+    'relation_created_successfully' => 'Organización creada correctamente',
+    'relation_can_not_create' => 'No se puede crear la organización',
+    'relation_updated_successfully' => 'Organización actualizada con éxito',
+    'relation_can_not_update' => 'La organización no se puede actualizar',
+    'relation_deleted_successfully' => 'Organización eliminada correctamente',
     'report_of' => 'Informe de',
     'ticket_of' => 'Tickets de',
     /*
@@ -1071,7 +1071,7 @@ return [
     'open' => 'Abierto',
     'Ticket_Information' => 'INFORMACION DEL TICKET',
     'Ticket_Id' => 'TICKET ID',
-    'User' => 'USUARIO',
+    'Staff' => 'USUARIO',
     'Unassigned' => 'Sin asignar',
     'unassigned-tickets' => 'Tickets sin asignar',
     'generate_pdf' => 'Generar PDF',
@@ -1094,7 +1094,7 @@ return [
     'attachment' => 'Adjunto archivo',
     'internal_note' => 'Nota interna',
     'this_ticket_is_under_banned_user' => 'Este ticket está bajo usuario baneado',
-    'ticket_source' => 'Ticket source',
+    'tickets_sources' => 'Ticket source',
     'are_you_sure_to_ban' => 'Seguro que vas a banear',
     'whome_do_you_want_to_assign_ticket' => 'A quién quiere asignar el ticket',
     'are_you_sure_you_want_to_surrender_this_ticket' => 'Está seguro de que desea entregar este ticket',
@@ -1354,7 +1354,7 @@ Puede ingresar el número de días de registros de base de datos que se eliminar
     'have_a_ticket' => 'Tengo un ticket',
     'check_ticket_status' => 'Compruebe el estado del ticket',
     'choose_a_help_topic' => 'Elija un tema de ayuda',
-    'ticket_status' => 'Estado del ticket',
+    'tickets__statuses' => 'Estado del ticket',
     'post_comment' => 'Publicar comentario',
     'plugin' => 'Plugin',
     'edit_profile' => 'Editar perfil',
@@ -1477,7 +1477,7 @@ Puede ingresar el número de días de registros de base de datos que se eliminar
      * Ticket Prioridad
      * -----------------------------------------------------------------------------------
      */
-    'ticket_priority' => 'Prioridad del ticket',
+    'tickets_priorities' => 'Prioridad del ticket',
     'priority' => 'Prioridad',
     'priority_desc' => 'Descripción de Prioridad',
     'priority_urgency' => 'Prioridad urgencia',
@@ -1523,7 +1523,7 @@ Puede ingresar el número de días de registros de base de datos que se eliminar
      */
     'not-available' => 'No disponible',
     /* --------------------------------------------------------------------------------------------
-    * User Module
+    * Staff Module
     * --------------------------------------------------------------------------------------------
     */
     'agent_report' => 'Informe del agente',
@@ -1532,7 +1532,7 @@ Puede ingresar el número de días de registros de base de datos que se eliminar
     'delete_user' => 'Borrar usuario',
     'confirm_deletion' => 'Confirmar la eliminación',
     'delete_all_content' => 'Borrar todo el contenido',
-    'agent_profile' => 'Perfil del agente',
+    'staff_profile' => 'Perfil del agente',
     'change_role_to_admin' => 'Cambiar el rol a admin',
     'change_role_to_user' => 'Cambiar función a usuario',
     'change_role_to_agent' => 'Cambiar el rol a agente',
@@ -1576,7 +1576,7 @@ Puede ingresar el número de días de registros de base de datos que se eliminar
     //update 18-12-2016
     'account-created-contact-admin-as-we-were-not-able-to-send-opt' => 'Su cuenta se ha creado correctamente. Póngase en contacto con admin para activar la cuenta, ya que no hemos podido enviarle un código de OTP.',
     //update 19-12-2016
-    'only-agents' => 'Usuarios de agentes',
+    'only-staff' => 'Usuarios de agentes',
     'only-users' => 'Clientes usuarios',
     'banned-users' => 'Usuarios baneados',
     'inactive-users' => 'Usuarios inactivos',
@@ -1587,7 +1587,7 @@ Puede ingresar el número de días de registros de base de datos que se eliminar
     //update 1-2-2017
     'system-outgoing-incoming-mail-not-configured' => 'You have not configured system mail. Faveo can\'t fetch tickets from mail or send mail to users without it.',
     'confihure-the-mail-now' => 'Click here to configure the mail.',
-    'system-mail-not-configured-agent-message' => 'System incoming and outgoing email settings are not configured. Please contct the admin.',
+    'system-mail-not-configured-staff-message' => 'System incoming and outgoing email settings are not configured. Please contct the admin.',
     // arindam-14.2.2017
     // sla
     'min' => 'Min',
@@ -1605,7 +1605,7 @@ Puede ingresar el número de días de registros de base de datos que se eliminar
      * ----------------------------------------------------------------
      */
     'client' => 'Client',
-    'send_email' => 'Send Email',
+    'send_email' => 'Send Mailboxes',
     'visibility_to_client' => 'Visibility to Client',
     'purpose_of_status' => 'Purpose of Status',
     'status_to_display' => 'Status to Display',
@@ -1636,20 +1636,20 @@ Puede ingresar el número de días de registros de base de datos que se eliminar
     //updates 22-2-2017
     'invalid-date-range' => 'Invalid date range',
     //updates 14-4-2017
-    'notification.priority.update' => 'Updated by :agent - Prority changed from :old to :new',
-    'notification.source.update' => 'Updated by :agent - Source changed from :old to :new',
-    'notification.title.update' => 'Updated by :agent - Title changed from :old to :new',
-    'notification.helptopic.update' => 'Updated by :agent - Help topic changed from :old to :new',
-    'notification.sla.update' => 'Updated by :agent - Sla changed from :old to :new',
-    'notification.status.update' => 'Updated by :agent - Status changed from :old to :new',
-    'notification.assign.update' => 'Assigned by :agent - Ticket assigned to :new',
-    'notification.user.update' => 'Ticket ownership changed by :agent - from :old to :new',
-    'notification.department.update' => 'Updated by :agent - Department changed from :old to :new',
+    'notification.priority.update' => 'Updated by :staff - Prority changed from :old to :new',
+    'notification.source.update' => 'Updated by :staff - Source changed from :old to :new',
+    'notification.title.update' => 'Updated by :staff - Title changed from :old to :new',
+    'notification.helptopic.update' => 'Updated by :staff - Help topic changed from :old to :new',
+    'notification.sla.update' => 'Updated by :staff - Sla changed from :old to :new',
+    'notification.status.update' => 'Updated by :staff - Status changed from :old to :new',
+    'notification.assign.update' => 'Assigned by :staff - Ticket assigned to :new',
+    'notification.user.update' => 'Ticket ownership changed by :staff - from :old to :new',
+    'notification.department.update' => 'Updated by :staff - Department changed from :old to :new',
     'created.ticket' => 'A new ticket :subject has created',
     'mode' => 'Mode',
     'new_internal_activity_alert' => 'New Internal Activity Alert',
     'sms' => 'Sms',
-    'agent' => 'Agent',
+    'staff' => 'Staff',
     'all_department_manager' => 'All Department Manager',
     'all_team_lead' => 'All Team Lead',
     'registration_notification' => 'Registration Notification',
@@ -1664,12 +1664,12 @@ Puede ingresar el número de días de registros de base de datos que se eliminar
     'notification.duedate.inapp' => 'Ticket :model on :new',
     'notification.note' => 'New :model added - :new',
     'notification.note.inapp' => 'added new :model in <b>:ticket</b> - :new',
-    'agent_reply' => 'Agent Reply',
+    'agent_reply' => 'Staff Reply',
     'client_reply' => 'Client Reply',
     'new-user-register' => 'registered',
     'reply.notification' => 'has replied in <b>:title</b>',
     'custom-format' => 'Custom Format',
-    'assigned_agent' => 'Assigned agent',
+    'assigned_agent' => 'Assigned staff',
     'in_app_system' => 'Notification',
     'new_ticket_confirmation_alert' => 'New Ticket Confirmation',
     'registration_verification' => 'Registration Verififcation',

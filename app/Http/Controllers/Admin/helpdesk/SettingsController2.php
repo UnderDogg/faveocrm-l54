@@ -8,20 +8,20 @@ use App\Http\Requests\helpdesk\CompanyRequest;
 use App\Http\Requests\helpdesk\EmailRequest;
 use App\Http\Requests\helpdesk\SystemRequest;
 // models
-use App\Model\helpdesk\Agent\Department;
-use App\Model\helpdesk\Email\Emails;
-use App\Model\helpdesk\Email\Template;
-use App\Model\helpdesk\Manage\Help_topic;
+use App\Model\helpdesk\Staff\Department;
+use App\Model\helpdesk\Mailboxes\Mailboxes;
+use App\Model\helpdesk\Mailboxes\Template;
+use App\Model\helpdesk\Manage\HelpTopic;
 use App\Model\helpdesk\Manage\Sla_plan;
 use App\Model\helpdesk\Notification\UserNotification;
 use App\Model\helpdesk\Settings\Access;
 use App\Model\helpdesk\Settings\Alert;
 use App\Model\helpdesk\Settings\Company;
-use App\Model\helpdesk\Settings\Email;
+use App\Model\helpdesk\Settings\MailboxSettings;
 use App\Model\helpdesk\Settings\Responder;
 use App\Model\helpdesk\Settings\System;
 use App\Model\helpdesk\Settings\Ticket;
-use App\Model\helpdesk\Ticket\Ticket_Priority;
+use App\Model\helpdesk\Ticket\TicketPriority;
 use App\Model\helpdesk\Utility\Date_format;
 use App\Model\helpdesk\Utility\Date_time_format;
 use App\Model\helpdesk\Utility\Time_format;
@@ -104,9 +104,9 @@ class SettingsController2 extends Controller
     {
         try {
             /* fetch the values of company from company table */
-            $statuss = \DB::table('ticket_status')->get();
+            $statuses = \DB::table('tickets__statuses')->get();
             /* Direct to Company Settings Page */
-            return view('themes.default1.admin.helpdesk.settings.status', compact('statuss'));
+            return view('themes.default1.admin.helpdesk.settings.status', compact('statuses'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->errorInfo[2]);
         }
@@ -124,19 +124,19 @@ class SettingsController2 extends Controller
     {
         try {
             /* fetch the values of company from company table */
-            $statuss = \App\Model\helpdesk\Ticket\Ticket_Status::whereId($id)->first();
-            $statuss->name = Input::get('name');
-            $statuss->icon_class = Input::get('icon_class');
-            $statuss->email_user = Input::get('email_user');
-            $statuss->sort = Input::get('sort');
+            $statuses = \App\Model\helpdesk\Ticket\TicketStatus::whereId($id)->first();
+            $statuses->name = Input::get('name');
+            $statuses->icon_class = Input::get('icon_class');
+            $statuses->email_user = Input::get('email_user');
+            $statuses->sort = Input::get('sort');
             $delete = Input::get('delete');
             if ($delete == 'yes') {
-                $statuss->state = 'delete';
+                $statuses->state = 'delete';
             } else {
-                $statuss->state = Input::get('state');
+                $statuses->state = Input::get('state');
             }
-            $statuss->sort = Input::get('sort');
-            $statuss->save();
+            $statuses->sort = Input::get('sort');
+            $statuses->save();
             /* Direct to Company Settings Page */
             return redirect()->back()->with('success', 'Status has been updated!');
         } catch (Exception $e) {
@@ -144,22 +144,22 @@ class SettingsController2 extends Controller
         }
     }
 
-    public function createStatuses(\App\Model\helpdesk\Ticket\Ticket_Status $statuss)
+    public function createStatuses(\App\Model\helpdesk\Ticket\TicketStatus $statuses)
     {
         //        try {
         /* fetch the values of company from company table */
-        $statuss->name = Input::get('name');
-        $statuss->icon_class = Input::get('icon_class');
-        $statuss->email_user = Input::get('email_user');
-        $statuss->sort = Input::get('sort');
+        $statuses->name = Input::get('name');
+        $statuses->icon_class = Input::get('icon_class');
+        $statuses->email_user = Input::get('email_user');
+        $statuses->sort = Input::get('sort');
         $delete = Input::get('delete');
         if ($delete == 'yes') {
-            $statuss->state = 'delete';
+            $statuses->state = 'delete';
         } else {
-            $statuss->state = Input::get('state');
+            $statuses->state = Input::get('state');
         }
-        $statuss->sort = Input::get('sort');
-        $statuss->save();
+        $statuses->sort = Input::get('sort');
+        $statuses->save();
         /* Direct to Company Settings Page */
         return redirect()->back()->with('success', 'Status has been created!');
         //        } catch (Exception $ex) {
@@ -172,7 +172,7 @@ class SettingsController2 extends Controller
         try {
             if ($id > 5) {
                 /* fetch the values of company from company table */
-                \App\Model\helpdesk\Ticket\Ticket_Status::whereId($id)->delete();
+                \App\Model\helpdesk\Ticket\TicketStatus::whereId($id)->delete();
                 /* Direct to Company Settings Page */
                 return redirect()->back()->with('success', 'Status has been deleted');
             } else {
@@ -316,19 +316,19 @@ class SettingsController2 extends Controller
      *
      * @param type Ticket     $ticket
      * @param type Sla_plan   $sla
-     * @param type Help_topic $topic
+     * @param type HelpTopic $topic
      * @param type Priority   $priority
      *
      * @return type Response
      */
-    public function getticket(Ticket $ticket, Sla_plan $sla, Help_topic $topic, Ticket_Priority $priority)
+    public function getticket(Ticket $ticket, Sla_plan $sla, HelpTopic $topic, TicketPriority $priority)
     {
         try {
             /* fetch the values of ticket from ticket table */
             $tickets = $ticket->whereId('1')->first();
             /* Fetch the values from SLA Plan table */
             $slas = $sla->get();
-            /* Fetch the values from Help_topic table */
+            /* Fetch the values from HelpTopic table */
             $topics = $topic->get();
             /* Direct to Ticket Settings Page */
             return view('themes.default1.admin.helpdesk.settings.ticket', compact('tickets', 'slas', 'topics', 'priority'));
@@ -373,25 +373,25 @@ class SettingsController2 extends Controller
     }
 
     /**
-     * get the form for Email setting page.
+     * get the form for Mailboxes setting page.
      *
-     * @param type Email    $email
+     * @param type MailboxSettings    $mailbox
      * @param type Template $template
-     * @param type Emails   $email1
+     * @param type Mailboxes   $email1
      *
      * @return type Response
      */
-    public function getemail(Email $email, Template $template, Emails $email1)
+    public function getemail(MailboxSettings $mailbox, Template $template, Mailboxes $email1)
     {
         try {
-            /* fetch the values of email from Email table */
-            $mailboxes = $email->whereId('1')->first();
+            /* fetch the values of email from Mailboxes table */
+            $mailboxes = $mailbox->whereId('1')->first();
             /* Fetch the values from Template table */
             $templates = $template->get();
-            /* Fetch the values from Emails table */
+            /* Fetch the values from Mailboxes table */
             $emails1 = $email1->get();
-            /* Direct to Email Settings Page */
-            return view('themes.default1.admin.helpdesk.settings.email', compact('emails', 'templates', 'emails1'));
+            /* Direct to Mailbox settings Page */
+            return view('themes.default1.admin.helpdesk.settings.email', compact('mailboxes', 'templates', 'emails1'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -401,16 +401,16 @@ class SettingsController2 extends Controller
      * Update the specified resource in storage.
      *
      * @param type int          $id
-     * @param type Email        $email
+     * @param type MailboxSettings        $mailbox
      * @param type EmailRequest $request
      *
      * @return type Response
      */
-    public function postemail($id, Email $email, EmailRequest $request)
+    public function postemail($id, MailboxSettings $mailbox, EmailRequest $request)
     {
         try {
             /* fetch the values of email request  */
-            $mailboxes = $email->whereId('1')->first();
+            $mailboxes = $mailbox->whereId('1')->first();
             /* fill the values to email table */
             $mailboxes->fill($request->except('email_fetching', 'all_emails', 'email_collaborator', 'strip', 'attachment'))->save();
             /* insert checkboxes  to database */
@@ -423,32 +423,32 @@ class SettingsController2 extends Controller
             /* Check whether function success or not */
             $mailboxes->save();
             /* redirect to Index page with Success Message */
-            return redirect('getemail')->with('success', 'Email Updated Successfully');
+            return redirect('getemail')->with('success', 'Mailboxes Updated Successfully');
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('getemail')->with('fails', 'Email can not Updated' . '<li>' . $e->getMessage() . '</li>');
+            return redirect('getemail')->with('fails', 'Mailboxes can not Updated' . '<li>' . $e->getMessage() . '</li>');
         }
     }
 
     /**
      * get the form for cron job setting page.
      *
-     * @param type Email    $email
+     * @param type MailboxSettings    $mailbox
      * @param type Template $template
-     * @param type Emails   $email1
+     * @param type Mailboxes   $email1
      *
      * @return type Response
      */
-    public function getSchedular(Email $email, Template $template, Emails $email1)
+    public function getSchedular(MailboxSettings $mailbox, Template $template, Mailboxes $email1)
     {
         // try {
-        /* fetch the values of email from Email table */
-        $mailboxes = $email->whereId('1')->first();
+        /* fetch the values of email from Mailboxes table */
+        $mailboxes = $mailbox->whereId('1')->first();
         /* Fetch the values from Template table */
         $templates = $template->get();
-        /* Fetch the values from Emails table */
+        /* Fetch the values from Mailboxes table */
         $emails1 = $email1->get();
-        return view('themes.default1.admin.helpdesk.settings.crone', compact('emails', 'templates', 'emails1'));
+        return view('themes.default1.admin.helpdesk.settings.crone', compact('mailboxes', 'templates', 'emails1'));
         // } catch {
         // }
     }
@@ -456,17 +456,17 @@ class SettingsController2 extends Controller
     /**
      * Update the specified resource in storage for cron job.
      *
-     * @param type Email        $email
+     * @param type MailboxSettings        $mailbox
      * @param type EmailRequest $request
      *
      * @return type Response
      */
-    public function postSchedular(Email $email, Template $template, Emails $email1, Request $request)
+    public function postSchedular(MailboxSettings $mailbox, Template $template, Mailboxes $email1, Request $request)
     {
         // dd($request);
         try {
             /* fetch the values of email request  */
-            $mailboxes = $email->whereId('1')->first();
+            $mailboxes = $mailbox->whereId('1')->first();
             if ($request->email_fetching) {
                 $mailboxes->email_fetching = $request->email_fetching;
             } else {
@@ -619,7 +619,7 @@ class SettingsController2 extends Controller
             $alerts = $alert->whereId('1')->first();
             /* Insert Checkbox to DB */
             $alerts->assignment_status = $request->input('assignment_status');
-            $alerts->ticket_status = $request->input('ticket_status');
+            $alerts->tickets__statuses = $request->input('tickets__statuses');
             $alerts->overdue_department_member = $request->input('overdue_department_member');
             $alerts->sql_error = $request->input('sql_error');
             $alerts->excessive_failure = $request->input('excessive_failure');
@@ -638,12 +638,12 @@ class SettingsController2 extends Controller
             $alerts->transfer_department_manager = $request->input('transfer_department_manager');
             $alerts->transfer_assigned_agent = $request->input('transfer_assigned_agent');
             $alerts->transfer_status = $request->input('transfer_status');
-            $alerts->message_organization_accmanager = $request->input('message_organization_accmanager');
+            $alerts->message_relation_accmanager = $request->input('message_relation_accmanager');
             $alerts->message_department_manager = $request->input('message_department_manager');
             $alerts->message_assigned_agent = $request->input('message_assigned_agent');
             $alerts->message_last_responder = $request->input('message_last_responder');
             $alerts->message_status = $request->input('message_status');
-            $alerts->ticket_organization_accmanager = $request->input('ticket_organization_accmanager');
+            $alerts->ticket_relation_accmanager = $request->input('ticket_relation_accmanager');
             $alerts->ticket_department_manager = $request->input('ticket_department_manager');
             $alerts->ticket_department_member = $request->input('ticket_department_member');
             $alerts->ticket_admin_email = $request->input('ticket_admin_email');

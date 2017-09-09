@@ -15,7 +15,7 @@
   } else {
     $referer = '/';
   }
-  $email = $value['email'];
+  $mailbox = $value['email'];
   $password = $value['password'];
   $number = Session::get('number');
   $sub_number = substr($number, 1, 6);
@@ -62,7 +62,7 @@
 
         <!-- form open -->
       {!!  Form::open(['route'=> 'otp-verification', 'method'=>'post']) !!}
-        <!-- Email -->
+        <!-- Mailboxes -->
       <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
         {!! Form::hidden('email',null,['placeholder'=> Lang::get("lang.email") ,'class' => 'form-control']) !!}
           <!-- {!! $errors->first('email', '<spam class="help-block">:message</spam>') !!} -->

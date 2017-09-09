@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Agent\helpdesk;
+namespace App\Http\Controllers\Staff\helpdesk;
 
 // controllers
 use App\Http\Controllers\Controller;
@@ -14,14 +14,14 @@ use App\Http\Requests\helpdesk\Sys_userRequest;
 /*  include guest_note model */
 use App\Http\Requests\helpdesk\Sys_userUpdate;
 // models
-use App\Model\helpdesk\Agent_panel\Organization;
+use App\Model\helpdesk\Agent_panel\Relation;
 use App\Model\helpdesk\Agent_panel\User_org;
 
-/* include User Model */
-/* include Help_topic Model */
+/* include Staff Model */
+/* include HelpTopic Model */
 /* Profile validator */
 /* Profile Password validator */
-use App\User;
+use App\Staff;
 
 // classes
 /* include ticket_thred model */
@@ -35,7 +35,7 @@ use Input;
 use Redirect;
 
 /**
- * UserController.
+ * StaffController.
  *
  * @author      Ladybird <info@ladybirdweb.com>
  */
@@ -46,21 +46,21 @@ class UserController extends Controller
      * constructor to check
      * 1. authentication
      * 2. user roles
-     * 3. roles must be agent.
+     * 3. roles must be staff.
      *
      * @return void
      */
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role.agent');
+        $this->middleware('role.staff');
         // $this->middleware('roles');
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @param type User $user
+     * @param type Staff $user
      *
      * @return type Response
      */
@@ -68,7 +68,7 @@ class UserController extends Controller
     {
         try {
             /* get all values in Sys_user */
-            return view('themes.default1.agent.helpdesk.user.index');
+            return view('themes.default1.staff.helpdesk.user.index');
         } catch (Exception $e) {
             return view('404');
         }
@@ -81,15 +81,15 @@ class UserController extends Controller
      */
     public function user_list()
     {
-        return \Datatable::collection(User::where('role', '!=', 'admin')->where('role', '!=', 'agent')->get())
+        return \Datatable::collection(Staff::where('role', '!=', 'admin')->where('role', '!=', 'staff')->get())
             ->searchColumns('user_name')
             ->orderColumns('user_name', 'email')
             ->addColumn('user_name', function ($model) {
                 return $model->user_name;
             })
             ->addColumn('email', function ($model) {
-                $email = $model->email;
-                return $email;
+                $mailbox = $model->email;
+                return $mailbox;
             })
             ->addColumn('phone', function ($model) {
                 $phone = '';
@@ -149,7 +149,7 @@ class UserController extends Controller
     public function create()
     {
         try {
-            return view('themes.default1.agent.helpdesk.user.create');
+            return view('themes.default1.staff.helpdesk.user.create');
         } catch (Exception $e) {
             return view('404');
         }
@@ -158,12 +158,12 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param type User            $user
+     * @param type Staff            $user
      * @param type Sys_userRequest $request
      *
      * @return type Response
      */
-    public function store(User $user, Sys_userRequest $request)
+    public function store(Staff $user, Sys_userRequest $request)
     {
         try {
             /* insert the input request to sys_user table */
@@ -178,14 +178,14 @@ class UserController extends Controller
             $user->role = 'user';
             if ($user->save() == true) {
                 /* redirect to Index page with Success Message */
-                return redirect('user')->with('success', 'User  Created Successfully');
+                return redirect('user')->with('success', 'Staff  Created Successfully');
             } else {
                 /* redirect to Index page with Fails Message */
-                return redirect('user')->with('fails', 'User  can not Create');
+                return redirect('user')->with('fails', 'Staff  can not Create');
             }
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('user')->with('fails', 'User  can not Create');
+            return redirect('user')->with('fails', 'Staff  can not Create');
         }
     }
 
@@ -193,16 +193,16 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param type int  $id
-     * @param type User $user
+     * @param type Staff $user
      *
      * @return type Response
      */
-    public function show($id, User $user)
+    public function show($id, Staff $user)
     {
         try {
             /* select the field where id = $id(request Id) */
             $users = $user->whereId($id)->first();
-            return view('themes.default1.agent.helpdesk.user.show', compact('users'));
+            return view('themes.default1.staff.helpdesk.user.show', compact('users'));
         } catch (Exception $e) {
             return view('404');
         }
@@ -212,16 +212,16 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param type int  $id
-     * @param type User $user
+     * @param type Staff $user
      *
      * @return type Response
      */
-    public function edit($id, User $user)
+    public function edit($id, Staff $user)
     {
         try {
             /* select the field where id = $id(request Id) */
             $users = $user->whereId($id)->first();
-            return view('themes.default1.agent.helpdesk.user.edit', compact('users'));
+            return view('themes.default1.staff.helpdesk.user.edit', compact('users'));
         } catch (Exception $e) {
             return view('404');
         }
@@ -231,12 +231,12 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param type int            $id
-     * @param type User           $user
+     * @param type Staff           $user
      * @param type Sys_userUpdate $request
      *
      * @return type Response
      */
-    public function update($id, User $user, Sys_userUpdate $request)
+    public function update($id, Staff $user, Sys_userUpdate $request)
     {
         try {
             /* select the field where id = $id(request Id) */
@@ -245,14 +245,14 @@ class UserController extends Controller
             /* Check whether function success or not */
             if ($users->fill($request->input())->save() == true) {
                 /* redirect to Index page with Success Message */
-                return redirect('user')->with('success', 'User  Updated Successfully');
+                return redirect('user')->with('success', 'Staff  Updated Successfully');
             } else {
                 /* redirect to Index page with Fails Message */
-                return redirect('user')->with('fails', 'User  can not Update');
+                return redirect('user')->with('fails', 'Staff  can not Update');
             }
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('user')->with('fails', 'User  can not Update');
+            return redirect('user')->with('fails', 'Staff  can not Update');
         }
     }
 
@@ -260,11 +260,11 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param type int  $id
-     * @param type User $user
+     * @param type Staff $user
      *
      * @return type Response
      */
-    public function destroy($id, User $user)
+    public function destroy($id, Staff $user)
     {
         try {
             /* select the field where id = $id(request Id) */
@@ -273,14 +273,14 @@ class UserController extends Controller
             /* Check whether function success or not */
             if ($users->delete() == true) {
                 /* redirect to Index page with Success Message */
-                return redirect('user')->with('success', 'User  Deleted Successfully');
+                return redirect('user')->with('success', 'Staff  Deleted Successfully');
             } else {
                 /* redirect to Index page with Fails Message */
-                return redirect('user')->with('fails', 'User  can not Delete');
+                return redirect('user')->with('fails', 'Staff  can not Delete');
             }
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('user')->with('fails', 'User  can not Delete');
+            return redirect('user')->with('fails', 'Staff  can not Delete');
         }
     }
 
@@ -292,7 +292,7 @@ class UserController extends Controller
     public function getProfile()
     {
         $user = Auth::user();
-        return view('themes.default1.agent.helpdesk.user.profile', compact('user'));
+        return view('themes.default1.staff.helpdesk.user.profile', compact('user'));
     }
 
     /**
@@ -303,7 +303,7 @@ class UserController extends Controller
     public function getProfileedit()
     {
         $user = Auth::user();
-        return view('themes.default1.agent.helpdesk.user.profile-edit', compact('user'));
+        return view('themes.default1.staff.helpdesk.user.profile-edit', compact('user'));
     }
 
     /**
@@ -369,7 +369,7 @@ class UserController extends Controller
     }
 
     /**
-     * User Assign Org.
+     * Staff Assign Org.
      *
      * @param type $id
      *
@@ -394,12 +394,12 @@ class UserController extends Controller
     {
         if (Input::get('website') != null) {
             // checking website
-            $check = Organization::where('website', '=', Input::get('website'))->first();
+            $check = Relation::where('website', '=', Input::get('website'))->first();
         } else {
             $check = null;
         }
         // checking name
-        $check2 = Organization::where('name', '=', Input::get('name'))->first();
+        $check2 = Relation::where('name', '=', Input::get('name'))->first();
         if (\Input::get('name') == null) {
             return 'Name is required';
         } elseif ($check2 != null) {
@@ -407,7 +407,7 @@ class UserController extends Controller
         } elseif ($check != null) {
             return 'Website should be Unique';
         } else {
-            $org = new Organization();
+            $org = new Relation();
             $org->name = Input::get('name');
             $org->phone = Input::get('phone');
             $org->website = Input::get('website');

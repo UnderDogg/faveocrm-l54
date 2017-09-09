@@ -1,7 +1,7 @@
 <?php
 namespace App\Console\Commands;
 
-use App\Http\Controllers\Agent\helpdesk\NotificationController;
+use App\Http\Controllers\Staff\helpdesk\NotificationController;
 use App\Http\Controllers\Common\PhpMailController;
 use Exception;
 use Illuminate\Console\Command;
@@ -46,11 +46,11 @@ class SendReport extends Command
                 $this_report = new NotificationController($mail);
                 $report = $this_report->send_notification();
                 if ($report !== 0) {
-                    loging('sending-mail-report', 'Report has send', 'info');
+                    logging('sending-mail-report', 'Report has send', 'info');
                     //\Log::info("Report has send");
                     $this->info('Report has send');
                 } else {
-                    loging('sending-mail-report', 'Nothing to send', 'info');
+                    logging('sending-mail-report', 'Nothing to send', 'info');
                     $this->info('Nothing to send');
                 }
             }

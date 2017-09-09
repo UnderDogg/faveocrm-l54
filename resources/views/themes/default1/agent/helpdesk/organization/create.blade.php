@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Users')
   class="active"
@@ -8,7 +8,7 @@
   active
 @stop
 
-@section('organizations')
+@section('relations')
   class="active"
   @stop
 
@@ -16,7 +16,7 @@
   @stop
     <!-- header -->
 @section('PageHeader')
-  <h1>{!! Lang::get('lang.organization') !!}</h1>
+  <h1>{!! Lang::get('lang.relation') !!}</h1>
   @stop
     <!-- /header -->
   <!-- breadcrumbs -->
@@ -28,7 +28,7 @@
   <!-- content -->
   @section('content')
     <!-- open a form -->
-  {!! Form::open(['action'=>'Agent\helpdesk\OrganizationController@store','method'=>'post']) !!}
+  {!! Form::open(['action'=>'Staff','method'=>'post']) !!}
   <div class="box box-primary">
     <div class="box-header with-border">
       <h3 class="box-title">{{Lang::get('lang.create')}}</h4>

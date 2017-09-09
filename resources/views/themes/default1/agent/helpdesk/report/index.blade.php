@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('sidebar')
   <li class="header">{!! Lang::get('lang.Report') !!}</li>
@@ -64,7 +64,7 @@
             <div class='col-sm-2'>
               {!! Form::label('helptopic', Lang::get('lang.help_topic')) !!}
               <select name="help_topic" id="help_topic" class="form-control">
-                <?php $helptopics = App\Model\helpdesk\Manage\Help_topic::where('status', '=', '1')->get(['id', 'topic']); ?>
+                <?php $helptopics = App\Model\helpdesk\Manage\HelpTopic::where('status', '=', '1')->get(['id', 'topic']); ?>
                 @foreach($helptopics as $helptopic)
                   <option value="{!! $helptopic->id !!}">{!! $helptopic->topic !!}</option>
                 @endforeach

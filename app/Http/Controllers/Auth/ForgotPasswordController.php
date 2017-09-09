@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Common\PhpMailController;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Staff;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 use Lang;
@@ -15,7 +15,7 @@ class ForgotPasswordController extends Controller
     | Password Reset Controller
     |--------------------------------------------------------------------------
     |
-    | This controller is responsible for handling password reset emails and
+    | This controller is responsible for handling password reset mailboxes and
     | includes a trait which assists in sending these notifications from
     | your application to your users. Feel free to explore this trait.
     |
@@ -46,7 +46,7 @@ class ForgotPasswordController extends Controller
             $date = date('Y-m-d H:i:s');
             $this->validate($request, ['email' => 'required']);
             \Event::fire('reset.password', []);
-            $user = User::where('email', '=', $request->only('email'))->orWhere('mobile', '=', $request->only('email'))->first();
+            $user = Staff::where('email', '=', $request->only('email'))->orWhere('mobile', '=', $request->only('email'))->first();
             if (isset($user)) {
                 $user1 = $user->email;
                 //gen new code and pass

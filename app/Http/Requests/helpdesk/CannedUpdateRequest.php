@@ -4,7 +4,7 @@ namespace App\Http\Requests\helpdesk;
 use App\Http\Requests\Request;
 
 /**
- * AgentRequest.
+ * StaffRequest.
  *
  * @author  Ladybird <info@ladybirdweb.com>
  */

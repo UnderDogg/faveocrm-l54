@@ -1,6 +1,6 @@
 @extends('themes.default1.client.layout.client')
-<?php $user = App\User::where('id', '=', $tickets->user_id)->first();?>
-<?php $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();?>
+<?php $user = App\Staff::where('id', '=', $tickets->user_id)->first();?>
+<?php $assignedto = App\Staff::where('id', '=', $tickets->assigned_to)->first();?>
 
 @section('sidebar')
   <li class="header">TICKET INFORMATION</li>
@@ -70,7 +70,7 @@
 
             <li id="delete"><a href="#"><i class="fa fa-trash-o" style="color:red;"> </i>Delete Ticket</a></li>
             <li data-toggle="modal" data-target="#banemail"><a href="#"><i class="fa fa-ban" style="color:red;"> </i>
-                Ban Email</a></li>
+                Ban MailboxSettings</a></li>
           </ul>
         </div>
 
@@ -157,18 +157,18 @@
                   <td title="{{$help_topic->topic}}">{{$help_topic->topic}}</td>
                 </tr>
                 <tr>
-                  <td><b>Email:</b></td>
+                  <td><b>MailboxSettings:</b></td>
                   <td>{{$user->email}}</td>
                 </tr>
               </table>
             </div>
             <div class="col-md-6">
               <?php
-              $user_phone = App\User::where('mobile', '=', $thread->user_id)->first();
+              $user_phone = App\Staff::where('mobile', '=', $thread->user_id)->first();
 
               $TicketData = App\Model\Ticket\Ticket_Thread::where('ticket_id', '=', $thread->ticket_id)->max('id');
               $TicketDatarow = App\Model\Ticket\Ticket_Thread::where('id', '=', $TicketData)->first();
-              $LastResponse = App\User::where('id', '=', $TicketDatarow->user_id)->first();
+              $LastResponse = App\Staff::where('id', '=', $TicketDatarow->user_id)->first();
               if ($LastResponse->role == "user") {
                 $rep = "#F39C12";
                 $username = $LastResponse->user_name;
@@ -464,13 +464,13 @@
                                     </span> <?php
                 $data = $ConvDate[0];
                 }
-                $role = App\User::where('id', '=', $conversation->user_id)->first();
+                $role = App\Staff::where('id', '=', $conversation->user_id)->first();
                 ?>
               </li>
               <li>
                 <?php if($conversation->is_internal) { ?>
                 <i class="fa fa-tag bg-purple" title="Posted by System"></i>
-                <?php }else{ if ($role->role == 'agent' || $role->role == 'admin') { ?>
+                <?php }else{ if ($role->role == 'staff' || $role->role == 'admin') { ?>
                 <i class="fa fa-mail-reply-all bg-yellow" title="Posted by Support Team"></i>
                 <?php } elseif ($role->role == 'user') {  ?>
                 <i class="fa fa-user bg-aqua" title="Posted by Customer"></i>
@@ -548,7 +548,7 @@
                     $color = '#046380';
                     echo $color;
                   } else {
-                    if ($role->role == 'agent' || $role->role == 'admin') {
+                    if ($role->role == 'staff' || $role->role == 'admin') {
                       $color = '#FFD34E';
                       echo $color;
                     } elseif ($role->role == 'user') {
@@ -674,7 +674,7 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                 aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Ban Email</h4>
+            <h4 class="modal-title">Ban MailboxSettings</h4>
           </div>
           <div class="modal-body">
             Are you sure to ban {!! $user->email !!}
@@ -682,7 +682,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="dismis2">Close</button>
-            <button id="ban" type="button" class="btn btn-warning pull-right">Ban Email</button>
+            <button id="ban" type="button" class="btn btn-warning pull-right">Ban MailboxSettings</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -701,7 +701,7 @@
           <div class="modal-body">
             <div class="form-group has-feedback">
               <!-- <input type="text" class="form-control" id="search" name="search" placeholder="Search Users"\> -->
-              <?php $users = App\User::where('role', '=', 'user')->get();?>
+              <?php $users = App\Staff::where('role', '=', 'user')->get();?>
               Add another Owner
               <select name="SelectOwner" class="form-control">
                 @foreach($users as $user)
@@ -717,9 +717,9 @@
                 <spam class="glyphicon glyphicon-user fa-5x"></spam>
               </div>
               <div class="col-md-10">
-                <?php $user = App\User::where('id', '=', $tickets->user_id)->first();?>
+                <?php $user = App\Staff::where('id', '=', $tickets->user_id)->first();?>
 
-                <b>User Details</b><br/>
+                <b>Staff Details</b><br/>
                 {!! $user->user_name !!}<br/>{!! $user->email !!}<br/>
                 @if($user->phone != null)
                   <b>Contact Informations</b><br/>
@@ -751,7 +751,7 @@
             <p>Whome do you want to assign ticket?</p>
 
             <select id="asssign" class="form-control" name="user">
-              <?php $assign = App\User::where('role', '=', 'agent')->get();?>
+              <?php $assign = App\Staff::where('role', '=', 'staff')->get();?>
               @foreach($assign as $user)
                 <option value="{{$user->email}}">{{$user->user_name}}</option>
               @endforeach
@@ -933,7 +933,7 @@
           success: function (response) {
             $("#dismis2").trigger("click");
             $("#refresh").load("../thread/{{$tickets->id}}   #refresh");
-            var message = "Success! This Email have been banned";
+            var message = "Success! This Mailboxes have been banned";
             $("#alert11").show();
             $('#message-success1').html(message);
             setInterval(function () {

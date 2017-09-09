@@ -13,16 +13,16 @@ class CreateSettingsAlertNoticeTable extends Migration
     {
         Schema::create('settings_alert_notice', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('ticket_status');
+            $table->boolean('tickets__statuses');
             $table->boolean('ticket_admin_email');
             $table->boolean('ticket_department_manager');
             $table->boolean('ticket_department_member');
-            $table->boolean('ticket_organization_accmanager');
+            $table->boolean('ticket_relation_accmanager');
             $table->boolean('message_status');
             $table->boolean('message_last_responder');
             $table->boolean('message_assigned_agent');
             $table->boolean('message_department_manager');
-            $table->boolean('message_organization_accmanager');
+            $table->boolean('message_relation_accmanager');
             $table->boolean('internal_status');
             $table->boolean('internal_last_responder');
             $table->boolean('internal_assigned_agent');

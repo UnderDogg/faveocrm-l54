@@ -43,7 +43,7 @@
               <a href="{{url('home')}}" rel="home">
                 @endif
                 @if($company->use_logo == 1)
-                  <img src="{{asset('lb-faveo/dist')}}{{'/'}}{{$company->logo}}" alt="User Image" width="200px"
+                  <img src="{{asset('lb-faveo/dist')}}{{'/'}}{{$company->logo}}" alt="Staff Image" width="200px"
                        height="200px"/>
                 @else
                   @if($system->name)
@@ -70,9 +70,9 @@
                     <div class="banner-wrapper user-menu text-center clearfix">
                       @if(Auth::user()->profile_pic)
                         <img src="{{asset('lb-faveo/dist/img')}}{{'/'}}{{Auth::user()->profile_pic}}" class="img-circle"
-                             alt="User Image" height="80" width="80"/>
+                             alt="Staff Image" height="80" width="80"/>
                       @else
-                        <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="User Image">
+                        <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="Staff Image">
                       @endif
                       <h3
                         class="banner-title text-info h4">{{Auth::user()->first_name." ".Auth::user()->last_name}}</h3>
@@ -94,7 +94,7 @@
               {!!  Form::open(['action'=>'Auth\AuthController@postLogin', 'method'=>'post']) !!}
 
               <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-                {!! Form::text('email',null,['placeholder'=>'Email','class' => 'form-control']) !!}
+                {!! Form::text('email',null,['placeholder'=>'Mailboxes','class' => 'form-control']) !!}
                 {!! $errors->first('email', '<spam class="help-block">:message</spam>') !!}
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
               </div>

@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 
 @section('Users')
@@ -81,26 +81,26 @@
             {!! Form::label('last_name',Lang::get('lang.last_name')) !!}
             {!! Form::text('last_name',null,['class' => 'form-control']) !!}
           </div>
-          <!-- User Name : Text : Required-->
+          <!-- Staff Name : Text : Required-->
           <div class="col-xs-4 form-group {{ $errors->has('user_name') ? 'has-error' : '' }}">
             {!! Form::label('user_name',Lang::get('lang.user_name')) !!}<span class="text-red"> *</span>
             {!! Form::text('user_name',null,['class' => 'form-control']) !!}
           </div>
         </div>
         <div class="row">
-          <!-- Email Address : Email : Required -->
+          <!-- Mailboxes Address : Mailboxes : Required -->
           <div class="col-xs-6 form-group {{ $errors->has('email') ? 'has-error' : '' }}">
             {!! Form::label('email',Lang::get('lang.email')) !!}<span class="text-red"> *</span>
             {!! Form::email('email',null,['class' => 'form-control']) !!}
           </div>
-          <div class="col-xs-6 form-group {{ $errors->has('organization') ? 'has-error' : '' }}">
-            {!! Form::label('organization',Lang::get('lang.organization')) !!}
+          <div class="col-xs-6 form-group {{ $errors->has('relation') ? 'has-error' : '' }}">
+            {!! Form::label('relation',Lang::get('lang.relation')) !!}
 
 
             <select class="form-control" name="org_id">
               @foreach($orgs as $org)
                 <option value="{!! $org->id !!}" <?php
-                  if ($org->id == $organization_id) {
+                  if ($org->id == $relation_id) {
                     echo 'selected';
                   }
                   ?> >{!! $org->name !!}</option>
@@ -180,7 +180,7 @@
     $('#org').autocomplete({
         minLength: 1,
         source: function (request, response) {
-            $.getJSON("{{url('get-organization')}}", {
+            $.getJSON("{{url('get-relation')}}", {
                 term: request.term
             }, function (data) {
                 var array = data.error ? [] : $.map(data, function (m) {

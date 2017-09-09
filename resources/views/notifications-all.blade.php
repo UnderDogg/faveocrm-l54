@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 @section('Users')
   class="active"
 @stop
@@ -135,7 +135,7 @@
                                  id="{{$notification -> notification_id}}">
                           <label for='cl' data-toggle="tooltip" data-placement="top" title="Mark Read"><span></span>&nbsp<img
                               src="{{$notification->users-> profile_pic}}" class="img-circle"
-                              style="width:25px;height: 25px" alt="User Image"/>
+                              style="width:25px;height: 25px" alt="Staff Image"/>
                             <!-- todo text -->
                             <h6 class="textcontent marginzero"><a
                                 href="{!! route('user.show', $notification -> notification_id) !!}"
@@ -164,7 +164,7 @@
                                  id="{{$notification -> notification_id}}">
                           <label for='cl' data-toggle="tooltip" data-placement="top" title="Mark Read"><span></span>&nbsp<img
                               src="{{$notification->users-> profile_pic}}" class="img-circle"
-                              style="width:25px;height: 25px" alt="User Image"/>
+                              style="width:25px;height: 25px" alt="Staff Image"/>
                             <!-- todo text -->
                             <h6 class="textcontent marginzero"><a
                                 href="{!! route('user.show', $notification -> notification_id) !!}"
@@ -192,7 +192,7 @@
                                  title="Mark Read" class="noti_User clickfun" id="{{$notification -> notification_id}}">
                           <label for='cl'><span></span>&nbsp<img src="{{$notification->users-> profile_pic}}"
                                                                  class="img-circle" style="width:25px;height: 25px"
-                                                                 alt="User Image"/>
+                                                                 alt="Staff Image"/>
                             <h6 class="textcontent marginzero"><a
                                 href="{!! route('ticket.thread', $notification->notification->model_id) !!}"
                                 id='{{ $notification -> notification_id }}'
@@ -216,7 +216,7 @@
                                  title="Mark Read" class="noti_User clickfun" id="{{$notification -> notification_id}}">
                           <label for='cl'><span></span>&nbsp<img src="{{$notification->users-> profile_pic}}"
                                                                  class="img-circle" style="width:25px;height: 25px"
-                                                                 alt="User Image"/>
+                                                                 alt="Staff Image"/>
                             <h6 class="textcontent marginzero"><a
                                 href="{!! route('ticket.thread', $notification->notification->model_id) !!}"
                                 id='{{ $notification -> notification_id }}'

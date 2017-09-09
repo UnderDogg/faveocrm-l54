@@ -197,13 +197,13 @@
               <div class="form-group">
                 {!! Form::label('verify',Lang::get('lang.verification_channel')) !!}
                 <?php
-                $email = in_array('email', $verify_decode);
+                $mailbox = in_array('email', $verify_decode);
                 $mobile = in_array('mobile', $verify_decode);
                 ?>
                   <!-- <a href="#" data-toggle="tooltip" title="{!! Lang::get('lang.otp_usage_info') !!}"><i class="fa fa-question-circle" style="padding: 0px;"></i></a> -->
                 <div class="row">
                   <div class="col-xs-5">
-                    {!! Form::checkbox('verify[]','email',$email) !!}&nbsp;{{Lang::get('lang.email')}}
+                    {!! Form::checkbox('verify[]','email',$mailbox) !!}&nbsp;{{Lang::get('lang.email')}}
                   </div>
                   <div class="col-xs-6">
                     {!! Form::checkbox('verify[]','mobile',$mobile) !!}&nbsp;{{Lang::get('lang.mobile')}}

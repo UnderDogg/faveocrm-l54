@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Users')
   class="active"
@@ -14,7 +14,7 @@
 
     <!-- header -->
 @section('PageHeader')
-  <h1>Export User</h1>
+  <h1>Export Staff</h1>
   @stop
     <!-- /header -->
   <!-- content -->

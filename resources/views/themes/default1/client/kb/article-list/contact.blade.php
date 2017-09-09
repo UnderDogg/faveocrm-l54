@@ -23,7 +23,7 @@
       <hr>
       <p></p>
     </article>
-    {!! Form::open(['method'=>'post','action'=>'Client\kb\UserController@postContact']) !!}
+    {!! Form::open(['method'=>'post','action'=>'Client\kb\StaffController@postContact']) !!}
     @if(Session::has('success'))
       <div class="alert alert-success alert-dismissable">
         <i class="fa  fa-check-circle"></i>
@@ -50,7 +50,7 @@
 
       <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
 
-        {!! Form::label('email','Email') !!}
+        {!! Form::label('email','Mailboxes') !!}
         {!! $errors->first('email', '<spam class="help-block">:message</spam>') !!}
         {!! Form::text('email',null,['class' => 'form-control']) !!}
 

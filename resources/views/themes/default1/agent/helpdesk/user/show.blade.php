@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Users')
   class="active"
@@ -48,8 +48,8 @@
   @if($users->role == 'user')
     <h1>{!! Lang::get('lang.user_profile') !!} </h1>
 
-  @elseif($users->role == 'agent')
-    <h1>{!! Lang::get('lang.agent_profile') !!} </h1>
+  @elseif($users->role == 'staff')
+    <h1>{!! Lang::get('lang.staff_profile') !!} </h1>
     @endif
     @stop
       <!-- /header -->
@@ -99,7 +99,7 @@
             <div class="box-body ">
               <div>
                 <center>
-                  <img src="{{ $users->profile_pic }}" class="img-circle" alt="User Image"
+                  <img src="{{ $users->profile_pic }}" class="img-circle" alt="Staff Image"
                        style="border:3px solid #CBCBDA;padding:3px;">
                   @if($users->first_name || $users->last_name)
                     <?php $name_of_user = $users->first_name . ' ' . $users->last_name; ?>
@@ -132,7 +132,7 @@
                     $user_org = App\Model\helpdesk\Agent_panel\User_org::where('user_id', '=', $users->id)->first();
                     ?>
                     @if($user_org == null)
-                      <b>{!! Lang::get('lang.organization') !!}</b>
+                      <b>{!! Lang::get('lang.relation') !!}</b>
                       <a href="" class="pull-right" data-toggle="modal" data-target="#assign"><i
                           class="fa fa-hand-o-right" style="color:orange;"> </i> {!! Lang::get('lang.assign') !!} </a>
                       <a href="" data-toggle="modal" data-target="#create_org"
@@ -141,9 +141,9 @@
                     @if($user_org != null)
                       <?php
                       $org_id = $user_org->org_id;
-                      $organization = App\Model\helpdesk\Agent_panel\Organization::where('id', '=', $org_id)->first();
+                      $organization = App\Model\helpdesk\Agent_panel\Relation::where('id', '=', $org_id)->first();
                       ?>
-                      <b>{!! Lang::get('lang.organization') !!}</b>
+                      <b>{!! Lang::get('lang.relation') !!}</b>
 
                       &nbsp;&nbsp;&nbsp;
 
@@ -159,7 +159,7 @@
                             <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                   aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title">Remove user from Organization</h4>
+                              <h4 class="modal-title">Remove user from Relation</h4>
                             </div>
                             <div class="modal-body">
                               <p>Are you sure you want to Remove ?</p>
@@ -167,7 +167,7 @@
                             <div class="modal-footer">
                               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close
                               </button>
-                              {!! link_to_route('removeuser.org','Remove User',[$org_id],['id'=>'delete','class'=>'btn btn-danger btn-sm']) !!}
+                              {!! link_to_route('removeuser.org','Remove Staff',[$org_id],['id'=>'delete','class'=>'btn btn-danger btn-sm']) !!}
                             </div>
                           </div>
                         </div>
@@ -404,7 +404,7 @@
                     @if($users->role=='user')
                       <h4 class="modal-title" id="titleLabel">{{Lang::get('lang.delete_user')}}</h4>
                     @endif
-                    @if($users->role=='agent')
+                    @if($users->role=='staff')
                       <h4 class="modal-title" id="titleLabel">{{Lang::get('lang.delete_agent')}}</h4>
                     @endif
 
@@ -423,14 +423,14 @@
 -->
 
 
-                    <?php $user = App\User::where('id', $users->id)->first(); ?>
-                    @if($user->role == 'agent')
+                    <?php $user = App\Staff::where('id', $users->id)->first(); ?>
+                    @if($user->role == 'staff')
                       {!! Form::label('delete_all_content',Lang::get('lang.delete_all_content')) !!} <span
                         class="text-red"> *</span>
                       <?php
                       $open = App\Model\helpdesk\Ticket\Tickets::where('assigned_to', '=', $users->id)->where('status', '=', '1')->get();
                       ?>
-                      <?php $user = App\User::where('id', $users->id)->first(); ?>
+                      <?php $user = App\Staff::where('id', $users->id)->first(); ?>
                       <?php
                       $open = count(App\Model\helpdesk\Ticket\Tickets::where('assigned_to', '=', $users->id)->where('status', '=', '1')->get());
                       ?>
@@ -443,27 +443,27 @@
                         @endif
                         @endif
                           <!--    Hi Admin
-                                @if($users->role=='agent')
-                          Assign  tickets of the agent will delete?
-                          Create ticket By agent Will Delete?
+                                @if($users->role=='staff')
+                          Assign  tickets of the staff will delete?
+                          Create ticket By staff Will Delete?
                           @elseif($users->role=='user')
                           Crete ticket by user Will Delete?
                           @endif -->
                         <!--  -->
-                        <?php $user = App\User::where('id', $users->id)->first(); ?>
+                        <?php $user = App\Staff::where('id', $users->id)->first(); ?>
                         <?php
                         $open = count(App\Model\helpdesk\Ticket\Tickets::where('assigned_to', '=', $users->id)->where('status', '=', '1')->get());
                         $counted = count(App\Model\helpdesk\Ticket\Tickets::where('user_id', '=', $users->id)->where('status', '=', '3')->get());
                         $deleted = count(App\Model\helpdesk\Ticket\Tickets::where('user_id', '=', $users->id)->where('status', '=', '5')->get());
                         ?>
-                        @if($open>0 && $user->role == 'agent')
+                        @if($open>0 && $user->role == 'staff')
                           <div id="delete_assign_body">
                             <p>{!! Lang::get('lang.whome_do_you_want_to_assign_ticket') !!}?</p>
                             <select id="asssign" class="form-control" name="assign_to">
                               <?php
-                              $assign = App\User::where('role', '!=', 'user')->get();
+                              $assign = App\Staff::where('role', '!=', 'user')->get();
                               $count_assign = count($assign);
-                              $teams = App\Model\helpdesk\Agent\Teams::all();
+                              $teams = App\Model\helpdesk\Staff\Teams::all();
                               $count_teams = count($teams);
                               ?>
                                 <!--    <optgroup label="Teams ( {!! $count_teams !!} )">
@@ -471,7 +471,7 @@
                                 <option  value="team_{{$team->id}}">{!! $team->name !!}</option>
                                            @endforeach
                                 </optgroup> -->
-                              <optgroup label="Agents ( {!! $count_assign !!} )">
+                              <optgroup label="Staff ( {!! $count_assign !!} )">
                                 @foreach($assign as $user)
                                   <option value="user_{{$user->id}}">{{$user->first_name." ".$user->last_name}}</option>
                                 @endforeach
@@ -510,7 +510,7 @@
 
                   <?php
 
-                  $departments = App\Model\helpdesk\Agent\Department::all(array('id', 'name'));
+                  $departments = App\Model\helpdesk\Staff\Department::all(array('id', 'name'));
                   ?>
 
 
@@ -548,7 +548,7 @@
 
 
                   Are u sure?
-                  Role Change Agent To User
+                  Role Change Agent To Staff
 
                 </div>
 
@@ -560,7 +560,7 @@
             </div>
           </div>
         </form>
-        <!-- agent -->
+        <!-- staff -->
         <form action="{!!URL::route('user.post.rolechangeagent', $users->id)!!}" method="post" role="form">
           {{ csrf_field() }}
           <div class="modal fade" id="addNewCategoryModal1" tabindex="-1" role="dialog">
@@ -577,7 +577,7 @@
 
                   <?php
 
-                  $departments = App\Model\helpdesk\Agent\Department::all(array('id', 'name'));
+                  $departments = App\Model\helpdesk\Staff\Department::all(array('id', 'name'));
                   ?>
 
 
@@ -715,7 +715,7 @@
         <div class="col-md-9">
           {{-- detals table starts --}}
           <?php
-          $user = App\User::where('id', $users->id)->first();
+          $user = App\Staff::where('id', $users->id)->first();
           // dd( $user->role);
 
           if ($users->role != 'user') {
@@ -759,7 +759,7 @@
                             <button type="button" href="#myPopup" data-rel="popup" class="btn btn-primary btn-sm"
                                     data-toggle="modal"
                                     data-target="#addNewCategoryModal2">{{Lang::get('lang.change_role_to_user')}}</button>
-                            <!-- <button type="button" class="btn btn-primary" id="role_user">Change Role TO User</button> -->
+                            <!-- <button type="button" class="btn btn-primary" id="role_user">Change role to staff</button> -->
                           </div>
                           <div class="btn-group">
                             <button type="button" href="#myPopup" data-rel="popup" class="btn btn-primary btn-sm"
@@ -782,7 +782,7 @@
 
                       @endif
 
-                      @if(Auth::user()->role == 'agent')
+                      @if(Auth::user()->role == 'staff')
                         @if($users->role == 'user')
                           <a href="{{route('user.edit', $users->id)}}">
                             <button type="button" href="{{route('user.edit', $users->id)}}"
@@ -822,13 +822,13 @@
                       @endif
 
 
-                      @if(Auth::user()->role == 'agent')
+                      @if(Auth::user()->role == 'staff')
                         @if($users->role == 'user')
                           This is a deleted contact
                           <button type="button" href="#myPopup" data-rel="popup" class="btn btn-primary btn-sm"
                                   data-toggle="modal"
                                   data-target="#addNewCategoryModal8">{{Lang::get('lang.restore')}}</button>
-                        @elseif($users->role == 'agent')
+                        @elseif($users->role == 'staff')
                           This is a deleted contact
                           @endif
                           @endif
@@ -931,7 +931,7 @@
                     @if($users->role=='user')
                       <h3 class="box-title">{!! Lang::get('lang.user_report') !!}</h3>
                     @endif
-                    @if($users->role=='agent')
+                    @if($users->role=='staff')
                       <h3 class="box-title">{!! Lang::get('lang.agent_report') !!}</h3>
                     @endif
 
@@ -1003,7 +1003,7 @@
                                       id="total-created-tickets"></span> {!! Lang::get('lang.tickets') !!} {!! Lang::get('lang.created') !!} </span>
                                 </div>
                               @endif
-                              @if($users->role=='agent')
+                              @if($users->role=='staff')
                                 <div class="col-md-4"><span id="legend-holder"
                                                             style="background-color: #6C96DF;"></span>&nbsp; <span
                                     class="lead"> <span
@@ -1160,7 +1160,7 @@
                   $("#show2").hide();
                   $("#hide").show();
                   if (response == 0) {
-                    message = "Organization added successfully."
+                    message = "Relation added successfully."
                     $("#dismis").trigger("click");
                     $("#refresh-org").load("../user/{{ $users->id }}  #refresh-org");
                     // $("#refresh2").load("../thread/{{$users->id}}   #refresh2");
@@ -1294,7 +1294,7 @@
         <?php
         $assign_org_id = App\Model\helpdesk\Agent_panel\User_org::where('user_id', '=', $users->id)->first();
         if ($assign_org_id) {
-          $organization = App\Model\helpdesk\Agent_panel\Organization::where('id', '=', $assign_org_id->org_id)->first();
+          $organization = App\Model\helpdesk\Agent_panel\Relation::where('id', '=', $assign_org_id->org_id)->first();
         }
         ?>
         @if($assign_org_id)
@@ -1362,7 +1362,7 @@
                   $("#hide").show();
 
                   if (response == 1) {
-                    message = "Organization added successfully."
+                    message = "Relation added successfully."
                     $("#dismiss").trigger("click");
                     $("#refresh-org").load("../user/{{ $users->id }}  #refresh-org");
                     // $("#refresh2").load("../thread/{{$users->id}}   #refresh2");
@@ -1377,7 +1377,7 @@
 
 
                   if (response == 0) {
-                    message = " Organization not found"
+                    message = " Relation not found"
                     $("#dismiss").trigger("click");
                     $("#refresh-org").load("../user/{{ $users->id }}  #refresh-org");
                     // $("#refresh2").load("../thread/{{$users->id}}   #refresh2");
@@ -1390,7 +1390,7 @@
                   }
 
                   if (response == 2) {
-                    message = "Select Organization"
+                    message = "Select Relation"
                     $("#dismiss").trigger("click");
                     $("#refresh-org").load("../user/{{ $users->id }}  #refresh-org");
                     // $("#refresh2").load("../thread/{{$users->id}}   #refresh2");
@@ -1409,7 +1409,7 @@
             });
           });
 
-          // edit assign organization
+          // edit assign relation
 
           jQuery(document).ready(function ($) {
             // create org
@@ -1428,7 +1428,7 @@
                   $("#hide").show();
 
                   if (response == 1) {
-                    message = "Organization added successfully."
+                    message = "Relation added successfully."
                     $("#dismiss").trigger("click");
                     $("#refresh-org").load("../user/{{ $users->id }}  #refresh-org");
                     // $("#refresh2").load("../thread/{{$users->id}}   #refresh2");
@@ -1443,7 +1443,7 @@
                   }
 
                   if (response == 0) {
-                    message = " Organization not found"
+                    message = " Relation not found"
                     $("#dismiss").trigger("click");
                     $("#refresh-org").load("../user/{{ $users->id }}  #refresh-org");
                     // $("#refresh2").load("../thread/{{$users->id}}   #refresh2");
@@ -1458,7 +1458,7 @@
                   }
 
                   if (response == 2) {
-                    message = "Select Organization"
+                    message = "Select Relation"
                     $("#dismiss").trigger("click");
                     $("#refresh-org").load("../user/{{ $users->id }}  #refresh-org");
                     // $("#refresh2").load("../thread/{{$users->id}}   #refresh2");
@@ -1478,10 +1478,10 @@
           });
 
 
-          // autocomplete organization name
+          // autocomplete relation name
           $(document).ready(function () {
             $("#org").autocomplete({
-              source: "{!!URL::route('post.organization.autofill')!!}",
+              source: "{!!URL::route('post.relation.autofill')!!}",
               minLength: 1,
               select: function (evt, ui) {
                 // // this.form.phone_number.value = ui.item.phone_number;
@@ -1500,7 +1500,7 @@
 
           $(document).ready(function () {
             $("#editorg").autocomplete({
-              source: "{!!URL::route('post.organization.autofill')!!}",
+              source: "{!!URL::route('post.relation.autofill')!!}",
               minLength: 1,
               select: function (evt, ui) {
 

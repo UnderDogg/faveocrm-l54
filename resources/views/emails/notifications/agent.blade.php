@@ -2,8 +2,8 @@
 $date = Date('d-m-Y');
 $format = 'Y-m-d';
 $day1 = Date($format, strtotime('-1 day' . $date));
-$user = App\User::where('id', '=', $user_id)->first();
-$dept = App\Model\helpdesk\Agent\Department::where('id', '=', $user->primary_dpt)->first();
+$user = App\Staff::where('id', '=', $user_id)->first();
+$dept = App\Model\helpdesk\Staff\Department::where('id', '=', $user->primary_dpt)->first();
 $created = DB::table('tickets')->select('created_at')->where('dept_id', '=', $dept->id)->where('created_at', 'LIKE', '%' . $day1 . '%')->count();
 $closed = DB::table('tickets')->where('dept_id', '=', $dept->id)->where('closed_at', 'LIKE', '%' . $day1 . '%')->count();
 $inprogress = App\Model\helpdesk\Ticket\Tickets::where('dept_id', '=', $dept->id)->where('status', '=', 1)->count();

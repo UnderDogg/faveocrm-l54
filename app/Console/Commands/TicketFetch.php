@@ -1,8 +1,8 @@
 <?php
 namespace App\Console\Commands;
 
-use App\Http\Controllers\Agent\helpdesk\MailController;
-use App\Http\Controllers\Agent\helpdesk\TicketWorkflowController;
+use App\Http\Controllers\Staff\helpdesk\MailController;
+use App\Http\Controllers\Staff\helpdesk\TicketWorkflowController;
 use Event;
 use Illuminate\Console\Command;
 
@@ -41,13 +41,13 @@ class TicketFetch extends Command
     {
         if (env('DB_INSTALL') == 1) {
             $controller = $this->mailController();
-            $mailboxes = new \App\Model\helpdesk\Email\Emails();
-            $settings_email = new \App\Model\helpdesk\Settings\Email();
+            $mailboxes = new \App\Model\helpdesk\Mailboxes\Mailboxes();
+            $mailsettings = new \App\Model\helpdesk\Settings\MailboxSettings();
             $system = new \App\Model\helpdesk\Settings\System();
             $ticket = new \App\Model\helpdesk\Settings\Ticket();
-            $controller->readmails($mailboxes, $settings_email, $system, $ticket);
+            $controller->readmails($mailboxes, $mailsettings, $system, $ticket);
             Event::fire('ticket.fetch', ['event' => '']);
-            loging('fetching-ticket', 'Ticket has read', 'info');
+            logging('fetching-ticket', 'Ticket has read', 'info');
             //\Log::info('Ticket has read');
             $this->info('Ticket has read');
         }
@@ -57,7 +57,7 @@ class TicketFetch extends Command
     {
         $PhpMailController = new \App\Http\Controllers\Common\PhpMailController();
         $NotificationController = new \App\Http\Controllers\Common\NotificationController();
-        $ticket = new \App\Http\Controllers\Agent\helpdesk\TicketController($PhpMailController, $NotificationController);
+        $ticket = new \App\Http\Controllers\Staff\helpdesk\TicketController($PhpMailController, $NotificationController);
         $work = new TicketWorkflowController($ticket);
         $controller = new MailController($work);
         return $controller;

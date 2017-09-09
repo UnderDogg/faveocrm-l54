@@ -69,7 +69,7 @@
 
     }
     $replacetop = 0;
-    $replacetop = \Event::fire('service.desk.agent.topbar.replace', array());
+    $replacetop = \Event::fire('service.desk.staff.topbar.replace', array());
 
     if (count($replacetop) == 0) {
       $replacetop = 0;
@@ -77,7 +77,7 @@
       $replacetop = $replacetop[0];
     }
     $replaceside = 0;
-    $replaceside = \Event::fire('service.desk.agent.sidebar.replace', array());
+    $replaceside = \Event::fire('service.desk.staff.sidebar.replace', array());
 
     if (count($replaceside) == 0) {
       $replaceside = 0;
@@ -113,7 +113,7 @@
             <?php \Event::fire('calendar.topbar', array()); ?>
           </ul>
         @else
-          <?php \Event::fire('service.desk.agent.topbar', array()); ?>
+          <?php \Event::fire('service.desk.staff.topbar', array()); ?>
         @endif
         <?php $noti = \App\Model\helpdesk\Notification\UserNotification::where('user_id', '=', Auth::user()->id)->where('is_read', '0')->get(); ?>
         <ul class="nav navbar-nav navbar-right">
@@ -142,7 +142,7 @@
 
                 <ul class="menu">
                   @foreach($notifications as $notification)
-                    <?php $user = App\User::whereId($notification->user_id)->first(); ?>
+                    <?php $user = App\Staff::whereId($notification->user_id)->first(); ?>
                     @if($notification->type == 'registration')
                       @if($notification->is_read == 1)
                         <li class="task" style="list-style: none; margin-left: -30px;"><span>&nbsp<img
@@ -291,7 +291,7 @@
             $followup_ticket = App\Model\helpdesk\Ticket\Tickets::where('status', '1')->where('follow_up', '1')->get();
             $closingapproval = App\Model\helpdesk\Ticket\Tickets::where('status', '7')->get();
             $deleted = App\Model\helpdesk\Ticket\Tickets::where('status', '5')->get();
-          } elseif (Auth::user()->role == 'agent') {
+          } elseif (Auth::user()->role == 'staff') {
             //$inbox = App\Model\helpdesk\Ticket\Tickets::where('dept_id','',Auth::user()->primary_dpt)->get();
             $myticket = App\Model\helpdesk\Ticket\Tickets::where('assigned_to', Auth::user()->id)->where('status', '1')->get();
             $unassigned = App\Model\helpdesk\Ticket\Tickets::where('assigned_to', '=', null)->where('status', '=', '1')->where('dept_id', '=', Auth::user()->primary_dpt)->get();
@@ -300,8 +300,8 @@
             $closingapproval = App\Model\helpdesk\Ticket\Tickets::where('status', '7')->get();
             $deleted = App\Model\helpdesk\Ticket\Tickets::where('status', '5')->where('dept_id', '=', Auth::user()->primary_dpt)->get();
           }
-          if (Auth::user()->role == 'agent') {
-            $dept = App\Model\helpdesk\Agent\Department::where('id', '=', Auth::user()->primary_dpt)->first();
+          if (Auth::user()->role == 'staff') {
+            $dept = App\Model\helpdesk\Staff\Department::where('id', '=', Auth::user()->primary_dpt)->first();
             $overdues = App\Model\helpdesk\Ticket\Tickets::where('status', '=', 1)->where('isanswered', '=', 0)->where('dept_id', '=', $dept->id)->orderBy('id', 'DESC')->get();
           } else {
             $overdues = App\Model\helpdesk\Ticket\Tickets::where('status', '=', 1)->where('isanswered', '=', 0)->orderBy('id', 'DESC')->get();
@@ -378,7 +378,7 @@
           </li>
           <li class="header">{!! Lang::get('lang.Departments') !!}</li>
           <?php
-          $depts = App\Model\helpdesk\Agent\Department::all();
+          $depts = App\Model\helpdesk\Staff\Department::all();
           foreach ($depts as $dept) {
           $open = App\Model\helpdesk\Ticket\Tickets::where('status', '=', '1')->where('isanswered', '=', 0)->where('dept_id', '=', $dept->id)->get();
           $open = count($open);
@@ -409,7 +409,7 @@
                 </a></li>
             </ul>
           </li>
-          <?php } if (Auth::user()->role == 'agent' && Auth::user()->primary_dpt == $dept->id) { ?>
+          <?php } if (Auth::user()->role == 'staff' && Auth::user()->primary_dpt == $dept->id) { ?>
           <li class="treeview">
             <a href="#">
               <i class="fa fa-folder-open"></i> <span>{!! $dept->name !!}</span> <i
@@ -434,7 +434,7 @@
           }
           ?>
         @else
-          <?php \Event::fire('service.desk.agent.sidebar', array()); ?>
+          <?php \Event::fire('service.desk.staff.sidebar', array()); ?>
         @endif
       </ul>
     </section>
@@ -442,7 +442,7 @@
   </aside>
   <?php
   $agent_group = Auth::user()->assign_group;
-  $group = App\Model\helpdesk\Agent\Groups::where('id', '=', $agent_group)->where('group_status', '=', '1')->first();
+  $group = App\Model\helpdesk\Staff\Groups::where('id', '=', $agent_group)->where('group_status', '=', '1')->first();
   ?>
     <!-- Right side column. Contains the navbar and content of the page -->
   <div class="content-wrapper">
@@ -459,8 +459,8 @@
               <ul class="nav navbar-nav">
                 <li id="bar" @yield('user')><a href="{{ url('user')}}">{!! Lang::get('lang.user_directory') !!}</a></li>
                 </a></li>
-                <li id="bar" @yield('organizations')><a
-                    href="{{ url('organizations')}}">{!! Lang::get('lang.organizations') !!}</a></li>
+                <li id="bar" @yield('relations')><a
+                    href="{{ url('relations')}}">{!! Lang::get('lang.organizations') !!}</a></li>
                 </a></li>
               </ul>
             </div>
@@ -501,7 +501,7 @@
               </div>
             @endif
           @endif
-          <?php \Event::fire('service.desk.agent.topsubbar', array()); ?>
+          <?php \Event::fire('service.desk.staff.topsubbar', array()); ?>
         </div>
       </div>
     </div>

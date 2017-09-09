@@ -47,29 +47,29 @@ Breadcrumbs::register('teams.edit', function ($breadcrumbs) {
     $breadcrumbs->parent('teams.index');
     $breadcrumbs->push(Lang::get('lang.edit'), url('teams/{teams}/edit'));
 });
-Breadcrumbs::register('agents.index', function ($breadcrumbs) {
+Breadcrumbs::register('staff.index', function ($breadcrumbs) {
     $breadcrumbs->parent('setting');
-    $breadcrumbs->push(Lang::get('lang.agents'), route('agents.index'));
+    $breadcrumbs->push(Lang::get('lang.staff'), route('staff.index'));
 });
-Breadcrumbs::register('agents.create', function ($breadcrumbs) {
-    $breadcrumbs->parent('agents.index');
-    $breadcrumbs->push(Lang::get('lang.create'), route('agents.create'));
+Breadcrumbs::register('staff.create', function ($breadcrumbs) {
+    $breadcrumbs->parent('staff.index');
+    $breadcrumbs->push(Lang::get('lang.create'), route('staff.create'));
 });
-Breadcrumbs::register('agents.edit', function ($breadcrumbs) {
-    $breadcrumbs->parent('agents.index');
-    $breadcrumbs->push(Lang::get('lang.edit'), url('agents/{agents}/edit'));
+Breadcrumbs::register('staff.edit', function ($breadcrumbs) {
+    $breadcrumbs->parent('staff.index');
+    $breadcrumbs->push(Lang::get('lang.edit'), url('staff/{staff}/edit'));
 });
-Breadcrumbs::register('emails.index', function ($breadcrumbs) {
+Breadcrumbs::register('mailboxes.index', function ($breadcrumbs) {
     $breadcrumbs->parent('setting');
-    $breadcrumbs->push(Lang::get('lang.emails'), route('emails.index'));
+    $breadcrumbs->push(Lang::get('lang.mailboxes'), route('mailboxes.index'));
 });
-Breadcrumbs::register('emails.create', function ($breadcrumbs) {
-    $breadcrumbs->parent('emails.index');
-    $breadcrumbs->push(Lang::get('lang.create'), route('emails.create'));
+Breadcrumbs::register('mailboxes.create', function ($breadcrumbs) {
+    $breadcrumbs->parent('mailboxes.index');
+    $breadcrumbs->push(Lang::get('lang.create'), route('mailboxes.create'));
 });
-Breadcrumbs::register('emails.edit', function ($breadcrumbs) {
-    $breadcrumbs->parent('emails.index');
-    $breadcrumbs->push(Lang::get('lang.edit'), url('emails/{emails}/edit'));
+Breadcrumbs::register('mailboxes.edit', function ($breadcrumbs) {
+    $breadcrumbs->parent('mailboxes.index');
+    $breadcrumbs->push(Lang::get('lang.edit'), url('mailboxes/{mailboxes}/edit'));
 });
 Breadcrumbs::register('banlist.index', function ($breadcrumbs) {
     $breadcrumbs->parent('setting');
@@ -81,7 +81,7 @@ Breadcrumbs::register('banlist.create', function ($breadcrumbs) {
 });
 Breadcrumbs::register('banlist.edit', function ($breadcrumbs) {
     $breadcrumbs->parent('banlist.index');
-    $breadcrumbs->push(Lang::get('lang.edit'), url('agents/{agents}/edit'));
+    $breadcrumbs->push(Lang::get('lang.edit'), url('staff/{staff}/edit'));
 });
 Breadcrumbs::register('template-sets.index', function ($breadcrumbs) {
     $breadcrumbs->parent('setting');
@@ -306,7 +306,7 @@ Breadcrumbs::register('organizations.edit', function ($breadcrumbs) {
 });
 Breadcrumbs::register('organizations.show', function ($breadcrumbs) {
     $breadcrumbs->parent('organizations.index');
-    $breadcrumbs->push(Lang::get('lang.view_organization_profile'), url('organizations/{organizations}'));
+    $breadcrumbs->push(Lang::get('lang.view_relation_profile'), url('organizations/{organizations}'));
 });
 Breadcrumbs::register('canned.list', function ($breadcrumbs) {
     $breadcrumbs->parent('dashboard');
@@ -324,7 +324,7 @@ Breadcrumbs::register('profile', function ($breadcrumbs) {
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(Lang::get('lang.my_profile'), route('profile'));
 });
-Breadcrumbs::register('agent-profile-edit', function ($breadcrumbs) {
+Breadcrumbs::register('staff-profile-edit', function ($breadcrumbs) {
     $breadcrumbs->parent('profile');
     $breadcrumbs->push(Lang::get('lang.edit'), url('profile-edit'));
 });

@@ -1,5 +1,5 @@
 <?php
-use App\User;
+use App\Staff;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
         // creating an user
         $str = 'password';
         $password = \Hash::make($str);
-        $user = User::create([
+        $user = Staff::create([
             'first_name' => 'Demo',
             'last_name' => 'Admin',
             'email' => null,

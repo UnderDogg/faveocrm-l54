@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Common\PhpMailController;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use JWTAuth;
@@ -109,7 +109,7 @@ class TokenAuthController extends Controller
     //
     //            $newuser['password'] = $password;
     //
-    //            return User::create($newuser);
+    //            return Staff::create($newuser);
     //        } catch (\Exception $e) {
     //            $error = $e->getMessage();
     //
@@ -150,7 +150,7 @@ class TokenAuthController extends Controller
                 return response()->json(compact('error'));
             }
             $date = date('Y-m-d H:i:s');
-            $user = User::where('email', '=', $request->only('email'))->first();
+            $user = Staff::where('email', '=', $request->only('email'))->first();
             if (isset($user)) {
                 $user1 = $user->email;
                 //gen new code and pass

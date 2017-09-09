@@ -7,15 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\helpdesk\BanlistRequest;
 use App\Http\Requests\helpdesk\BanRequest;
 // model
-use App\Model\helpdesk\Email\Banlist;
-use App\User;
+use App\Model\helpdesk\Mailboxes\Banlist;
+use App\Staff;
 //classes
 use Exception;
 use Lang;
 
 /**
  * BanlistController
- * In this controller in the CRUD function for all the banned emails.
+ * In this controller in the CRUD function for all the banned mailboxes.
  *
  * @author      Ladybird <info@ladybirdweb.com>
  */
@@ -26,7 +26,7 @@ class BanlistController extends Controller
      * constructor to check
      * 1. authentication
      * 2. user roles
-     * 3. roles must be agent.
+     * 3. roles must be staff.
      *
      * @return void
      */
@@ -46,8 +46,8 @@ class BanlistController extends Controller
     public function index()
     {
         try {
-            $bans = User::where('ban', '=', 1)->get();
-            return view('themes.default1.admin.helpdesk.emails.banlist.index', compact('bans'));
+            $bans = Staff::where('ban', '=', 1)->get();
+            return view('themes.default1.admin.helpdesk.mailboxes.banlist.index', compact('bans'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -61,7 +61,7 @@ class BanlistController extends Controller
     public function create()
     {
         try {
-            return view('themes.default1.admin.helpdesk.emails.banlist.create');
+            return view('themes.default1.admin.helpdesk.mailboxes.banlist.create');
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -71,11 +71,11 @@ class BanlistController extends Controller
      * Store a new banned user credentials.
      *
      * @param BanRequest $request
-     * @param User $user
+     * @param Staff $user
      *
      * @return type Response
      */
-    public function store(BanRequest $request, User $user)
+    public function store(BanRequest $request, Staff $user)
     {
         // dd($request);
         try {
@@ -89,7 +89,7 @@ class BanlistController extends Controller
                 // $user->create($request->input())->save();
                 return redirect('banlist')->with('success', Lang::get('lang.email_banned_sucessfully'));
             } else {
-                $user = new User();
+                $user = new Staff();
                 $user->email = $adban;
                 $user->ban = $request->input('ban');
                 $user->internal_note = $request->input('internal_note');
@@ -105,15 +105,15 @@ class BanlistController extends Controller
      * Editing the details of the banned users.
      *
      * @param type $id
-     * @param User $ban
+     * @param Staff $ban
      *
      * @return type Response
      */
-    public function edit($id, User $ban)
+    public function edit($id, Staff $ban)
     {
         try {
             $bans = $ban->whereId($id)->first();
-            return view('themes.default1.admin.helpdesk.emails.banlist.edit', compact('bans'));
+            return view('themes.default1.admin.helpdesk.mailboxes.banlist.edit', compact('bans'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -123,12 +123,12 @@ class BanlistController extends Controller
      * Update the banned users.
      *
      * @param type $id
-     * @param User $ban
+     * @param Staff $ban
      * @param BanlistRequest $request
      *
      * @return type Response
      */
-    public function update($id, User $ban, BanlistRequest $request)
+    public function update($id, Staff $ban, BanlistRequest $request)
     {
         try {
             $bans = $ban->whereId($id)->first();
@@ -148,11 +148,11 @@ class BanlistController extends Controller
      * delete the banned users.
      *
      * @param type $id
-     * @param \App\User $ban
+     * @param \App\Staff $ban
      *
      * @return type view
      */
-    public function delete($id, User $ban)
+    public function delete($id, Staff $ban)
     {
         try {
             $ban_user = $ban->where('id', '=', $id)->first();

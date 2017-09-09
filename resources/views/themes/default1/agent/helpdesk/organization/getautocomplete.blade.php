@@ -1,6 +1,6 @@
 <?php
 $term = $_GET["term"];
-$organizations = App\Model\helpdesk\Agent_panel\Organization::where('name', 'LIKE', '%' . $term . '%')->get();
+$organizations = App\Model\helpdesk\Agent_panel\Relation::where('name', 'LIKE', '%' . $term . '%')->get();
 $json = array();
 foreach ($organizations as $organization) {
   $json[] = array(

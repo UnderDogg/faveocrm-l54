@@ -38,7 +38,7 @@ class HomeController extends Controller
 
     public function getdata()
     {
-        return \View::make('emails/notifications/agent');
+        return \View::make('mailboxes/notifications/staff');
     }
 
     public function getreport()

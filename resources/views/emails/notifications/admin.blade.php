@@ -4,7 +4,7 @@ $date = Date('d-m-Y');
 $format = 'Y-m-d';
 $day1 = Date($format, strtotime('-1 day' . $date));
 
-$depts = App\Model\helpdesk\Agent\Department::all();
+$depts = App\Model\helpdesk\Staff\Department::all();
 foreach ($depts as $dept) {
   // echo $dept->name;
   $created = DB::table('tickets')->select('created_at')->where('dept_id', '=', $dept->id)->where('created_at', 'LIKE', '%' . $day1 . '%')->count();

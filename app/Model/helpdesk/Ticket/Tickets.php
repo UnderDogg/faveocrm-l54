@@ -10,7 +10,7 @@ class Tickets extends BaseModel
     protected $dates = ['duedate'];
 
     //        public function attach(){
-    //            return $this->hasMany('App\Model\helpdesk\Ticket\Ticket_attachments',);
+    //            return $this->hasMany('App\Model\helpdesk\Ticket\TicketAttachments',);
     //
     //        }
     public function thread()
@@ -50,7 +50,7 @@ class Tickets extends BaseModel
     public function source()
     {
         $source_id = $this->attributes['source'];
-        $sources = new Ticket_source();
+        $sources = new TicketSource();
         $source = $sources->find($source_id);
         return $source;
     }
@@ -86,7 +86,7 @@ class Tickets extends BaseModel
     {
         $agentid = $this->attributes['assigned_to'];
         if ($agentid) {
-            $users = new \App\User();
+            $users = new \App\Staff();
             $user = $users->where('id', $agentid)->first();
             if ($user) {
                 return $user;
@@ -110,7 +110,7 @@ class Tickets extends BaseModel
 
     public function departments()
     {
-        $related = 'App\Model\helpdesk\Agent\Department';
+        $related = 'App\Model\helpdesk\Staff\Department';
         $foreignKey = 'dept_id';
         return $this->belongsTo($related, $foreignKey);
     }

@@ -118,9 +118,9 @@
 
       <!-- form open -->
       <form role="form" method="POST" action="{{ url('/password/email') }}">
-        <!-- Email -->
+        <!-- Mailboxes -->
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <!-- Email -->
+        <!-- Mailboxes -->
         <!-- <div class="input-group margin"> -->
         <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
           {!! Form::label('password',Lang::get('lang.enter_your_email_here')) !!}

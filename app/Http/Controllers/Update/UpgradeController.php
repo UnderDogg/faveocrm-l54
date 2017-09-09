@@ -81,7 +81,7 @@ class UpgradeController extends Controller
         $context = stream_context_create(
             [
                 'http' => [
-                    'header' => 'User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+                    'header' => 'Staff-Staff: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
                 ],
             ]
         );

@@ -203,7 +203,7 @@
           $ok = false;
         } // if
         $recommended_extensions = array(
-          'imap' => 'IMAP extension is used for connecting to mail server using IMAP settings to fetch emails in the system.',
+          'imap' => 'IMAP extension is used for connecting to mail server using IMAP settings to fetch mailboxes in the system.',
           'mcrypt' => 'Optional extension',
           // 'gd' => 'GD is used for image manipulation. Without it, system is not able to create thumbnails for files or manage avatars, logos and project icons. Please refer to <a href="http://www.php.net/manual/en/image.installation.php">this</a> page for installation instructions',
           // 'mbstring' => 'MultiByte String is used for work with Unicode. Without it, system may not split words and string properly and you can have weird question mark characters in Recent Activities for example. Please refer to <a href="http://www.php.net/manual/en/mbstring.installation.php">this</a> page for installation instructions',

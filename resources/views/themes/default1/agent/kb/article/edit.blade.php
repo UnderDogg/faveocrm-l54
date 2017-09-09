@@ -1,6 +1,6 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
-@extends('themes.default1.agent.layout.sidebar')
+@extends('themes.default1.staff.layout.sidebar')
 
 @section('article')
   active
@@ -218,14 +218,14 @@
               <div class="modal" id="j">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    {!! Form::open(['method'=>'post','action'=>'Agent\kb\CategoryController@store']) !!}
+                    {!! Form::open(['method'=>'post','action'=>'Staff']) !!}
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                           aria-hidden="true">&times;</span></button>
                       <h4 class="modal-title">{{Lang::get('lang.addcategory')}}</h4>
                     </div>
                     <div class="modal-body">
-                      @include('themes.default1.agent.kb.category.form')
+                      @include('themes.default1.staff.kb.category.form')
                     </div>
                     <div class="modal-footer">
                       <div class="form-group">

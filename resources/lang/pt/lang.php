@@ -4,7 +4,7 @@
  |      Dutch translation [for version 1.0.8.0]
  |-------------------------------------------------------------------------------------
  |      Author      : Marcelo A. Fernandes
- |      Email       : marcelo.fernandes@corplantechnologia.com.br
+ |      Mailboxes       : marcelo.fernandes@corplantechnologia.com.br
  |  Last translated : 30-11-2016
  |********************************************************************************
  |      Details of new words added for translation
@@ -99,10 +99,10 @@ return [
     'link' => 'Link',
     /*
       |----------------------------------------------------------------------------------------
-      | Emails Pages [English(en)]
+      | Mailboxes Pages [English(en)]
       |----------------------------------------------------------------------------------------
       |
-      | The following language lines are used in all Emails related issues to translate
+      | The following language lines are used in all Mailboxes related issues to translate
       | some words in view to English. You are free to change them to anything you want to
       | customize your views to better match your application.
       |
@@ -110,16 +110,16 @@ return [
     'admin_panel' => 'Admin Panel',
     /*
       |--------------------------------------
-      |  Emails Create Page
+      |  Mailboxes Create Page
       |--------------------------------------
      */
-    'emails' => 'E-mails',
+    'mailboxes' => 'E-mails',
     'incoming_emails' => 'Caixa de entrada',
     'reuired_authentication' => 'Requer autenticação',
     'fetching_email_via_imap' => 'Buscando e-mail via IMAP',
-    'create_email' => 'Criar E-mail',
+    'create_mailbox' => 'Criar E-mail',
     'email_address' => 'Endereço de E-mail',
-    'email_name' => 'Nome de E-mail',
+    'mailbox_name' => 'Nome de E-mail',
     'help_topic' => 'Tópico de ajuda',
     'auto_response' => 'Resposta automática',
     'host_name' => 'Nome do Host',
@@ -131,7 +131,7 @@ return [
     'header_spoofing' => 'Mascarar Cabeçalho',
     'allow_for_this_email' => 'Permitir este E-mail',
     'imap_config' => 'Configuração IMAP',
-    'email_information_and_settings' => 'Informações e configurações de E-mail',
+    'mailbox_information_and_settings' => 'Informações e configurações de E-mail',
     'incoming_email_information' => 'Informações de E-mails recebidos',
     'outgoing_email_information' => 'Informações de E-mails enviados',
     'new_ticket_settings' => 'Configurações de novos tickets',
@@ -151,7 +151,7 @@ return [
     'email_can_not_delete' => 'E-mail não pode ser deletado ',
     /*
       |--------------------------------------
-      |  Ban Emails Create Page
+      |  Ban Mailboxes Create Page
       |--------------------------------------
      */
     'ban_lists' => 'Lista de bloqueio',
@@ -185,18 +185,18 @@ return [
     'you_have_successfully_activated_this_set' => 'Você ativou esse conjunto com sucesso',
     'template_set_deleted_successfully' => 'Conjunto de modelo deletado com sucesso',
     //Template Description
-    'Create ticket agent' => 'Um E-mail de notificação é enviado ao criar um novo ticket',
+    'Create ticket staff' => 'Um E-mail de notificação é enviado ao criar um novo ticket',
     'Assign ticket' => 'Ticket atribuído a um atendente',
     'Create ticket' => 'E-mail enviado ao cliente com sucesso',
     'Check ticket' => 'Caso o cliente queira verificar os detalhes do ticket pelo portal, pode verificar por esse link sem efetuar login no sistema',
-    'Ticket reply agent' => 'Uma notificação é enviada por E-mail ao atendente sempre que o cliente responder o ticket',
+    'Ticket reply staff' => 'Uma notificação é enviada por E-mail ao atendente sempre que o cliente responder o ticket',
     'Registration notification' => 'Nome de usuário e senha são enviados por E-mail após o registro',
     'Reset password' => 'Link para redefinir senha enviado por E-mail',
     'Error report' => 'Relatório de erro',
     'Ticket creation' => 'Notificação da criação do ticket enviada para o cliente',
     'Ticket reply' => 'Quando um ticket é respondido pelo atendente, uma notificação é enviada tanto para o cliente quanto para o atendente',
     'Close ticket' => 'Ao fechar um ticket será enviado um E-mail ao cliente',
-    'Create ticket by agent' => 'Um atendente cria um ticket para o cliente em nome do próprio cliente',
+    'Create ticket by staff' => 'Um atendente cria um ticket para o cliente em nome do próprio cliente',
     /*
       |--------------------------------------
       |  Templates Create Page
@@ -289,7 +289,7 @@ return [
     'Please-save-this-for-future-reference' => 'Guarde para verificação futura',
     /*
       |--------------------------------------
-      |   Email Settings Page
+      |   Mailbox settings Page
       |--------------------------------------
      */
     'email' => 'E-mail',
@@ -401,7 +401,7 @@ return [
     'new_ticket_alert' => 'Aviso de novo Ticket',
     'department_manager' => 'Gerente de departamento',
     'department_members' => 'Membros do departamento',
-    'organization_account_manager' => 'Gerente de conta da Organização',
+    'relation_account_manager' => 'Gerente de conta da Organização',
     'new_message_alert' => 'Nova mensagem de aviso',
     'last_respondent' => 'Último rementente',
     'assigned_agent_team' => 'Atribuído Atendente / Equipe',
@@ -699,7 +699,7 @@ return [
     'lastlogin' => 'Último login',
     'createagent' => 'Criar um atendente',
     'delete' => 'Deletar',
-    'agents' => 'Atendentes',
+    'staff' => 'Atendentes',
     'create' => 'Criar',
     'edit' => 'Editar',
     'departments' => 'Departamentos',
@@ -719,7 +719,7 @@ return [
     'account_status_setting' => 'Configurações & Status da conta',
     'account_type' => 'Tipo da conta',
     'admin' => 'Administrador',
-    'agent' => 'Atendente',
+    'staff' => 'Atendente',
     'account_status' => 'Status da conta',
     'locked' => 'Bloqueado',
     'assigned_group' => 'Atribuir ao grupo',
@@ -812,7 +812,7 @@ return [
     'can_assign_ticket' => 'Atribuir ticket',
     'can_transfer_ticket' => 'Transferir ticket',
     'can_delete_ticket' => 'Deletar ticket',
-    'can_ban_emails' => 'Bloquear emails',
+    'can_ban_emails' => 'Bloquear mailboxes',
     'can_manage_premade' => 'Gerenciar produção',
     'can_manage_FAQ' => 'Gerenciar FAQ',
     'can_view_agent_stats' => 'Pode ver desempenho de atendentes',
@@ -844,10 +844,10 @@ return [
     'encryption' => 'Encryption',
     /*
       |----------------------------------------------------------------------------------------
-      | Agent Panel [English(en)]
+      | Staff Panel [English(en)]
       |----------------------------------------------------------------------------------------
       |
-      | The following language lines are used in all Agent Panel related issues to translate
+      | The following language lines are used in all Staff Panel related issues to translate
       | some words in view to English. You are free to change them to anything you want to
       | customize your views to better match your application.
       |
@@ -890,7 +890,7 @@ return [
     'your_ticket_have_been_resolved' => 'Seu Ticket foi finalizado',
     'your_ticket_have_been_opened' => 'Seu Ticket foi aberto',
     'your_ticket_have_been_moved_to_trash' => 'Seu Ticket foi removido',
-    'this_email_have_been_banned' => 'Este Email foi bloqueado',
+    'this_email_have_been_banned' => 'Este Mailboxes foi bloqueado',
     'ticket_updated_successfully' => 'Ticket alterado com sucesso',
     'you_have_successfully_replied_to_your_ticket' => 'O ticket foi respondido com sucesso',
     'for_some_reason_your_message_was_not_posted_please_try_again_later' => 'Por algum motivo a mensagem não foi postada. Tente novamente mais tarde',
@@ -965,27 +965,27 @@ return [
     'user_report' => 'Relatório de usuário',
     /*
       |------------------------------------------------
-      |Organization Page
+      |Relation Page
       |------------------------------------------------
      */
-    'organizations' => 'Organizações',
-    'organization' => 'Organização',
-    'organization_list' => 'Lista de organizações',
-    'view_organization_profile' => 'Visualizar organizações',
+    'relations' => 'Organizações',
+    'relation' => 'Organização',
+    'relation_list' => 'Lista de organizações',
+    'view_relation_profile' => 'Visualizar organizações',
     'create_organization' => 'Criar Organização',
     'account_manager' => 'Gerente de contas',
     'update' => 'Atualizar',
     'please_select_an_organization' => 'Selecione uma organização por favor',
     'please_select_an_user' => 'Selecione um usuário por favor',
-    'organization_profile' => 'Perfil de organização',
-    'organization-s_head' => 'Organização mestre',
+    'relation_profile' => 'Perfil de organização',
+    'relation-s_head' => 'Organização mestre',
     'select_department_manager' => 'Selecione o gerente de departamento',
     'users_of' => 'Usuário do',
-    'organization_created_successfully' => 'Organização criada com sucesso',
-    'organization_can_not_create' => 'Não foi possível criar a organização',
-    'organization_updated_successfully' => 'Organização atualizada com sucesso',
-    'organization_can_not_update' => 'Não foi possível atualizar a organização',
-    'organization_deleted_successfully' => 'Organização excluída com sucesso',
+    'relation_created_successfully' => 'Organização criada com sucesso',
+    'relation_can_not_create' => 'Não foi possível criar a organização',
+    'relation_updated_successfully' => 'Organização atualizada com sucesso',
+    'relation_can_not_update' => 'Não foi possível atualizar a organização',
+    'relation_deleted_successfully' => 'Organização excluída com sucesso',
     'report_of' => 'Relatório do',
     'ticket_of' => 'Tickets do',
     /*
@@ -1030,7 +1030,7 @@ return [
     'attachment' => 'Anexo',
     'internal_note' => 'Nota interna',
     'this_ticket_is_under_banned_user' => 'Usuário do ticket não está disponível',
-    'ticket_source' => 'Origem do Ticket',
+    'tickets_sources' => 'Origem do Ticket',
     'are_you_sure_to_ban' => 'Tem certeza que deseja bloquear',
     'whome_do_you_want_to_assign_ticket' => 'A quem você deseja atribuir o ticket',
     'are_you_sure_you_want_to_surrender_this_ticket' => 'Tem certeza que deseja entregar o ticket',
@@ -1273,7 +1273,7 @@ return [
       |--------------------------------------------------------------------------------------
       |  Client Panel [English(en)]
       |--------------------------------------------------------------------------------------
-      | The following language lines are used in all Agent Panel related issues to translate
+      | The following language lines are used in all Staff Panel related issues to translate
       | some words in view to English. You are free to change them to anything you want to
       | customize your views to better match your application.
       |
@@ -1288,7 +1288,7 @@ return [
     'have_a_ticket' => 'Tem um novo Ticket',
     'check_ticket_status' => 'Verifique o status do ticket',
     'choose_a_help_topic' => 'Escolha um tópico de Ajuda',
-    'ticket_status' => 'Status do Ticket',
+    'tickets__statuses' => 'Status do Ticket',
     'post_comment' => 'Enviar comentário',
     'plugin' => 'Plugin',
     'edit_profile' => 'Editar Perfil',
@@ -1414,7 +1414,7 @@ return [
      * Ticket Priority
      * -----------------------------------------------------------------------------------
      */
-    'ticket_priority' => 'Ticket priority',
+    'tickets_priorities' => 'Ticket priority',
     'priority' => 'Priority',
     'priority_desc' => 'Priority description',
     'priority_urgency' => 'Priority urgency',
@@ -1423,7 +1423,7 @@ return [
     'ispublic' => 'IsPublic',
     'is_default' => 'By default',
     'create_ticket_priority' => 'Create ticket priority',
-    'agent_notes' => 'Agent notes',
+    'agent_notes' => 'Staff notes',
     'select_priority' => 'Select priority',
     'normal' => 'Normal',
     'ispublic' => 'Visibility',
@@ -1463,16 +1463,16 @@ return [
     * User Module
     * --------------------------------------------------------------------------------------------
     */
-    'agent_report' => 'Agent report',
+    'agent_report' => 'Staff report',
     'assign_tickets' => 'Assign tickets',
-    'delete_agent' => 'Delete agent',
+    'delete_agent' => 'Delete staff',
     'delete_user' => 'Delete user',
     'confirm_deletion' => 'Confirm deletion',
     'delete_all_content' => 'Delete all content',
-    'agent_profile' => 'Agent profile',
+    'staff_profile' => 'Staff profile',
     'change_role_to_admin' => 'Change role to admin',
     'change_role_to_user' => 'Change role to user',
-    'change_role_to_agent' => 'Change role to agent',
+    'change_role_to_agent' => 'Change role to staff',
     'change_password' => 'Change password',
     'role_change' => 'Role change',
     'password_generator' => 'Password generator',
@@ -1482,9 +1482,9 @@ return [
     'password_change_successfully' => 'Password changed successfully',
     'role_change_successfully' => 'Role changed successfully',
     'user_delete_successfully' => 'User deleted successfully',
-    'agent_delete_successfully' => 'Agent deleted successfully',
-    'select_another_agent' => 'Select another agent',
-    'agent_delete_successfully_and_ticket_assign_to_another_agent' => 'Agent deleted successfully and ticket assigned to another agent',
+    'agent_delete_successfully' => 'Staff deleted successfully',
+    'select_another_agent' => 'Select another staff',
+    'agent_delete_successfully_and_ticket_assign_to_another_agent' => 'Staff deleted successfully and ticket assigned to another staff',
     'deleted_user' => 'Deleted User',
     'deleted_user_directory' => 'Deleted User Directory',
     'restore' => 'Restore',
@@ -1498,7 +1498,7 @@ return [
     'activate' => 'Activate',
     'system-email-not-configured' => 'We are unable to process email request as the system has no configured email for sending mails. Please contact and report system admin.',
     'assign-ticket' => 'Assign tickets',
-    'can-not-inactive-group' => 'Can not make the group inactive as it has agents assigned in it. Please assign those agents to another group and try again.',
+    'can-not-inactive-group' => 'Can not make the group inactive as it has staff assigned in it. Please assign those staff to another group and try again.',
     'internal-note-has-been-added' => 'Internal note added to the ticket',
     'active-users' => 'Active users',
     'deleted-users' => 'Deleted users',
@@ -1513,7 +1513,7 @@ return [
     //update 18-12-2016
     'account-created-contact-admin-as-we-were-not-able-to-send-opt' => 'Your account has been created successfully. Please contact admin for account activation as we were not able to send you an OPT code.',
     //update 19-12-2016
-    'only-agents' => 'Agent users',
+    'only-staff' => 'Staff users',
     'only-users' => 'Clients users',
     'banned-users' => 'Banned users',
     'inactive-users' => 'Inactive users',
@@ -1524,7 +1524,7 @@ return [
     //update 1-2-2017
     'system-outgoing-incoming-mail-not-configured' => 'You have not configured system mail. Faveo can\'t fetch tickets from mail or send mail to users without it.',
     'confihure-the-mail-now' => 'Click here to configure the mail.',
-    'system-mail-not-configured-agent-message' => 'System incoming and outgoing email settings are not configured. Please contct the admin.',
+    'system-mail-not-configured-staff-message' => 'System incoming and outgoing email settings are not configured. Please contct the admin.',
     // arindam-14.2.2017
     // sla
     'min' => 'Min',
@@ -1542,7 +1542,7 @@ return [
      * ----------------------------------------------------------------
      */
     'client' => 'Client',
-    'send_email' => 'Send Email',
+    'send_email' => 'Send Mailboxes',
     'visibility_to_client' => 'Visibility to Client',
     'purpose_of_status' => 'Purpose of Status',
     'status_to_display' => 'Status to Display',
@@ -1573,20 +1573,20 @@ return [
     //updates 22-2-2017
     'invalid-date-range' => 'Invalid date range',
     //updates 14-4-2017
-    'notification.priority.update' => 'Updated by :agent - Prority changed from :old to :new',
-    'notification.source.update' => 'Updated by :agent - Source changed from :old to :new',
-    'notification.title.update' => 'Updated by :agent - Title changed from :old to :new',
-    'notification.helptopic.update' => 'Updated by :agent - Help topic changed from :old to :new',
-    'notification.sla.update' => 'Updated by :agent - Sla changed from :old to :new',
-    'notification.status.update' => 'Updated by :agent - Status changed from :old to :new',
-    'notification.assign.update' => 'Assigned by :agent - Ticket assigned to :new',
-    'notification.user.update' => 'Ticket ownership changed by :agent - from :old to :new',
-    'notification.department.update' => 'Updated by :agent - Department changed from :old to :new',
+    'notification.priority.update' => 'Updated by :staff - Prority changed from :old to :new',
+    'notification.source.update' => 'Updated by :staff - Source changed from :old to :new',
+    'notification.title.update' => 'Updated by :staff - Title changed from :old to :new',
+    'notification.helptopic.update' => 'Updated by :staff - Help topic changed from :old to :new',
+    'notification.sla.update' => 'Updated by :staff - Sla changed from :old to :new',
+    'notification.status.update' => 'Updated by :staff - Status changed from :old to :new',
+    'notification.assign.update' => 'Assigned by :staff - Ticket assigned to :new',
+    'notification.user.update' => 'Ticket ownership changed by :staff - from :old to :new',
+    'notification.department.update' => 'Updated by :staff - Department changed from :old to :new',
     'created.ticket' => 'A new ticket :subject has created',
     'mode' => 'Mode',
     'new_internal_activity_alert' => 'New Internal Activity Alert',
     'sms' => 'Sms',
-    'agent' => 'Agent',
+    'staff' => 'Staff',
     'all_department_manager' => 'All Department Manager',
     'all_team_lead' => 'All Team Lead',
     'registration_notification' => 'Registration Notification',
@@ -1601,12 +1601,12 @@ return [
     'notification.duedate.inapp' => 'Ticket :model on :new',
     'notification.note' => 'New :model added - :new',
     'notification.note.inapp' => 'added new :model in <b>:ticket</b> - :new',
-    'agent_reply' => 'Agent Reply',
+    'agent_reply' => 'Staff Reply',
     'client_reply' => 'Client Reply',
     'new-user-register' => 'registered',
     'reply.notification' => 'has replied in <b>:title</b>',
     'custom-format' => 'Custom Format',
-    'assigned_agent' => 'Assigned agent',
+    'assigned_agent' => 'Assigned staff',
     'in_app_system' => 'Notification',
     'new_ticket_confirmation_alert' => 'New Ticket Confirmation',
     'registration_verification' => 'Registration Verififcation',

@@ -140,7 +140,7 @@
 
       <!-- form open -->
       {!!  Form::open(['action'=>'Auth\AuthController@postLogin', 'method'=>'post']) !!}
-        <!-- Email -->
+        <!-- Mailboxes -->
       <div class="col-xs-12">
         <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
           {!! Form::text('email',null,['placeholder'=> Lang::get("lang.email") ,'class' => 'form-control']) !!}

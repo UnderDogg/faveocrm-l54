@@ -136,7 +136,7 @@
                   if ($workflow->target == "A-2") {
                     echo "selected='selected'";
                   }
-                  ?> >Emails
+                  ?> >Mailboxes
                 </option>
 
               </select>
@@ -184,11 +184,11 @@
                                   echo "selected='selected'";
                                 }
                                 ?> >{!! Lang::get('lang.email') !!}</option>
-                              <option value="email_name" <?php
-                                if ($workflow_rule->matching_scenario == 'email_name') {
+                              <option value="mailbox_name" <?php
+                                if ($workflow_rule->matching_scenario == 'mailbox_name') {
                                   echo "selected='selected'";
                                 }
-                                ?> >{!! Lang::get('lang.email_name') !!}</option>
+                                ?> >{!! Lang::get('lang.mailbox_name') !!}</option>
                               <option value="subject" <?php
                                 if ($workflow_rule->matching_scenario == 'subject') {
                                   echo "selected='selected'";
@@ -324,8 +324,8 @@
                                   echo "selected='selected'";
                                 }
                                 ?> >{!! Lang::get('lang.assign_team') !!}</option>
-                              <option value="agent" <?php
-                                if ($workflow_action->condition == 'agent') {
+                              <option value="staff" <?php
+                                if ($workflow_action->condition == 'staff') {
                                   echo "selected='selected'";
                                 }
                                 ?> >{!! Lang::get('lang.assign_agent') !!}</option>
@@ -347,7 +347,7 @@
                           if ($workflow_action->condition == 'reject') {
                             echo "<input type='hidden' name='action[" . $i . "][b]' class='form-control' value='reject'><span text-red>Reject</span>";
                           } elseif ($workflow_action->condition == 'department') {
-                            $departments = App\Model\helpdesk\Agent\Department::all();
+                            $departments = App\Model\helpdesk\Staff\Department::all();
                             $var = "<select name='action[" . $i . "][b]' class='form-control' required>";
                             foreach ($departments as $department) {
                               if ($workflow_action->action == $department->id) {
@@ -360,7 +360,7 @@
                             $var .= "</select>";
                             echo $var;
                           } elseif ($workflow_action->condition == 'priority') {
-                            $priorities = App\Model\helpdesk\Ticket\Ticket_Priority::all();
+                            $priorities = App\Model\helpdesk\Ticket\TicketPriority::all();
                             $var = "<select name='action[" . $i . "][b]' class='form-control' required>";
                             foreach ($priorities as $priority) {
                               if ($workflow_action->action == $priority->priority_id) {
@@ -386,7 +386,7 @@
                             $var .= "</select>";
                             echo $var;
                           } elseif ($workflow_action->condition == 'team') {
-                            $teams = App\Model\helpdesk\Agent\Teams::where('status', '=', 1)->get();
+                            $teams = App\Model\helpdesk\Staff\Teams::where('status', '=', 1)->get();
                             $var = "<select name='action[" . $i . "][b]' class='form-control' required>";
                             foreach ($teams as $team) {
                               if ($workflow_action->action == $team->id) {
@@ -398,8 +398,8 @@
                             }
                             $var .= "</select>";
                             echo $var;
-                          } elseif ($workflow_action->condition == 'agent') {
-                            $users = App\User::where('role', '!=', 'user')->where('active', '=', 1)->get();
+                          } elseif ($workflow_action->condition == 'staff') {
+                            $users = App\Staff::where('role', '!=', 'user')->where('active', '=', 1)->get();
                             $var = "<select name='action[" . $i . "][b]' class='form-control' required>";
                             foreach ($users as $user) {
                               if ($workflow_action->action == $user->id) {
@@ -412,7 +412,7 @@
                             $var .= "</select>";
                             echo $var;
                           } elseif ($workflow_action->condition == 'helptopic') {
-                            $help_topics = App\Model\helpdesk\Manage\Help_topic::where('status', '=', 1)->get();
+                            $help_topics = App\Model\helpdesk\Manage\HelpTopic::where('status', '=', 1)->get();
                             $var = "<select name='action[" . $i . "][b]' class='form-control' required>";
                             foreach ($help_topics as $help_topic) {
                               if ($workflow_action->action == $help_topic->id) {
@@ -425,7 +425,7 @@
                             $var .= "</select>";
                             echo $var;
                           } elseif ($workflow_action->condition == 'status') {
-                            $ticket_status = App\Model\helpdesk\Ticket\Ticket_Status::all();
+                            $ticket_status = App\Model\helpdesk\Ticket\TicketStatus::all();
                             $var = "<select name='action[" . $i . "][b]' class='form-control' required>";
                             foreach ($ticket_status as $status) {
                               if ($workflow_action->action == $status->id) {
@@ -527,7 +527,7 @@
           '<option value="priority">{!! Lang::get("lang.set_priority") !!}</option>' +
           '<option value="sla">{!! Lang::get("lang.set_sla_plan") !!}</option>' +
           '<option value="team">{!! Lang::get("lang.assign_team") !!}</option>' +
-          '<option value="agent">{!! Lang::get("lang.assign_agent") !!} </option>' +
+          '<option value="staff">{!! Lang::get("lang.assign_agent") !!} </option>' +
           '<option value="helptopic">{!! Lang::get("lang.set_help_topic") !!} </option>' +
           '<option value="status">{!! Lang::get("lang.set_ticket_status") !!} </option>' +
           '</select>' +
@@ -561,7 +561,7 @@
           '<select class="form-control" name="rule[' + n + '][a]" required>' +
           '<option>-- {!! Lang::get("lang.select_one") !!} --</option>' +
           '<option value="email">{!! Lang::get("lang.email") !!}</option>' +
-          '<option value="email_name">{!! Lang::get("lang.email_name") !!}</option>' +
+          '<option value="mailbox_name">{!! Lang::get("lang.mailbox_name") !!}</option>' +
           '<option value="subject">{!! Lang::get("lang.subject") !!}</option>' +
           '<option value="message">{!! Lang::get("lang.message") !!}/{!! Lang::get("lang.body") !!}</option>' +
           '</select>' +

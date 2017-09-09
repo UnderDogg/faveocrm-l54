@@ -12,11 +12,11 @@ use App\Http\Requests\helpdesk\RegisterRequest;
 use App\Model\helpdesk\Settings\CommonSettings;
 use App\Model\helpdesk\Settings\Plugin;
 use App\Model\helpdesk\Settings\Security;
-use App\Model\helpdesk\Ticket\Ticket_Thread;
+use App\Model\helpdesk\Ticket\TicketThread;
 // classes
 use App\Model\helpdesk\Ticket\Tickets;
 use App\Model\helpdesk\Utility\Otp;
-use App\User;
+use App\Staff;
 use Auth;
 use DateTime;
 use DB;
@@ -39,7 +39,7 @@ class AuthController extends Controller
 {
     //use AuthenticatesAndRegistersUsers;
     /* to redirect after login */
-    // if auth is agent
+    // if auth is staff
     protected $redirectTo = '/dashboard';
     // if auth is user
     protected $redirectToUser = '/profile';
@@ -97,12 +97,12 @@ class AuthController extends Controller
                     'role' => 'user',
                     'active' => 1,
                 ];
-                $user = User::where('email', $data['email'])->first();
+                $user = Staff::where('email', $data['email'])->first();
                 if (!$user) {
-                    $user = User::where('user_name', $data['user_name'])->first();
+                    $user = Staff::where('user_name', $data['user_name'])->first();
                 }
                 if (!$user) {
-                    $user = User::firstOrCreate($data);
+                    $user = Staff::firstOrCreate($data);
                 }
                 Auth::login($user);
             }
@@ -126,7 +126,7 @@ class AuthController extends Controller
         //dd($settings->status);
         \Event::fire(new \App\Events\FormRegisterEvent());
         if (Auth::user()) {
-            if (Auth::user()->role == 'admin' || Auth::user()->role == 'agent') {
+            if (Auth::user()->role == 'admin' || Auth::user()->role == 'staff') {
                 return \Redirect::route('dashboard');
             } elseif (Auth::user()->role == 'user') {
                 // return view('auth.register');
@@ -139,12 +139,12 @@ class AuthController extends Controller
     /**
      * Post registration form.
      *
-     * @param type User            $user
+     * @param type Staff            $user
      * @param type RegisterRequest $request
      *
      * @return type Response
      */
-    public function postRegister(User $user, RegisterRequest $request)
+    public function postRegister(Staff $user, RegisterRequest $request)
     {
         try {
             $request_array = $request->input();
@@ -202,7 +202,7 @@ class AuthController extends Controller
                     'variable' => ['user' => $name, 'email_address' => $user->user_name, 'user_profile_link' => faveoUrl('user/' . $userid)],
                 ],
             ];
-            $alert = new \App\Http\Controllers\Agent\helpdesk\Notifications\NotificationController();
+            $alert = new \App\Http\Controllers\Staff\helpdesk\Notifications\NotificationController();
             if (!$request->input('email')) {
                 $alert->setParameter('send_mail', false);
             }
@@ -210,7 +210,7 @@ class AuthController extends Controller
             if ($settings->status == 1 || $settings->status == '1') {
                 if (count($sms) > 0) {
                     if ($sms->status == 1 || $sms->status == '1') {
-                        $message12 = Lang::get('lang.activate_your_account_click_on_Link_that_send_to_your_mail_and_moble');
+                        $message12 = Lang::get('lang.activate_your_account_click_on_Link_that_send_to_your_mail_and_mobile');
                     } else {
                         $message12 = Lang::get('lang.activate_your_account_click_on_Link_that_send_to_your_mail_sms_plugin_inactive_or_not_setup');
                     }
@@ -239,7 +239,7 @@ class AuthController extends Controller
      */
     public function accountActivate($token)
     {
-        $user = User::where('remember_token', '=', $token)->first();
+        $user = Staff::where('remember_token', '=', $token)->first();
         if ($user) {
             $user->active = 1;
             $user->remember_token = null;
@@ -255,11 +255,11 @@ class AuthController extends Controller
      * Get mail function.
      *
      * @param type $token
-     * @param type User $user
+     * @param type Staff $user
      *
      * @return type Response
      */
-    public function getMail($token, User $user)
+    public function getMail($token, Staff $user)
     {
         $user = $user->where('remember_token', $token)->where('active', 0)->first();
         if ($user) {
@@ -281,7 +281,7 @@ class AuthController extends Controller
         $directory = base_path();
         if (file_exists($directory . DIRECTORY_SEPARATOR . '.env')) {
             if (Auth::user()) {
-                if (Auth::user()->role == 'admin' || Auth::user()->role == 'agent') {
+                if (Auth::user()->role == 'admin' || Auth::user()->role == 'staff') {
                     return \Redirect::route('dashboard');
                 } elseif (Auth::user()->role == 'user') {
                     return \Redirect::route('home');
@@ -321,7 +321,7 @@ class AuthController extends Controller
         if ($result == 1) {
             return redirect()->back()->withErrors('email', 'Incorrect details')->with(['error' => $security->lockout_message, 'referer' => $referer]);
         }
-        $check_active = User::where('email', '=', $request->input('email'))->orwhere('user_name', '=', $request->input('email'))->first();
+        $check_active = Staff::where('email', '=', $request->input('email'))->orwhere('user_name', '=', $request->input('email'))->first();
         if (!$check_active) { //check if user exists or not
             //if user deos not exist then return back with error that user is not registered
             return redirect()->back()
@@ -550,7 +550,7 @@ class AuthController extends Controller
      */
     public function verifyOTP(LoginRequest $request)
     {
-        $user = User::select('id', 'mobile', 'user_name')->where('email', '=', $request->input('email'))
+        $user = Staff::select('id', 'mobile', 'user_name')->where('email', '=', $request->input('email'))
             ->orWhere('user_name', '=', $request->input('email'))->first();
         $otp_length = strlen($request->input('otp'));
         if (!\Schema::hasTable('user_verification')) {
@@ -572,7 +572,7 @@ class AuthController extends Controller
                         if (Hash::check($request->input('otp'), $otp->otp)) {
                             Otp::where('user_id', '=', $user->id)
                                 ->update(['otp' => '']);
-                            User::where('id', '=', $user->id)
+                            Staff::where('id', '=', $user->id)
                                 ->update(['active' => 1]);
                             $this->openTicketAfterVerification($user->id);
                             return $this->postLogin($request);
@@ -632,7 +632,7 @@ class AuthController extends Controller
         if ($ticket != null) {
             foreach ($ticket as $value) {
                 $ticket_id = $value->id;
-                Ticket_Thread::where('ticket_id', '=', $ticket_id)
+                TicketThread::where('ticket_id', '=', $ticket_id)
                     ->update(['updated_at' => date('Y-m-d H:i:s')]);
             }
         }

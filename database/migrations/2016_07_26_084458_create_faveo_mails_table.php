@@ -13,7 +13,7 @@ class CreateFaveoMailsTable extends Migration
     {
         Schema::create('faveo_mails', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('email_id');
+            $table->integer('mailbox_id');
             $table->string('drive');
             $table->string('key');
             $table->string('value');

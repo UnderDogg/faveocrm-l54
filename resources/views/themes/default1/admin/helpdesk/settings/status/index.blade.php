@@ -56,7 +56,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($statuss as $status)
+        @foreach($statuses as $status)
 
           <tr>
             <td><a href="{!! route('status.edit',$status->id) !!}"> {!! $status->name !!} </a>

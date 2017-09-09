@@ -13,7 +13,7 @@ class AddForeignKeysToTeamAssignAgentTable extends Migration
     {
         Schema::table('team_assign_agent', function (Blueprint $table) {
             $table->foreign('team_id', 'team_assign_agent_ibfk_1')->references('id')->on('teams')->onUpdate('NO ACTION')->onDelete('RESTRICT');
-            $table->foreign('agent_id', 'team_assign_agent_ibfk_2')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('RESTRICT');
+            $table->foreign('staff_id', 'team_assign_agent_ibfk_2')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('RESTRICT');
         });
     }
 

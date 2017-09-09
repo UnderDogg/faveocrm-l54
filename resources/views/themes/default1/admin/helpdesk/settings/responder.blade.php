@@ -56,7 +56,7 @@
           {!! Form::checkbox('new_ticket',1) !!} &nbsp;
           {!! Form::label('new_ticket',Lang::get('lang.new_ticket')) !!}
         </div>
-        <!-- New Ticket by Agent: CHECKBOX	 Ticket Owner   -->
+        <!-- New Ticket by Staff: CHECKBOX	 Ticket Owner   -->
         <div class="form-group">
           {!! Form::checkbox('agent_new_ticket',1) !!}&nbsp;
           {!! Form::label('agent_new_ticket',Lang::get('lang.new_ticket_by_agent')) !!}

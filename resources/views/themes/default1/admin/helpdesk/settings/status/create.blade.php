@@ -199,7 +199,7 @@
               {!! Form::checkbox('client','1') !!} {{Lang::get('lang.client')}}
             </div>
             <div class="col-xs-3">
-              {!! Form::checkbox('agent','2') !!} {{Lang::get('lang.agent')}}
+              {!! Form::checkbox('staff','2') !!} {{Lang::get('lang.staff')}}
             </div>
             <div class="col-xs-3">
               {!! Form::checkbox('admin','4') !!} {{Lang::get('lang.admin')}}

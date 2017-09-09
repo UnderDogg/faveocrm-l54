@@ -31,8 +31,8 @@
                 AND AGREE TO BE BOUND TO THE TERMS OF THE EULA. IF YOU DO NOT AGREE TO BE BOUND BY THE EULA, OR YOU DO
                 NOT HAVE AUTHORITY TO BIND CUSTOMER TO THE EULA, YOU MAY NOT USE THE SOFTWARE.</p>
               <h2>Definitions</h2>
-              <p><strong>"Active Staff User Account"</strong> means a staff user account that is active in the context
-                of Faveo’s software, meaning that the Staff User Account is fully functional and can be used to
+              <p><strong>"Active Staff Staff Account"</strong> means a staff user account that is active in the context
+                of Faveo’s software, meaning that the Staff Staff Account is fully functional and can be used to
                 authenticate to the Software.</p>
               <p><strong>"Data"</strong> means the data stored in Your helpdesk using the Software.</p>
               <p><strong>"Domain Name"</strong> means an Internet domain name (e.g., sub.domain.com and domain.com).</p>
@@ -44,7 +44,7 @@
               <p><strong>"Software"</strong> means the software that accompanies this EULA.</p>
               <p><strong>"Solution"</strong> means the solution (Faveo Helpdesk, Faveo Service Desk) You choose to have
                 delivered to You as part of the Software.</p>
-              <p><strong>"Staff User Account"</strong> means a staff/agent user account in the context of Faveo’s
+              <p><strong>"Staff Staff Account"</strong> means a staff/staff user account in the context of Faveo’s
                 software.</p>
               <p><strong>"Support and Maintenance"</strong> means the optional fee-based subscription that enables a
                 Customer to receive access to support and new releases of and updates to the Software.</p>
@@ -54,25 +54,25 @@
               <h3>1.1 License</h3>
               <p> Subject to the EULA and provided that you have a valid License Key, Faveo grants You the revocable,
                 non-exclusive, non-transferable, and non-sublicensable license to use the Software through Your Active
-                Staff User Accounts.
-              <h3>1.2 Staff User Accounts</h3>
-              <p> You shall ensure that the number of Your Active Staff User Accounts is equal to or less than the
-                number of Staff User Accounts for which You have subscribed. You are responsible for ensuring that
-                access to a Staff User Account is not shared. Only one individual may authenticate to one Staff User
-                Account. If You are a legal entity or association, all persons using Your Staff User Accounts must be
+                Staff Staff Accounts.
+              <h3>1.2 Staff Staff Accounts</h3>
+              <p> You shall ensure that the number of Your Active Staff Staff Accounts is equal to or less than the
+                number of Staff Staff Accounts for which You have subscribed. You are responsible for ensuring that
+                access to a Staff Staff Account is not shared. Only one individual may authenticate to one Staff Staff
+                Account. If You are a legal entity or association, all persons using Your Staff Staff Accounts must be
                 either Your employees or Your contractors who have agreed to be bound by the EULA. Hardware or software
                 you use to pool connections, reroute information, or reduce the number of users that directly access or
                 use the Software (sometimes referred to as “multiplexing” or “pooling”), does not reduce the number of
-                licenses or Active Staff User Accounts you need.
+                licenses or Active Staff Staff Accounts you need.
               <h3>1.3 Third Party Software</h3>
               <p> The Software may contain or be accompanied by Third Party Software that requires notices and/or
                 additional terms and conditions. Such required Third Party Software notices and/or additional terms and
                 conditions may be requested from Faveo and are made a part of and incorporated by reference into the
                 EULA. By accepting the EULA, You are also accepting the additional terms and conditions, if any, set
                 forth therein.
-              <h3>1.4 New Releases, Updates, and Increases to Number of Staff User Accounts</h3>
+              <h3>1.4 New Releases, Updates, and Increases to Number of Staff Staff Accounts</h3>
               <p> You are entitled to use new releases of and updates to the Software, and/or to increase the number of
-                Your Staff User Accounts, only
+                Your Staff Staff Accounts, only
               <p>(i) if you elect to purchase a Support and Maintenance subscription and </p>
               <p>(ii) while your Support and Maintenance subscription remains active and in good standing. A Support and
                 Maintenance subscription is optional and, subject to the terms of the EULA, You may use the Software
@@ -119,12 +119,12 @@
                 that allowed in the EULA.
               <h3>2.7 Data Backups</h3>
               <p> You assume all responsibility for all of Your Data and any backups thereof.
-              <h3>2.8 Unsolicited Email</h3>
+              <h3>2.8 Unsolicited MailboxSettings</h3>
               <p> You may not use the Software to send unsolicited email ("spam") to anyone, including mailing lists
                 which You have purchased.
               <h3>2.9 Securing Your Authentication Details</h3>
               <p> You will ensure that all passwords and login credentials remain secure at all times for You and each
-                of Your Staff User Accounts. If in the case that You suspect a security violation You also undertake to
+                of Your Staff Staff Accounts. If in the case that You suspect a security violation You also undertake to
                 notify Faveo immediately.
               <h3>2.10 Handling Software</h3>
               <p> You shall not
@@ -133,7 +133,7 @@
                 Software, </p>
               <p>(b) use any Third Party Software independently of the Software, or </p>
               <p>(c) make any attempt to circumvent parts of the Software designed to enforce the maximum number of
-                Staff User Accounts for which You have paid. You obtain no rights to the Software except for the limited
+                Staff Staff Accounts for which You have paid. You obtain no rights to the Software except for the limited
                 rights to use the Software expressly granted by the EULA.</p>
               <h3>2.11 Limited License</h3>
               <p> You acknowledge and agree that
@@ -232,7 +232,7 @@
               <p>(a) Your use of the Software; </p>
               <p>(b) any content You create, transmit, or display while using the Software; </p>
               <p>(c) any breach by You of any representations, warranties, or agreements contained in the EULA; </p>
-              <p>(d) any unlicensed use of the Software using Your Staff User Accounts; and </p>
+              <p>(d) any unlicensed use of the Software using Your Staff Staff Accounts; and </p>
               <p>(e) Your negligent or wilful misconduct.</p>
               <h3>3.8 Notification of Claim</h3>
               <p> In no event will a claim by brought by You unless the licensee has notified Faveo of the claim within
@@ -251,7 +251,7 @@
                 to be used, regardless of whether Faveo was aware of or had been advised of such use; </p>
               <p>(iii) modifications to Software by any person or entity other than Faveo; </p>
               <p>(iv) any breach by You of any representations, warranties, or agreements contained in the EULA; (v) any
-                unlicensed use of the Software using Your Staff User Accounts; or </p>
+                unlicensed use of the Software using Your Staff Staff Accounts; or </p>
               <p>(v) Your negligent or wilful misconduct.</p>
               <p> If the Software becomes, or in the opinion of Faveo may become, the subject of a Claim, Faveo may, at
                 its option and in its discretion: </p>
@@ -296,14 +296,14 @@
               <h3>6.1 Payment of Fees</h3>
               <p> You must pay all fees by the due dates.
               <h3>6.2 Upgrading, Downgrading, or Switching Solution</h3>
-              <p> The amount You pay for the Software is dependent on the Solution selected and the number of Staff User
+              <p> The amount You pay for the Software is dependent on the Solution selected and the number of Staff Staff
                 Accounts selected. If You elect to switch to a Solution which costs more or increase the number of Staff
-                User Accounts, Faveo will invoice You for the marginally increased amount owed. If You switch to a
-                Solution which costs less or decrease the number of Staff User Accounts, Faveo will not be required to
+                Staff Accounts, Faveo will invoice You for the marginally increased amount owed. If You switch to a
+                Solution which costs less or decrease the number of Staff Staff Accounts, Faveo will not be required to
                 refund any prepaid amount. Because the price of the Support and Maintenance subscription is a function
-                of the cost of the Solution and number of Staff User Accounts you have selected, You will also be
+                of the cost of the Solution and number of Staff Staff Accounts you have selected, You will also be
                 required to pay any difference in the price of the Support and Maintenance subscription. To change your
-                Solution or the number of Staff User Accounts, you must, at Faveo’s sole discretion, enter into a new
+                Solution or the number of Staff Staff Accounts, you must, at Faveo’s sole discretion, enter into a new
                 license agreement for the Software on the then-current terms.
               <h3>6.3 Price Changes</h3>
               <p> Faveo reserves the right to change prices at any time.

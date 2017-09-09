@@ -3,11 +3,11 @@ namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
 use App\Model\Common\TemplateType;
-use App\Model\helpdesk\Agent\Department;
-use App\Model\helpdesk\Email\Emails;
+use App\Model\helpdesk\Staff\Department;
+use App\Model\helpdesk\Mailboxes\Mailboxes;
 use App\Model\helpdesk\Settings\Company;
-use App\Model\helpdesk\Settings\Email;
-use App\User;
+use App\Model\helpdesk\Settings\MailboxSettings;
+use App\Staff;
 use Auth;
 use Exception;
 use Mail;
@@ -16,7 +16,7 @@ class PhpMailController extends Controller
 {
     public function fetch_smtp_details($id)
     {
-        $mailboxes = Emails::where('id', '=', $id)->first();
+        $mailboxes = Mailboxes::where('id', '=', $id)->first();
         return $mailboxes;
     }
 
@@ -47,12 +47,12 @@ class PhpMailController extends Controller
     public function mailfrom($reg, $dept_id)
     {
         $email_id = '';
-        $mailboxes = Emails::where('department', '=', $dept_id)->first();
-        $email = Email::find(1);
+        $mailboxes = Mailboxes::where('department', '=', $dept_id)->first();
+        $mailbox = MailboxSettings::find(1);
         if ($mailboxes && $mailboxes->sending_status) {
             $email_id = $mailboxes->id;
         } else {
-            $email_id = $email->sys_email;
+            $email_id = $mailbox->sys_email;
         }
         return $email_id;
     }
@@ -68,7 +68,7 @@ class PhpMailController extends Controller
     {
         $from_address = $this->fetch_smtp_details($from);
         if ($from_address == null) {
-            throw new Exception('Invalid Email Configuration', 601);
+            throw new Exception('Invalid Mailboxes Configuration', 601);
         }
         $this->setMailConfig($from_address);
         $recipants = $this->checkElement('email', $to);
@@ -91,7 +91,7 @@ class PhpMailController extends Controller
     public function setMailConfig($from_address)
     {
         $username = $from_address->email_address;
-        $fromname = $from_address->email_name;
+        $fromname = $from_address->mailbox_name;
         $password = $from_address->password;
         $smtpsecure = $from_address->sending_encryption;
         $host = $from_address->sending_host;
@@ -128,8 +128,8 @@ class PhpMailController extends Controller
     public function setServices($emailid, $protocol)
     {
         $service = new \App\Model\MailJob\FaveoMail();
-        $services = $service->where('email_id', $emailid)->pluck('value', 'key')->toArray();
-        $controller = new \App\Http\Controllers\Admin\helpdesk\EmailsController();
+        $services = $service->where('mailbox_id', $emailid)->pluck('value', 'key')->toArray();
+        $controller = new \App\Http\Controllers\Admin\helpdesk\MailBoxesController();
         $controller->setServiceConfig($protocol, $services);
     }
 
@@ -146,7 +146,7 @@ class PhpMailController extends Controller
 
     public function laravelMail($to, $toname, $subject, $data, $cc = '', $attach = '', $thread = '', $auto_respond = '')
     {
-        $mail = Mail::send('emails.mail', ['data' => $data, 'thread' => $thread], function ($m) use ($to, $subject, $toname, $cc, $attach, $thread, $auto_respond) {
+        $mail = Mail::send('mailboxes.mail', ['data' => $data, 'thread' => $thread], function ($m) use ($to, $subject, $toname, $cc, $attach, $thread, $auto_respond) {
             $m->to($to, $toname)->subject($subject);
             if ($auto_respond) {
                 $swiftMessage = $m->getSwiftMessage();
@@ -249,7 +249,7 @@ class PhpMailController extends Controller
         $content = $this->checkElement('body', $message);
         $ticket_number = $this->checkElement('ticket_number', $template_variables);
         $template = TemplateType::where('name', '=', $template_type)->first();
-        $status = \DB::table('settings_email')->first();
+        $status = \DB::table('mailboxes__settings')->first();
         $set = \App\Model\Common\TemplateSet::where('name', '=', $status->template)->first();
         $temp = [];
         if ($template) {
@@ -260,7 +260,7 @@ class PhpMailController extends Controller
                 $messagebody = str_replace($k, $v, $contents);
                 $contents = $messagebody;
             }
-            if ($template_type == 'ticket-reply-agent') {
+            if ($template_type == 'ticket-reply-staff') {
                 $line = '---Reply above this line--- <br/><br/>';
                 $content = $line . $messagebody;
             } else {
@@ -275,7 +275,7 @@ class PhpMailController extends Controller
 
     public function templateVariables($template_variables, $content, $from)
     {
-        $agent = $this->checkElement('agent', $template_variables);
+        $agent = $this->checkElement('staff', $template_variables);
         // template variables
         if ($agent == '' && Auth::user()) {
             $agent = Auth::user()->user_name;
@@ -290,7 +290,7 @@ class PhpMailController extends Controller
         }
         $variables = [
             '{!!$user!!}' => checkArray('user', $template_variables),
-            '{!!$agent!!}' => $agent,
+            '{!!$staff!!}' => $agent,
             '{!!$ticket_number!!}' => checkArray('ticket_number', $template_variables),
             '{!!$content!!}' => $content,
             '{!!$from!!}' => $from,

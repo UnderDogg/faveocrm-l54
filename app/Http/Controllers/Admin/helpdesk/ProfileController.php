@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfilePassword;
 use App\Http\Requests\ProfileRequest;
 // models
-use App\User;
+use App\Staff;
 // classes
 use Auth;
 use Exception;
@@ -42,7 +42,7 @@ class ProfileController extends Controller
         try {
             $user = Auth::user();
             if ($user) {
-                return view('themes.default1.agent.helpdesk.user.profile', compact('user'));
+                return view('themes.default1.staff.helpdesk.user.profile', compact('user'));
             } else {
                 return redirect('404');
             }
@@ -61,7 +61,7 @@ class ProfileController extends Controller
         try {
             $user = Auth::user();
             if ($user) {
-                return view('themes.default1.agent.helpdesk.user.profile-edit', compact('user'));
+                return view('themes.default1.staff.helpdesk.user.profile-edit', compact('user'));
             } else {
                 return redirect('404');
             }
@@ -115,12 +115,12 @@ class ProfileController extends Controller
      * Post  Profile password page.
      *
      * @param type int             $id
-     * @param type User            $user
+     * @param type Staff            $user
      * @param type ProfilePassword $request
      *
      * @return type Response
      */
-    public function postProfilePassword($id, User $user, ProfilePassword $request)
+    public function postProfilePassword($id, Staff $user, ProfilePassword $request)
     {
         $user = Auth::user();
         //echo $user->password;

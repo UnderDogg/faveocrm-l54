@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Users')
   class="active"
@@ -8,7 +8,7 @@
   active
 @stop
 
-@section('organizations')
+@section('relations')
   class="active"
   @stop
 
@@ -18,7 +18,7 @@
     <!-- header -->
 @section('PageHeader')
   <div class="box-header" style="margin-top:-5px;margin-bottom:-15px;"><h3
-      class="box-title">{!! Lang::get('lang.organization_profile') !!}</h3></div>
+      class="box-title">{!! Lang::get('lang.relation_profile') !!}</h3></div>
   @stop
     <!-- /header -->
 
@@ -32,7 +32,7 @@
   <!-- content -->
 @section('content')
   <div class="row">
-    <?php $org_hd = App\Model\helpdesk\Agent_panel\Organization::where('id', '=', $orgs->id)->first(); ?>
+    <?php $org_hd = App\Model\helpdesk\Agent_panel\Relation::where('id', '=', $orgs->id)->first(); ?>
     <div id="alert-success" class="alert alert-success alert-dismissable" style="display:none;">
       <i class="fa  fa-check-circle"> </i> <b> Success <span id="get-success"></span></b>
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -68,20 +68,20 @@
                 </a></li>@endif
           </ul>
           <button data-toggle="modal" data-target="#assign_head" id="button_select"
-                  class="btn btn-primary btn-flat btn-block">{!! Lang::get('lang.select_organization_manager') !!}</button>
+                  class="btn btn-primary btn-flat btn-block">{!! Lang::get('lang.select_relation_manager') !!}</button>
         </div>
       </div>
       <div id="refresh1">
         @if($org_hd->head > 0)
-          <?php $users = App\User::where('id', '=', $org_hd->head)->first(); ?>
+          <?php $users = App\Staff::where('id', '=', $org_hd->head)->first(); ?>
           <div class="box box-widget widget-user-2">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header bg-yellow">
               <div class="widget-user-image">
-                <img class="img-circle" src="{{ Gravatar::src( $users->email) }}" alt="User Avatar">
+                <img class="img-circle" src="{{ Gravatar::src( $users->email) }}" alt="Staff Avatar">
               </div><!-- /.widget-user-image -->
               <h3 class="widget-user-username">{!! $users->user_name !!}</h3>
-              <h5 class="widget-user-desc">{!! Lang::get('lang.organization-s_head') !!}</h5>
+              <h5 class="widget-user-desc">{!! Lang::get('lang.relation-s_head') !!}</h5>
             </div>
             <div class="box-footer no-padding">
               <ul class="nav nav-stacked">
@@ -118,7 +118,7 @@
             </tr>
             @foreach($user_orgs as $user_org)
               <?php
-              $user_detail = App\User::where('id', '=', $user_org->user_id)->first();
+              $user_detail = App\Staff::where('id', '=', $user_org->user_id)->first();
               ?>
               <tr>
                 <td><a href="{!! route('user.show',$user_detail->id) !!}">{!! $user_detail->user_name !!}</a></td>
@@ -220,22 +220,22 @@
                                    value="{{$ticket->id}}"/></td>
                         <?php
                         //  collaborators
-                        $collaborators = App\Model\helpdesk\Ticket\Ticket_Collaborator::where('ticket_id', '=', $ticket->id)->get();
+                        $collaborators = App\Model\helpdesk\Ticket\TicketCollaborator::where('ticket_id', '=', $ticket->id)->get();
                         $collab = count($collaborators);
                         //  title
-                        $title = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->first();
+                        $title = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->first();
                         $string = strip_tags($title->title);
                         // check atatchments
-                        $attachments = App\Model\helpdesk\Ticket\Ticket_attachments::where('thread_id', '=', $title->id)->first();
+                        $attachments = App\Model\helpdesk\Ticket\TicketAttachments::where('thread_id', '=', $title->id)->first();
                         $attach = count($attachments);
 
                         if (strlen($string) > 40) {
                           $stringCut = substr($string, 0, 40);
                           $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . ' ...';
                         }
-                        $TicketData = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->max('id');
-                        $TicketDatarow = App\Model\helpdesk\Ticket\Ticket_Thread::where('id', '=', $TicketData)->first();
-                        $LastResponse = App\User::where('id', '=', $TicketDatarow->user_id)->first();
+                        $TicketData = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->max('id');
+                        $TicketDatarow = App\Model\helpdesk\Ticket\TicketThread::where('id', '=', $TicketData)->first();
+                        $LastResponse = App\Staff::where('id', '=', $TicketDatarow->user_id)->first();
                         if ($LastResponse->role == "user") {
                           $rep = "#F39C12";
                           $username = $LastResponse->user_name;
@@ -246,12 +246,12 @@
                             $username = $LastResponse->user_name;
                           }
                         }
-                        $titles = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->get();
+                        $titles = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->get();
                         $count = count($titles);
                         foreach ($titles as $title) {
                           $title = $title;
                         }
-                        $assigned_to = App\User::where('id', '=', $ticket->assigned_to)->first();
+                        $assigned_to = App\Staff::where('id', '=', $ticket->assigned_to)->first();
                         if ($assigned_to == null) {
                           $assigned = "Unassigned";
                         } else {
@@ -265,12 +265,12 @@
                           @if($attach > 0)&nbsp;<i class="fa fa-paperclip"></i>@endif</td>
                         <td class="mailbox-Id"><a href="{!! route('ticket.thread',[$ticket->id]) !!}"
                                                   title="{!! $title->title !!}">#{!! $ticket->ticket_number !!}</a></td>
-                        <?php $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
+                        <?php $priority = App\Model\helpdesk\Ticket\TicketPriority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
                         <td class="mailbox-priority">@if($priority != null)
                             <spam
                               class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</spam>@endif
                         </td>
-                        <?php $from = App\User::where('id', '=', $ticket->user_id)->first(); ?>
+                        <?php $from = App\Staff::where('id', '=', $ticket->user_id)->first(); ?>
                         <td class="mailbox-last-reply" style="color:{!! $rep !!}">{!! $username !!}</td>
                         <td>{!! $assigned !!}</td>
                         <td class="mailbox-last-activity">{!! faveoDate($title->updated_at) !!}</td>
@@ -348,22 +348,22 @@
                                    value="{{$ticket->id}}"/></td>
                         <?php
                         //  collaborators
-                        $collaborators = App\Model\helpdesk\Ticket\Ticket_Collaborator::where('ticket_id', '=', $ticket->id)->get();
+                        $collaborators = App\Model\helpdesk\Ticket\TicketCollaborator::where('ticket_id', '=', $ticket->id)->get();
                         $collab = count($collaborators);
                         //  title
-                        $title = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->first();
+                        $title = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->first();
                         $string = strip_tags($title->title);
                         // check atatchments
-                        $attachments = App\Model\helpdesk\Ticket\Ticket_attachments::where('thread_id', '=', $title->id)->first();
+                        $attachments = App\Model\helpdesk\Ticket\TicketAttachments::where('thread_id', '=', $title->id)->first();
                         $attach = count($attachments);
 
                         if (strlen($string) > 40) {
                           $stringCut = substr($string, 0, 40);
                           $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . ' ...';
                         }
-                        $TicketData = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->max('id');
-                        $TicketDatarow = App\Model\helpdesk\Ticket\Ticket_Thread::where('id', '=', $TicketData)->first();
-                        $LastResponse = App\User::where('id', '=', $TicketDatarow->user_id)->first();
+                        $TicketData = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->max('id');
+                        $TicketDatarow = App\Model\helpdesk\Ticket\TicketThread::where('id', '=', $TicketData)->first();
+                        $LastResponse = App\Staff::where('id', '=', $TicketDatarow->user_id)->first();
                         if ($LastResponse->role == "user") {
                           $rep = "#F39C12";
                           $username = $LastResponse->user_name;
@@ -374,12 +374,12 @@
                             $username = $LastResponse->user_name;
                           }
                         }
-                        $titles = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->get();
+                        $titles = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->get();
                         $count = count($titles);
                         foreach ($titles as $title) {
                           $title = $title;
                         }
-                        $assigned_to = App\User::where('id', '=', $ticket->assigned_to)->first();
+                        $assigned_to = App\Staff::where('id', '=', $ticket->assigned_to)->first();
                         if ($assigned_to == null) {
                           $assigned = "Unassigned";
                         } else {
@@ -393,12 +393,12 @@
                           @if($attach > 0)&nbsp;<i class="fa fa-paperclip"></i>@endif</td>
                         <td class="mailbox-Id"><a href="{!! route('ticket.thread',[$ticket->id]) !!}"
                                                   title="{!! $title->title !!}">#{!! $ticket->ticket_number !!}</a></td>
-                        <?php $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
+                        <?php $priority = App\Model\helpdesk\Ticket\TicketPriority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
                         <td class="mailbox-priority">@if($priority != null)
                             <spam
                               class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</spam>@endif
                         </td>
-                        <?php $from = App\User::where('id', '=', $ticket->user_id)->first(); ?>
+                        <?php $from = App\Staff::where('id', '=', $ticket->user_id)->first(); ?>
                         <td class="mailbox-last-reply" style="color:{!! $rep !!}">{!! $username !!}</td>
                         <td>{!! $assigned !!}</td>
                         <td class="mailbox-last-activity">{!! faveoDate($title->updated_at) !!}</td>
@@ -481,22 +481,22 @@
                                    value="{{$ticket->id}}"/></td>
                         <?php
                         //  collaborators
-                        $collaborators = App\Model\helpdesk\Ticket\Ticket_Collaborator::where('ticket_id', '=', $ticket->id)->get();
+                        $collaborators = App\Model\helpdesk\Ticket\TicketCollaborator::where('ticket_id', '=', $ticket->id)->get();
                         $collab = count($collaborators);
                         //  title
-                        $title = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->first();
+                        $title = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->first();
                         $string = strip_tags($title->title);
                         // check atatchments
-                        $attachments = App\Model\helpdesk\Ticket\Ticket_attachments::where('thread_id', '=', $title->id)->first();
+                        $attachments = App\Model\helpdesk\Ticket\TicketAttachments::where('thread_id', '=', $title->id)->first();
                         $attach = count($attachments);
 
                         if (strlen($string) > 40) {
                           $stringCut = substr($string, 0, 40);
                           $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . ' ...';
                         }
-                        $TicketData = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->max('id');
-                        $TicketDatarow = App\Model\helpdesk\Ticket\Ticket_Thread::where('id', '=', $TicketData)->first();
-                        $LastResponse = App\User::where('id', '=', $TicketDatarow->user_id)->first();
+                        $TicketData = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->max('id');
+                        $TicketDatarow = App\Model\helpdesk\Ticket\TicketThread::where('id', '=', $TicketData)->first();
+                        $LastResponse = App\Staff::where('id', '=', $TicketDatarow->user_id)->first();
                         if ($LastResponse->role == "user") {
                           $rep = "#F39C12";
                           $username = $LastResponse->user_name;
@@ -507,12 +507,12 @@
                             $username = $LastResponse->user_name;
                           }
                         }
-                        $titles = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->get();
+                        $titles = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->get();
                         $count = count($titles);
                         foreach ($titles as $title) {
                           $title = $title;
                         }
-                        $assigned_to = App\User::where('id', '=', $ticket->assigned_to)->first();
+                        $assigned_to = App\Staff::where('id', '=', $ticket->assigned_to)->first();
                         if ($assigned_to == null) {
                           $assigned = "Unassigned";
                         } else {
@@ -526,12 +526,12 @@
                           @if($attach > 0)&nbsp;<i class="fa fa-paperclip"></i>@endif</td>
                         <td class="mailbox-Id"><a href="{!! route('ticket.thread',[$ticket->id]) !!}"
                                                   title="{!! $title->title !!}">#{!! $ticket->ticket_number !!}</a></td>
-                        <?php $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
+                        <?php $priority = App\Model\helpdesk\Ticket\TicketPriority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
                         <td class="mailbox-priority">@if($priority != null)
                             <spam
                               class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</spam>@endif
                         </td>
-                        <?php $from = App\User::where('id', '=', $ticket->user_id)->first(); ?>
+                        <?php $from = App\Staff::where('id', '=', $ticket->user_id)->first(); ?>
                         <td class="mailbox-last-reply" style="color:{!! $rep !!}">{!! $username !!}</td>
                         <td>{!! $assigned !!}</td>
                         <td class="mailbox-last-activity">{!! faveoDate($title->updated_at) !!}</td>
@@ -549,7 +549,7 @@
           </div><!-- /.tab-content -->
         </div><!-- nav-tabs-custom -->
       </div>
-      <!--  Report of organization  -->
+      <!--  Report of relation  -->
       <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">
@@ -941,9 +941,9 @@
               <?php
               $org_heads = App\Model\helpdesk\Agent_panel\User_org::where('org_id', '=', $orgs->id)->get();
               ?>
-              <optgroup label="Select Organizations">
+              <optgroup label="Select Relations">
                 @foreach($org_heads as $org_head)
-                  <?php $user_org_heads = App\User::where('id', '=', $org_head->user_id)->first(); ?>
+                  <?php $user_org_heads = App\Staff::where('id', '=', $org_head->user_id)->first(); ?>
                   <option value="{{$user_org_heads->id}}">{!! $user_org_heads->user_name !!}</option>
                 @endforeach
               </optgroup>
@@ -979,7 +979,7 @@
             $("#assign_body").show();
 
             if (response == 1) {
-              message = "Organization head added Successfully."
+              message = "Relation head added Successfully."
               $("#dismiss").trigger("click");
               $("#refresh1").load("../organizations/{!! $orgs->id !!}  #refresh1");
               // $("#refresh2").load("../thread/1  #refresh2");

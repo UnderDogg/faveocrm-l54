@@ -10,15 +10,15 @@ use App\Http\Requests\helpdesk\ProfilePassword;
 use App\Http\Requests\helpdesk\ProfileRequest;
 use App\Http\Requests\helpdesk\TicketRequest;
 // models
-use App\Model\helpdesk\Manage\Help_topic;
+use App\Model\helpdesk\Manage\HelpTopic;
 use App\Model\helpdesk\Settings\CommonSettings;
 use App\Model\helpdesk\Settings\Company;
 use App\Model\helpdesk\Settings\System;
-use App\Model\helpdesk\Ticket\Ticket_Thread;
+use App\Model\helpdesk\Ticket\TicketThread;
 use App\Model\helpdesk\Ticket\Tickets;
 use App\Model\helpdesk\Utility\CountryCode;
 use App\Model\helpdesk\Utility\Otp;
-use App\User;
+use App\Staff;
 use Auth;
 // classes
 use DateTime;
@@ -130,7 +130,7 @@ class GuestController extends Controller
     public function checkMobile($mobile)
     {
         if ($mobile) {
-            $check = User::where('mobile', '=', $mobile)
+            $check = Staff::where('mobile', '=', $mobile)
                 ->where('id', '<>', \Auth::user()->id)
                 ->first();
             if (count($check) > 0) {
@@ -143,11 +143,11 @@ class GuestController extends Controller
     /**
      * Get Ticket page.
      *
-     * @param type Help_topic $topic
+     * @param type HelpTopic $topic
      *
      * @return type Response
      */
-    public function getTicket(Help_topic $topic)
+    public function getTicket(HelpTopic $topic)
     {
         $topics = $topic->get();
         return view('themes.default1.client.helpdesk.tickets.form', compact('topics'));
@@ -156,11 +156,11 @@ class GuestController extends Controller
     /**
      * getform.
      *
-     * @param type Help_topic $topic
+     * @param type HelpTopic $topic
      *
      * @return type
      */
-    public function getForm(Help_topic $topic)
+    public function getForm(HelpTopic $topic)
     {
         if (\Config::get('database.install') == '%0%') {
             return \Redirect::route('licence');
@@ -177,8 +177,8 @@ class GuestController extends Controller
      * Get my ticket.
      *
      * @param type Tickets       $tickets
-     * @param type Ticket_Thread $thread
-     * @param type User          $user
+     * @param type TicketThread $thread
+     * @param type Staff          $user
      *
      * @return type Response
      */
@@ -190,13 +190,13 @@ class GuestController extends Controller
     /**
      * Get ticket-thread.
      *
-     * @param type Ticket_Thread $thread
+     * @param type TicketThread $thread
      * @param type Tickets       $tickets
-     * @param type User          $user
+     * @param type Staff          $user
      *
      * @return type Response
      */
-    public function thread(Ticket_Thread $thread, Tickets $tickets, User $user)
+    public function thread(TicketThread $thread, Tickets $tickets, Staff $user)
     {
         $user_id = Auth::user()->id;
         //dd($user_id);
@@ -246,12 +246,12 @@ class GuestController extends Controller
     /**
      * Ticekt reply.
      *
-     * @param type Ticket_Thread $thread
+     * @param type TicketThread $thread
      * @param type TicketRequest $request
      *
      * @return type Response
      */
-    public function reply(Ticket_Thread $thread, TicketRequest $request)
+    public function reply(TicketThread $thread, TicketRequest $request)
     {
         $thread->ticket_id = $request->input('ticket_ID');
         $thread->title = $request->input('To');
@@ -261,7 +261,7 @@ class GuestController extends Controller
         $thread->save();
         $ticket_id = $request->input('ticket_ID');
         $tickets = Tickets::where('id', '=', $ticket_id)->first();
-        $thread = Ticket_Thread::where('ticket_id', '=', $ticket_id)->first();
+        $thread = TicketThread::where('ticket_id', '=', $ticket_id)->first();
         return Redirect('thread/' . $ticket_id);
     }
 
@@ -269,11 +269,11 @@ class GuestController extends Controller
      * Get Checked ticket.
      *
      * @param type Tickets $ticket
-     * @param type User    $user
+     * @param type Staff    $user
      *
      * @return type response
      */
-    public function getCheckTicket(Tickets $ticket, User $user)
+    public function getCheckTicket(Tickets $ticket, Staff $user)
     {
         return view('themes.default1.client.helpdesk.guest-user.newticket', compact('ticket'));
     }
@@ -282,9 +282,9 @@ class GuestController extends Controller
      * Post Check ticket.
      *
      * @param type CheckTicket   $request
-     * @param type User          $user
+     * @param type Staff          $user
      * @param type Tickets       $ticket
-     * @param type Ticket_Thread $thread
+     * @param type TicketThread $thread
      *
      * @return type Response
      */
@@ -307,7 +307,7 @@ class GuestController extends Controller
             return \Redirect::route('form')->with('fails', Lang::get('lang.there_is_no_such_ticket_number'));
         } else {
             $userId = $ticket->user_id;
-            $user = User::where('id', '=', $userId)->first();
+            $user = Staff::where('id', '=', $userId)->first();
             if ($user->role == 'user') {
                 $username = $user->first_name;
             } else {
@@ -387,7 +387,7 @@ class GuestController extends Controller
     public function verifyOTP()
     {
         // dd(Input::all());
-        // $user = User::select('id', 'mobile', 'user_name')->where('email', '=', $request->input('email'))->first();
+        // $user = Staff::select('id', 'mobile', 'user_name')->where('email', '=', $request->input('email'))->first();
         $otp = Otp::select('otp', 'updated_at')->where('user_id', '=', Input::get('u_id'))
             ->first();
         if ($otp != null) {
@@ -406,7 +406,7 @@ class GuestController extends Controller
                     if (Hash::check(Input::get('otp'), $otp->otp)) {
                         Otp::where('user_id', '=', Input::get('u_id'))
                             ->update(['otp' => '']);
-                        // User::where('id', '=', $user->id)
+                        // Staff::where('id', '=', $user->id)
                         //     ->update(['active' => 1]);
                         // $this->openTicketAfterVerification($user->id);
                         return 1;
@@ -478,8 +478,8 @@ class GuestController extends Controller
     {
         $userid = \Auth::user()->id;
         $useremail = \Auth::user()->email;
-        $email = $this->checkArray('email', $user); //$user['email'];
-        if ($email !== '' && $email !== $useremail) {
+        $mailbox = $this->checkArray('email', $user); //$user['email'];
+        if ($mailbox !== '' && $mailbox !== $useremail) {
             throw new Exception('Sorry! your current email and ' . ucfirst($user['provider']) . ' email is different so system can not sync');
         }
         $this->update($userid, $user);
@@ -487,15 +487,15 @@ class GuestController extends Controller
 
     public function update($userid, $user, $provider)
     {
-        $email = $this->checkArray('email', $user);
+        $mailbox = $this->checkArray('email', $user);
         $this->deleteUser($userid, $user, $provider);
         $this->insertAdditional($userid, $provider, $user);
-        $this->changeEmail($email);
+        $this->changeEmail($mailbox);
     }
 
     public function deleteUser($userid, $user, $provider)
     {
-        $info = new \App\UserAdditionalInfo();
+        $info = new \App\StaffAdditionalInfo();
         $infos = $info->where('owner', $userid)->where('service', $provider)->get();
         if ($infos->count() > 0 && count($user) > 0) {
             foreach ($infos as $key => $detail) {
@@ -508,7 +508,7 @@ class GuestController extends Controller
 
     public function insertAdditional($id, $provider, $user = [])
     {
-        $info = new \App\UserAdditionalInfo();
+        $info = new \App\StaffAdditionalInfo();
         if (count($user) > 0) {
             foreach ($user as $key => $value) {
                 $info->create([
@@ -521,11 +521,11 @@ class GuestController extends Controller
         }
     }
 
-    public function changeEmail($email)
+    public function changeEmail($mailbox)
     {
         $user = \Auth::user();
-        if ($user && $email && !$user->email) {
-            $user->email = $email;
+        if ($user && $mailbox && !$user->email) {
+            $user->email = $mailbox;
             $user->save();
         }
     }

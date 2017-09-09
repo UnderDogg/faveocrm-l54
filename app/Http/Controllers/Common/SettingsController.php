@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 // requests
 use App\Http\Requests;
 use App\Http\Requests\helpdesk\SmtpRequest;
-use App\Model\helpdesk\Email\Smtp;
+use App\Model\helpdesk\Mailboxes\Smtp;
 // models
 use App\Model\helpdesk\Settings\Plugin;
 use App\Model\helpdesk\Theme\Widgets;
@@ -212,7 +212,7 @@ class SettingsController extends Controller
     public function getsmtp()
     {
         $settings = Smtp::where('id', '=', '1')->first();
-        return view('themes.default1.admin.helpdesk.emails.smtp', compact('settings'));
+        return view('themes.default1.admin.helpdesk.mailboxes.smtp', compact('settings'));
     }
 
     /**

@@ -36,8 +36,8 @@
             <img src="{{asset("dist/img/user8-128x128.jpg")}}" width="250px; "/>
           </div>
           <div class="col-md-6">
-            <a href="{{url('agent-profile-edit')}}"><i class="fa fa-fw fa-edit"> </i></a>
-            <h3><b>User Information</b></h3>
+            <a href="{{url('staff-profile-edit')}}"><i class="fa fa-fw fa-edit"> </i></a>
+            <h3><b>Staff Information</b></h3>
             <h2>{{ $user->user_name }}</h2>
             <h4>{{ $user->primary_dpt }}</h4>
             <h4>{{ $user->assign_group }}</h4>

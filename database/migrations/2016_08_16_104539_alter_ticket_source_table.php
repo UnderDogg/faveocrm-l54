@@ -11,15 +11,15 @@ class AlterTicketSourceTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('ticket_source', 'css_class')) {
-            Schema::table('ticket_source', function (Blueprint $table) {
+        if (!Schema::hasColumn('tickets_sources', 'css_class')) {
+            Schema::table('tickets_sources', function (Blueprint $table) {
                 $table->string('css_class');
             });
         }
-        DB::table('ticket_source')->delete();
+        DB::table('tickets_sources')->delete();
         $values = $this->values();
         foreach ($values as $value) {
-            DB::table('ticket_source')->insert($value);
+            DB::table('tickets_sources')->insert($value);
         }
     }
 
@@ -28,7 +28,7 @@ class AlterTicketSourceTable extends Migration
         return [
             ['name' => 'web', 'value' => 'Web', 'css_class' => 'fa fa-internet-explorer'],
             ['name' => 'email', 'value' => 'E-mail', 'css_class' => 'fa fa-envelope'],
-            ['name' => 'agent', 'value' => 'Agent Panel', 'css_class' => 'fa fa-envelope'],
+            ['name' => 'staff', 'value' => 'Staff Panel', 'css_class' => 'fa fa-envelope'],
             ['name' => 'facebook', 'value' => 'Facebook', 'css_class' => 'fa fa-facebook'],
             ['name' => 'twitter', 'value' => 'Twitter', 'css_class' => 'fa fa-twitter'],
             ['name' => 'call', 'value' => 'Call', 'css_class' => 'fa fa-phone'],
@@ -43,7 +43,7 @@ class AlterTicketSourceTable extends Migration
      */
     public function down()
     {
-        Schema::table('ticket_source', function (Blueprint $table) {
+        Schema::table('tickets_sources', function (Blueprint $table) {
             //
         });
     }

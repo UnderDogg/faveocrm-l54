@@ -7,17 +7,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\helpdesk\DepartmentRequest;
 use App\Http\Requests\helpdesk\DepartmentUpdate;
 // model
-use App\Model\helpdesk\Agent\Department;
-use App\Model\helpdesk\Agent\Group_assign_department;
-use App\Model\helpdesk\Agent\Groups;
-use App\Model\helpdesk\Agent\Teams;
-use App\Model\helpdesk\Email\Emails;
-use App\Model\helpdesk\Email\Template;
-use App\Model\helpdesk\Manage\Help_topic;
+use App\Model\helpdesk\Staff\Department;
+use App\Model\helpdesk\Staff\Group_assign_department;
+use App\Model\helpdesk\Staff\Groups;
+use App\Model\helpdesk\Staff\Teams;
+use App\Model\helpdesk\Mailboxes\Mailboxes;
+use App\Model\helpdesk\Mailboxes\Template;
+use App\Model\helpdesk\Manage\HelpTopic;
 use App\Model\helpdesk\Manage\Sla_plan;
 use App\Model\helpdesk\Settings\System;
 use App\Model\helpdesk\Ticket\Tickets;
-use App\User;
+use App\Staff;
 // classes
 use DB;
 use Exception;
@@ -52,7 +52,7 @@ class DepartmentController extends Controller
     {
         try {
             $departments = $department->get();
-            return view('themes.default1.admin.helpdesk.agent.departments.index', compact('departments'));
+            return view('themes.default1.admin.helpdesk.staff.departments.index', compact('departments'));
         } catch (Exception $e) {
             return view('404');
         }
@@ -61,17 +61,17 @@ class DepartmentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param type User                    $user
+     * @param type Staff                    $user
      * @param type Group_assign_department $group_assign_department
      * @param type Department              $department
      * @param type Sla_plan                $sla
      * @param type Template                $template
-     * @param type Emails                  $email
+     * @param type Mailboxes                  $mailbox
      * @param type Groups                  $group
      *
      * @return type Response
      */
-    public function create(User $user, Group_assign_department $group_assign_department, Department $department, Sla_plan $sla, Template $template, Emails $email, Groups $group)
+    public function create(Staff $user, Group_assign_department $group_assign_department, Department $department, Sla_plan $sla, Template $template, Mailboxes $mailbox, Groups $group)
     {
         try {
             $slas = $sla->where('status', '=', 1)
@@ -79,11 +79,11 @@ class DepartmentController extends Controller
             $user = $user->where('role', '<>', 'user')
                 ->where('active', '=', 1)
                 ->get();
-            $mailboxes = $email->select('email_name', 'id')->get();
+            $mailboxes = $mailbox->select('mailbox_name', 'id')->get();
             $templates = $template->get();
             $department = $department->get();
             $groups = $group->pluck('id', 'name');
-            return view('themes.default1.admin.helpdesk.agent.departments.create', compact('department', 'templates', 'slas', 'user', 'emails', 'groups'));
+            return view('themes.default1.admin.helpdesk.staff.departments.create', compact('department', 'templates', 'slas', 'user', 'mailboxes', 'groups'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -134,18 +134,18 @@ class DepartmentController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param type int                     $id
-     * @param type User                    $user
+     * @param type Staff                    $user
      * @param type Group_assign_department $group_assign_department
      * @param type Template                $template
      * @param type Teams                   $team
      * @param type Department              $department
      * @param type Sla_plan                $sla
-     * @param type Emails                  $email
+     * @param type Mailboxes                  $mailbox
      * @param type Groups                  $group
      *
      * @return type Response
      */
-    public function edit($id, User $user, Group_assign_department $group_assign_department, Template $template, Teams $team, Department $department, Sla_plan $sla, Emails $email, Groups $group)
+    public function edit($id, Staff $user, Group_assign_department $group_assign_department, Template $template, Teams $team, Department $department, Sla_plan $sla, Mailboxes $mailbox, Groups $group)
     {
         try {
             $sys_department = \DB::table('settings_system')
@@ -157,12 +157,12 @@ class DepartmentController extends Controller
             $user = $user->where('primary_dpt', $id)
                 ->where('active', '=', 1)
                 ->get();
-            $mailboxes = $email->select('email_name', 'id')->get();
+            $mailboxes = $mailbox->select('mailbox_name', 'id')->get();
             $templates = $template->get();
             $departments = $department->whereId($id)->first();
             //$groups = $group->pluck('id', 'name');
             $assign = $group_assign_department->where('department_id', $id)->pluck('group_id');
-            return view('themes.default1.admin.helpdesk.agent.departments.edit', compact('assign', 'team', 'templates', 'departments', 'slas', 'user', 'emails', 'sys_department'));
+            return view('themes.default1.admin.helpdesk.staff.departments.edit', compact('assign', 'team', 'templates', 'departments', 'slas', 'user', 'mailboxes', 'sys_department'));
         } catch (Exception $e) {
             return redirect('departments')->with('fails', $e->getMessage());
         }
@@ -249,22 +249,22 @@ class DepartmentController extends Controller
                 if ($users > 1) {
                     $text_user = 'Users';
                 } else {
-                    $text_user = 'User';
+                    $text_user = 'Staff';
                 }
                 $user = '<li>' . $users . ' ' . $text_user . Lang::get('lang.have_been_moved_to_default_department') . '</li>';
             } else {
                 $user = '';
             }
-            $mailboxes = DB::table('emails')->where('department', '=', $id)->update(['department' => $system->department]);
+            $mailboxes = DB::table('mailboxes')->where('department', '=', $id)->update(['department' => $system->department]);
             if ($mailboxes > 0) {
                 if ($mailboxes > 1) {
-                    $text_emails = 'Emails';
+                    $text_emails = 'Mailboxes';
                 } else {
-                    $text_emails = 'Email';
+                    $text_emails = 'Mailboxes';
                 }
-                $email = '<li>' . $mailboxes . ' System ' . $text_emails . Lang::get('lang.have_been_moved_to_default_department') . ' </li>';
+                $mailbox = '<li>' . $mailboxes . ' System ' . $text_emails . Lang::get('lang.have_been_moved_to_default_department') . ' </li>';
             } else {
-                $email = '';
+                $mailbox = '';
             }
             $helptopic = DB::table('help_topic')->where('department', '=', $id)->update(['department' => null], ['status' => '1']);
             if ($helptopic > 0) {
@@ -272,7 +272,7 @@ class DepartmentController extends Controller
             } else {
                 $helptopic = '';
             }
-            $message = $ticket . $user . $email . $helptopic;
+            $message = $ticket . $user . $mailbox . $helptopic;
             /* Becouse of foreign key we delete group_assign_department first */
             $group_assign_department = $group_assign_department->where('department_id', $id);
             $group_assign_department->delete();

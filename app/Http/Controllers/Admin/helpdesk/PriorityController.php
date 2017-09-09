@@ -8,11 +8,11 @@ use App\Http\Controllers\Controller;
 // requests
 use App\Http\Requests\helpdesk\PriorityRequest;
 // models
-use App\Model\helpdesk\Email\Emails;
-use App\Model\helpdesk\Manage\Help_topic;
+use App\Model\helpdesk\Mailboxes\Mailboxes;
+use App\Model\helpdesk\Manage\HelpTopic;
 use App\Model\helpdesk\Settings\CommonSettings;
-use App\Model\helpdesk\Settings\Email;
-use App\Model\helpdesk\Ticket\Ticket_Priority;
+use App\Model\helpdesk\Settings\MailboxSettings;
+use App\Model\helpdesk\Ticket\TicketPriority;
 use Auth;
 use DB;
 use Exception;
@@ -44,7 +44,7 @@ class PriorityController extends Controller
     {
         $user_status = CommonSettings::where('option_name', '=', 'user_priority')->first();
         // dd( $user_status);
-        return view('themes.default1.admin.helpdesk.manage.ticket_priority.index', compact('user_status'));
+        return view('themes.default1.admin.helpdesk.manage.tickets_priorities.index', compact('user_status'));
     }
 
     /**
@@ -69,7 +69,7 @@ class PriorityController extends Controller
     public function priorityIndex1()
     {
         try {
-            $ticket = new Ticket_Priority();
+            $ticket = new TicketPriority();
             $tickets = $ticket->select('priority_id', 'priority', 'priority_desc', 'priority_color', 'status', 'is_default', 'ispublic')->get();
             return \Datatable::Collection($tickets)
                 ->showColumns('priority', 'priority_desc')
@@ -80,7 +80,7 @@ class PriorityController extends Controller
                     if ($model->status == 1) {
                         return "<a style='color:green'>active</a>";
                     } elseif ($model->status == 0) {
-                        Ticket_Priority::where('priority_id', '=', '$priority_id')
+                        TicketPriority::where('priority_id', '=', '$priority_id')
                             ->update(['priority_id' => '']);
                         return "<a style='color:red'>inactive</a>";
                     }
@@ -105,12 +105,12 @@ class PriorityController extends Controller
      */
     public function priorityCreate()
     {
-        return view('themes.default1.admin.helpdesk.manage.ticket_priority.create');
+        return view('themes.default1.admin.helpdesk.manage.tickets_priorities.create');
     }
 
     public function priorityCreate1(PriorityRequest $request)
     {
-        $tk_priority = new Ticket_Priority();
+        $tk_priority = new TicketPriority();
         $tk_priority->priority = $request->priority;
         $tk_priority->status = $request->status;
         $tk_priority->priority_desc = $request->priority_desc;
@@ -127,8 +127,8 @@ class PriorityController extends Controller
      */
     public function priorityEdit($priority_id)
     {
-        $tk_priority = Ticket_Priority::wherepriority_id($priority_id)->first();
-        return view('themes.default1.admin.helpdesk.manage.ticket_priority.edit', compact('tk_priority'));
+        $tk_priority = TicketPriority::wherepriority_id($priority_id)->first();
+        return view('themes.default1.admin.helpdesk.manage.tickets_priorities.edit', compact('tk_priority'));
     }
 
     /**
@@ -139,7 +139,7 @@ class PriorityController extends Controller
     public function priorityEdit1(PriorityRequest $request)
     {
         $priority_id = $request->priority_id;
-        $tk_priority = Ticket_Priority::findOrFail($priority_id);
+        $tk_priority = TicketPriority::findOrFail($priority_id);
         $tk_priority->priority = $request->priority;
         $tk_priority->status = $request->status;
         $tk_priority->priority_desc = $request->priority_desc;
@@ -147,9 +147,9 @@ class PriorityController extends Controller
         $tk_priority->ispublic = $request->ispublic;
         $tk_priority->save();
         if ($request->input('default_priority') == 'on') {
-            Ticket_Priority::where('is_default', '>', 0)
+            TicketPriority::where('is_default', '>', 0)
                 ->update(['is_default' => 0]);
-            Ticket_Priority::where('priority_id', '=', $priority_id)
+            TicketPriority::where('priority_id', '=', $priority_id)
                 ->update(['is_default' => 1]);
         }
         return \Redirect::route('priority.index')->with('success', (Lang::get('lang.priority_successfully_updated')));
@@ -162,21 +162,21 @@ class PriorityController extends Controller
      */
     public function destroy($priority_id)
     {
-        $default_priority = Ticket_Priority::where('is_default', '>', '0')->first();
+        $default_priority = TicketPriority::where('is_default', '>', '0')->first();
         // dd($default_priority->is_default);
         $topic = DB::table('help_topic')->where('priority', '=', $priority_id)->update(['priority' => $default_priority->is_default]);
         // if ($topic > 0) {
         //     if ($topic > 1) {
-        //         $text_topic = 'Emails';
+        //         $text_topic = 'Mailboxes';
         //     } else {
-        //         $text_topic = 'Email';
+        //         $text_topic = 'Mailboxes';
         //     }
         //     $topic = '<li>'.Lang::get('lang.associated_help_topic_have_been_moved_to_default_sla').'</li>';
         // } else {
         //     $topic = '';
         // }
         // dd('llll');
-        $tk_priority = Ticket_Priority::findOrFail($priority_id);
+        $tk_priority = TicketPriority::findOrFail($priority_id);
         $tk_priority->delete();
         return \Redirect::route('priority.index')->with('success', (Lang::get('lang.delete_successfully')));
     }

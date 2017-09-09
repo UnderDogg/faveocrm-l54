@@ -36,13 +36,13 @@ class Condition extends Model
     public function checkActiveJob()
     {
         $result = ['fetching' => '', 'notification' => '', 'work' => '', 'message' => '', 'remind' => ''];
-        $mailboxes = new \App\Model\helpdesk\Settings\Email();
-        $email = $mailboxes->find(1);
-        if ($email) {
-            if ($email->email_fetching == 1) {
+        $mailboxes = new \App\Model\helpdesk\Settings\MailboxSettings();
+        $mailbox = $mailboxes->find(1);
+        if ($mailbox) {
+            if ($mailbox->email_fetching == 1) {
                 $result['fetching'] = true;
             }
-            if ($email->notification_cron == 1) {
+            if ($mailbox->notification_cron == 1) {
                 $result['notification'] = true;
             }
         }

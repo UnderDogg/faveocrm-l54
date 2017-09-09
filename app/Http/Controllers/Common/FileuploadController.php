@@ -9,8 +9,8 @@ class FileuploadController extends Controller
     {
         // checking authentication
         $this->middleware('auth');
-        // checking if role is agent
-        $this->middleware('role.agent');
+        // checking if role is staff
+        $this->middleware('role.staff');
     }
 
     // Returns a file size limit in bytes based on the PHP upload_max_filesize

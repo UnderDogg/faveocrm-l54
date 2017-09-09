@@ -29,7 +29,7 @@ class FormController extends Controller
     {
         switch ($dependency) {
             case 'priority':
-                return DB::table('ticket_priority')->select('priority_id as id', 'priority as optionvalue')->get()->toJson();
+                return DB::table('tickets_priorities')->select('priority_id as id', 'priority as optionvalue')->get()->toJson();
             case 'department':
                 return DB::table('department')->select('id', 'name as optionvalue')->get()->toJson();
             case 'type':
@@ -37,9 +37,9 @@ class FormController extends Controller
             case 'assigned_to':
                 return DB::table('users')->where('role', '!=', 'user')->select('id', 'user_name as optionvalue')->get()->toJson();
             case 'company':
-                return DB::table('organization')->select('id', 'name as optionvalue')->get()->toJson();
+                return DB::table('relation')->select('id', 'name as optionvalue')->get()->toJson();
             case 'status':
-                return DB::table('ticket_status')->select('id', 'name as optionvalue')->get()->toJson();
+                return DB::table('tickets__statuses')->select('id', 'name as optionvalue')->get()->toJson();
             case 'helptopic':
                 return DB::table('help_topic')->select('id', 'topic as optionvalue')->get()->toJson();
         }
@@ -47,7 +47,7 @@ class FormController extends Controller
 
     public function requester(Request $request)
     {
-        $user = new \App\User();
+        $user = new \App\Staff();
         $term = $request->input('term');
         $users = $user
             ->where('first_name', 'LIKE', '%' . $term . '%')

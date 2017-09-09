@@ -197,9 +197,9 @@ class SlaController extends Controller
             $dept = DB::table('department')->where('sla', '=', $id)->update(['sla' => $default_sla->sla]);
             if ($dept > 0) {
                 if ($dept > 1) {
-                    $text_dept = 'Emails';
+                    $text_dept = 'Mailboxes';
                 } else {
-                    $text_dept = 'Email';
+                    $text_dept = 'Mailboxes';
                 }
                 $dept = '<li>' . Lang::get('lang.associated_department_have_been_moved_to_default_sla') . '</li>';
             } else {
@@ -208,9 +208,9 @@ class SlaController extends Controller
             $topic = DB::table('help_topic')->where('sla_plan', '=', $id)->update(['sla_plan' => $default_sla->sla]);
             if ($topic > 0) {
                 if ($topic > 1) {
-                    $text_topic = 'Emails';
+                    $text_topic = 'Mailboxes';
                 } else {
-                    $text_topic = 'Email';
+                    $text_topic = 'Mailboxes';
                 }
                 $topic = '<li>' . Lang::get('lang.associated_help_topic_have_been_moved_to_default_sla') . '</li>';
             } else {

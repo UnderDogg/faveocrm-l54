@@ -69,7 +69,7 @@
               <b>Alert!</b>
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
               {!! $errors->first('Name', '<p>:message</p>') !!}
-              {!! $errors->first('Email', '<p>:message</p>') !!}
+              {!! $errors->first('Mailboxes', '<p>:message</p>') !!}
               {!! $errors->first('Phone', '<p>:message</p>') !!}
               {!! $errors->first('Subject', '<p>:message</p>') !!}
               {!! $errors->first('Details', '<p>:message</p>') !!}

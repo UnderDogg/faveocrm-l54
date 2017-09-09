@@ -134,7 +134,7 @@ class CustomFormSeeder extends Seeder
             ['name' => 'Status', 'is_agent_required' => 1, 'is_client_required' => 1],
             ['name' => 'Priority', 'is_agent_required' => 1, 'is_client_required' => 1],
             ['name' => 'Group', 'is_agent_required' => 1, 'is_client_required' => 1],
-            ['name' => 'Agent', 'is_agent_required' => 1, 'is_client_required' => 1],
+            ['name' => 'Staff', 'is_agent_required' => 1, 'is_client_required' => 1],
             ['name' => 'Description', 'is_agent_required' => 1, 'is_client_required' => 1],
             ['name' => 'Company', 'is_agent_required' => 1, 'is_client_required' => 1],
         ];

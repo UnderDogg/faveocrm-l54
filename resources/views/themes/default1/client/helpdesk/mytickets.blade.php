@@ -78,17 +78,17 @@
                   <td><input type="checkbox" class="icheckbox_flat-blue" name="select_all[]" value="{{$ticket->id}}"/>
                   </td>
                   <?php
-                  $title = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->orderBy('id')->first();
+                  $title = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->orderBy('id')->first();
                   $string = strip_tags($title->title);
                   if (strlen($string) > 40) {
                     $stringCut = substr($string, 0, 25);
                     $string = $stringCut . '....';
                   }
-                  $TicketData = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)
+                  $TicketData = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)
                     ->where('user_id', '!=', null)
                     ->max('id');
-                  $TicketDatarow = App\Model\helpdesk\Ticket\Ticket_Thread::where('id', '=', $TicketData)->first();
-                  $LastResponse = App\User::where('id', '=', $TicketDatarow->user_id)->first();
+                  $TicketDatarow = App\Model\helpdesk\Ticket\TicketThread::where('id', '=', $TicketData)->first();
+                  $LastResponse = App\Staff::where('id', '=', $TicketDatarow->user_id)->first();
                   if ($LastResponse->role == "user") {
                     $rep = "#F39C12";
                     $username = $LastResponse->user_name;
@@ -99,7 +99,7 @@
                       $username = $LastResponse->user_name;
                     }
                   }
-                  $titles = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->where('is_internal', '=', 0)->get();
+                  $titles = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->where('is_internal', '=', 0)->get();
                   $count = count($titles);
                   foreach ($titles as $title) {
                     $title = $title;
@@ -109,14 +109,14 @@
                                               title="{!! $title->title !!}">{{$string}}   </a> ({!! $count!!}) <i
                       class="fa fa-comment"></i></td>
                   <td class="mailbox-Id">#{!! $ticket->ticket_number !!}</td>
-                  <?php $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
+                  <?php $priority = App\Model\helpdesk\Ticket\TicketPriority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
                   <td class="mailbox-priority">
                     <spam class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</spam>
                   </td>
 
                   <td class="mailbox-last-reply" style="color: {!! $rep !!}">{!! $username !!}</td>
                   <td class="mailbox-last-activity">{!! $title->updated_at !!}</td>
-                  <?php $status = App\Model\helpdesk\Ticket\Ticket_Status::where('id', '=', $ticket->status)->first(); ?>
+                  <?php $status = App\Model\helpdesk\Ticket\TicketStatus::where('id', '=', $ticket->status)->first(); ?>
                   <td class="mailbox-date">{!! $status->name !!}</td>
                 </tr>
               @endforeach
@@ -174,15 +174,15 @@
                   <td><input type="checkbox" class="icheckbox_flat-blue" name="select_all[]" value="{{$ticket->id}}"/>
                   </td>
                   <?php
-                  $title = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->first();
+                  $title = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->first();
                   $string = strip_tags($title->title);
                   if (strlen($string) > 40) {
                     $stringCut = substr($string, 0, 40);
                     $string = substr($stringCut, 0, strrpos($stringCut, ' ')) . ' ...';
                   }
-                  $TicketData = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->max('id');
-                  $TicketDatarow = App\Model\helpdesk\Ticket\Ticket_Thread::where('id', '=', $TicketData)->first();
-                  $LastResponse = App\User::where('id', '=', $TicketDatarow->user_id)->first();
+                  $TicketData = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->max('id');
+                  $TicketDatarow = App\Model\helpdesk\Ticket\TicketThread::where('id', '=', $TicketData)->first();
+                  $LastResponse = App\Staff::where('id', '=', $TicketDatarow->user_id)->first();
                   if ($LastResponse->role == "user") {
                     $rep = "#F39C12";
                     $username = $LastResponse->user_name;
@@ -193,7 +193,7 @@
                       $username = $LastResponse->user_name;
                     }
                   }
-                  $titles = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->where("is_internal", "=", 0)->get();
+                  $titles = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $ticket->id)->where("is_internal", "=", 0)->get();
                   $count = count($titles);
                   foreach ($titles as $title) {
                     $title = $title;
@@ -203,13 +203,13 @@
                                               title="{!! $title->title !!}">{{$string}}   </a> ({!! $count!!}) <i
                       class="fa fa-comment"></i></td>
                   <td class="mailbox-Id">#{!! $ticket->ticket_number !!}</td>
-                  <?php $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
+                  <?php $priority = App\Model\helpdesk\Ticket\TicketPriority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
                   <td class="mailbox-priority">
                     <spam class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</spam>
                   </td>
                   <td class="mailbox-last-reply" style="color: {!! $rep !!}">{!! $username !!}</td>
                   <td class="mailbox-last-activity">{!! $title->updated_at !!}</td>
-                  <?php $status = App\Model\helpdesk\Ticket\Ticket_Status::where('id', '=', $ticket->status)->first(); ?>
+                  <?php $status = App\Model\helpdesk\Ticket\TicketStatus::where('id', '=', $ticket->status)->first(); ?>
                   <td class="mailbox-date">{!! $status->name !!}</td>
                 </tr>
               @endforeach

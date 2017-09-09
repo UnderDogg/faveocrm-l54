@@ -8,7 +8,7 @@ use App\Model\helpdesk\Settings\System;
 // models
 use App\Model\helpdesk\Utility\Date_time_format;
 use App\Model\helpdesk\Utility\Timezones;
-use App\User;
+use App\Staff;
 use Artisan;
 // classes
 use File;
@@ -149,7 +149,7 @@ class InstallerApiController extends Controller
         if (\Config::get('database.install') == '%0%') {
             $firstname = $request->firstname;
             $lastname = $request->lastname;
-            $email = $request->email;
+            $mailbox = $request->email;
             $username = $request->username;
             $password = $request->password;
             $timezone = $request->timezone;
@@ -181,10 +181,10 @@ class InstallerApiController extends Controller
             $system->version = $version;
             $system->save();
             // Creating user
-            $user = User::create([
+            $user = Staff::create([
                 'first_name' => $firstname,
                 'last_name' => $lastname,
-                'email' => $email,
+                'email' => $mailbox,
                 'user_name' => $username,
                 'password' => Hash::make($password),
                 'active' => 1,

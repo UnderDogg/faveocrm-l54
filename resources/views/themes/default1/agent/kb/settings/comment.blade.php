@@ -1,6 +1,6 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
-@extends('themes.default1.agent.layout.sidebar')
+@extends('themes.default1.staff.layout.sidebar')
 @section('PageHeader')
   <h1>{!! Lang::get('lang.comments') !!}</h1>
 @stop

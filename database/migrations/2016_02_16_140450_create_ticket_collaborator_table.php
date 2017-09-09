@@ -11,7 +11,7 @@ class CreateTicketCollaboratorTable extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_collaborator', function (Blueprint $table) {
+        Schema::create('tickets__collaborators', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('isactive');
             $table->integer('ticket_id')->unsigned()->nullable()->index('ticket_id');
@@ -28,6 +28,6 @@ class CreateTicketCollaboratorTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ticket_collaborator');
+        Schema::drop('tickets__collaborators');
     }
 }

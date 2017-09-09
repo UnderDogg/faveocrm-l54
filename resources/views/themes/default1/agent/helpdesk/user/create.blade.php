@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Users')
   class="active"
@@ -28,11 +28,11 @@
     </div>
     @endif
       <!-- open a form -->
-    {!! Form::open(['action'=>'Agent\helpdesk\UserController@store','method'=>'post']) !!}
+    {!! Form::open(['action'=>'Staff','method'=>'post']) !!}
     <div class="box box-primary">
       <div class="box-header with-border">
         <h3 class="box-title">
-          User Credentials
+          Staff Credentials
         </h3>
       </div>
       <div class="box-body">
@@ -82,10 +82,10 @@
             {!! Form::label('last_name',Lang::get('lang.last_name')) !!}
             {!! Form::text('last_name',null,['class' => 'form-control']) !!}
           </div>
-          <!-- User Name : Text : Required-->
+          <!-- Staff Name : Text : Required-->
         </div>
         <div class="row">
-          <!-- Email Address : Email : Required -->
+          <!-- Mailboxes Address : Mailboxes : Required -->
           <div class="col-xs-6 form-group {{ $errors->has('email') ? 'has-error' : '' }}">
             {!! Form::label('email',Lang::get('lang.email')) !!}
             @if ($email_mandatory->status == 1 || $email_mandatory->status == '1')
@@ -100,9 +100,9 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6 form-group {{ $errors->has('organization') ? 'has-error' : '' }}">
-            {!! Form::label('organization',Lang::get('lang.organization')) !!}
-            {!! Form::select('org_id',[''=>'Select','Organization'=>$org],null,['class' => 'form-control','id'=>'org']) !!}
+          <div class="col-xs-6 form-group {{ $errors->has('relation') ? 'has-error' : '' }}">
+            {!! Form::label('relation',Lang::get('lang.relation')) !!}
+            {!! Form::select('org_id',[''=>'Select','Relationorg],null,['class' => 'form-control','id'=>'org']) !!}
 
           </div>
         </div>
@@ -177,7 +177,7 @@
     $('#org').autocomplete({
         minLength: 1,
         source: function (request, response) {
-            $.getJSON("{{url('get-organization')}}", {
+            $.getJSON("{{url('get-relation')}}", {
                 term: request.term
             }, function (data) {
                 var array = data.error ? [] : $.map(data, function (m) {

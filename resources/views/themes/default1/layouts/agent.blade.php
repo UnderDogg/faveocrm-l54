@@ -68,28 +68,28 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{{url('agents')}}">Admin Panel</a></li>
-          <!-- User Account: style can be found in dropdown.less -->
+          <li><a href="{{url('staff')}}">Admin Panel</a></li>
+          <!-- Staff Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               @if(Auth::user())
                 @if(Auth::user()->profile_pic)
                   <img src="{{asset('lb-faveo/lb-faveo/dist/img')}}{{'/'}}{{Auth::user()->profile_pic}}"
-                       class="user-image" alt="User Image"/>
+                       class="user-image" alt="Staff Image"/>
                 @else
-                  <img src="{{ Gravatar::src(Auth::user()->email) }}" class="user-image" alt="User Image">
+                  <img src="{{ Gravatar::src(Auth::user()->email) }}" class="user-image" alt="Staff Image">
                 @endif
                 <span class="hidden-xs">{{Auth::user()->first_name." ".Auth::user()->last_name}}</span>
               @endif
             </a>
             <ul class="dropdown-menu">
-              <!-- User image -->
+              <!-- Staff image -->
               <li class="user-header" style="background-color:#343F44;">
                 @if(Auth::user()->profile_pic)
                   <img src="{{asset('lb-faveo/dist/img')}}{{'/'}}{{Auth::user()->profile_pic}}" class="img-circle"
-                       alt="User Image"/>
+                       alt="Staff Image"/>
                 @else
-                  <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="User Image">
+                  <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="Staff Image">
                 @endif
                 <p>
                   {{Auth::user()->first_name." ".Auth::user()->last_name}} - {{Auth::user()->role}}
@@ -125,9 +125,9 @@
             <div class="col-xs-2" style="width:50%;">
               @if(Auth::user() && Auth::user()->profile_pic)
                 <img src="{{asset('lb-faveo/dist/img')}}{{'/'}}{{Auth::user()->profile_pic}}" class="img-circle"
-                     alt="User Image"/>
+                     alt="Staff Image"/>
               @else
-                <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="User Image">
+                <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="Staff Image">
               @endif
 
             </div>
@@ -203,7 +203,7 @@
         <li class="header">DEPARTMENTS</li>
         <?php
 
-        $depts = App\Model\helpdesk\Agent\Department::all();
+        $depts = App\Model\helpdesk\Staff\Department::all();
         foreach ($depts as $dept) {
 
         $open = App\Model\helpdesk\Ticket\Tickets::where('status','=','1')->where('dept_id','=',$dept->id)->get();
@@ -249,7 +249,7 @@
 
         <?php
         }
-        if (Auth::user()->role == 'agent' && Auth::user()->primary_dpt == $dept->name) {
+        if (Auth::user()->role == 'staff' && Auth::user()->primary_dpt == $dept->name) {
         ?>
         <li class="treeview">
           <a href="#">
@@ -277,7 +277,7 @@
   </aside>
 
   <?php $agent_group = Auth::user()->assign_group;
-  $group = App\Model\helpdesk\Agent\Groups::where('name', '=', $agent_group)->where('group_status', '=', '1')->first();
+  $group = App\Model\helpdesk\Staff\Groups::where('name', '=', $agent_group)->where('group_status', '=', '1')->first();
   // dd($group);
   ?>
 
@@ -295,9 +295,9 @@
           </div>
           <div class="tabs-pane @yield('user-bar')" id="tabB">
             <ul class="nav navbar-nav">
-              <li id="bar" @yield('user')><a href="{{ url('user') }}">User Directory</a></li>
+              <li id="bar" @yield('user')><a href="{{ url('user') }}">Staff Directory</a></li>
               </a></li>
-              <li id="bar" @yield('organizations')><a href="{{ url('organizations') }}">Organizations</a></li>
+              <li id="bar" @yield('relations')><a href="{{ url('relations') }}">Relations</a></li>
               </a></li>
             </ul>
           </div>

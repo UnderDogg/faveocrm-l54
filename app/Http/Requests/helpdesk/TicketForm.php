@@ -29,7 +29,7 @@ class TicketForm extends Request
     {
         return [
             'help_topic' => 'required',
-            'Email' => 'required',
+            'Mailboxes' => 'required',
             'Subject' => 'required',
             'Detail' => 'required',
         ];

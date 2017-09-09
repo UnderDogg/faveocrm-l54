@@ -25,10 +25,10 @@ class MailController extends Controller
     {
         $mailid = \Input::get('emailid');
         if ($mailid) {
-            $mailboxes = new \App\Model\helpdesk\Email\Emails();
-            $email = $mailboxes->find($mailid);
+            $mailboxes = new \App\Model\helpdesk\Mailboxes\Mailboxes();
+            $mailbox = $mailboxes->find($mailid);
             $form = "<div class='" . $class . "'>" . Form::label($name, $label) . "<span class='text-red'> *</span>" .
-                Form::text($name, $email->getExtraField($name), ['class' => 'form-control']) . '</div>';
+                Form::text($name, $mailbox->getExtraField($name), ['class' => 'form-control']) . '</div>';
         } else {
             $form = "<div class='" . $class . "'>" . Form::label($name, $label) . "<span class='text-red'> *</span>" .
                 Form::text($name, null, ['class' => 'form-control']) . '</div>';

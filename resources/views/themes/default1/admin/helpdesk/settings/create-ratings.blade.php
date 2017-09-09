@@ -94,7 +94,7 @@
           !!}
         </div>
         <div class="form-group {{ $errors->has('allow_modification') ? 'has-error' : '' }}">
-          <!-- Email user -->
+          <!-- Mailboxes user -->
           {!! Form::label('allow_modification',Lang::get('lang.rating_change')) !!}<span style="color:red;">*</span>
           <div class="callout callout-default" style="font-style: oblique;">{!! Lang::get('lang.rating-msg3') !!}</div>
           <div class="row">

@@ -58,13 +58,13 @@
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="Staff Image"/>
               <span class="hidden-xs">Alexander Pierce</span>
             </a>
             <ul class="dropdown-menu">
-              <!-- User image -->
+              <!-- Staff image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="Staff Image"/>
                 <p>
                   Alexander Pierce - Web Developer
                   <small>Member since Nov. 2012</small>
@@ -289,7 +289,7 @@
                 <li><a href="#"><i class="fa fa-users" style="color:green;"> </i>Change Owner</a></li>
                 <li><a href="#"><i class="fa fa-edit" style="color:blue;"> </i>Manage Forms</a></li>
                 <li><a href="#"><i class="fa fa-trash" style="color:red;"> </i>Delete Ticket</a></li>
-                <li><a href="#"><i class="fa fa-ban" style="color:red;"> </i> Ban Email</a></li>
+                <li><a href="#"><i class="fa fa-ban" style="color:red;"> </i> Ban MailboxSettings</a></li>
               </ul>
             </div>
           </div>
@@ -331,8 +331,8 @@
                     <td>Support</td>
                   </tr>
                   <tr>
-                    <td><b>Email:</b></td>
-                    <td>Email@email.com</td>
+                    <td><b>MailboxSettings:</b></td>
+                    <td>MailboxSettings@email.com</td>
                   </tr>
                 </table>
                 <!-- </div> -->
@@ -347,7 +347,7 @@
                   </tr>
                   <tr>
                     <td><b>Source:</b></td>
-                    <td>Email (IP address)</td>
+                    <td>MailboxSettings (IP address)</td>
                   </tr>
                   <tr>
                     <td><b>Help Topic:</b></td>

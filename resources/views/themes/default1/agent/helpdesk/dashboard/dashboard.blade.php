@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Dashboard')
   class="active"
@@ -101,7 +101,7 @@
       if (Auth::user()->role == 'admin') {
         $todaytickets = App\Model\helpdesk\Ticket\Tickets::where('status', '=', 1)->whereDate('tickets.duedate', '=', \Carbon\Carbon::now()->format('Y-m-d'))->count();
       } else {
-        $dept = App\Model\helpdesk\Agent\Department::where('id', '=', Auth::user()->primary_dpt)->first();
+        $dept = App\Model\helpdesk\Staff\Department::where('id', '=', Auth::user()->primary_dpt)->first();
         $todaytickets = App\Model\helpdesk\Ticket\Tickets::where('status', '=', 1)->whereDate('tickets.duedate', '=', \Carbon\Carbon::now()->format('Y-m-d'))->where('dept_id', '=', $dept->id)->count();
       }
       ?>

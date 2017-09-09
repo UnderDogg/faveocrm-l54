@@ -73,8 +73,8 @@
         <!-- status radio: required: Active|Dissable -->
         <div class="row">
           <div class="col-md-6">
-            <div class="form-group {{ $errors->has('ticket_status') ? 'has-error' : '' }}">
-              {!! Form::label('ticket_status',Lang::get('lang.status')) !!}&nbsp;&nbsp;
+            <div class="form-group {{ $errors->has('tickets__statuses') ? 'has-error' : '' }}">
+              {!! Form::label('tickets__statuses',Lang::get('lang.status')) !!}&nbsp;&nbsp;
               {!! Form::radio('status','1',true) !!} {{Lang::get('lang.active')}}&nbsp;&nbsp;&nbsp;
               {!! Form::radio('status','0') !!} {{Lang::get('lang.inactive')}}
             </div>
@@ -141,12 +141,12 @@
               => 'form-control']) !!}
             </div>
           </div>
-          <!-- Auto-assign To:	Drop Down: value  from Agent table   -->
+          <!-- Auto-assign To:	Drop Down: value  from Staff table   -->
           <div class="col-md-4">
             <div class="form-group {{ $errors->has('auto_assign') ? 'has-error' : '' }}">
               {!! Form::label('auto_assign',Lang::get('lang.auto_assign')) !!}
               {!!Form::select('auto_assign',
-              [''=>Lang::get('lang.select_an_agent'),Lang::get('lang.agents')=>$agents->pluck('full_name','id')->toArray()],null,['class'
+              [''=>Lang::get('lang.select_an_agent'),Lang::get('lang.staff')=>$staff->pluck('full_name','id')->toArray()],null,['class'
               => 'form-control']) !!}
             </div>
           </div>

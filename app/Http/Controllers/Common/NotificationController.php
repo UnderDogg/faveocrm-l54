@@ -6,7 +6,7 @@ use App\Model\helpdesk\Notification\Notification;
 use App\Model\helpdesk\Notification\NotificationType;
 use App\Model\helpdesk\Notification\UserNotification;
 use App\Model\helpdesk\Ticket\Tickets;
-use App\User;
+use App\Staff;
 
 class NotificationController extends Controller
 {
@@ -18,7 +18,7 @@ class NotificationController extends Controller
      * under the folling occurrence
      * 1. Ticket Creation
      * 2. Ticket Reply
-     * 3. User Creation.
+     * 3. Staff Creation.
      *
      * @author      Ladybird <info@ladybirdweb.com>
      */
@@ -29,12 +29,12 @@ class NotificationController extends Controller
      */
     public function __construct()
     {
-        $user = new User();
+        $user = new Staff();
         $this->user = $user;
         // checking authentication
         $this->middleware('auth');
-        // checking if role is agent
-        $this->middleware('role.agent');
+        // checking if role is staff
+        $this->middleware('role.staff');
     }
 
     /**
@@ -50,7 +50,7 @@ class NotificationController extends Controller
         try {
             if (empty($forwhome)) {
                 $ticket = Tickets::where('id', '=', $model_id)->first();
-                $forwhome = $this->user->where('role', '=', 'agent')->where('primary_dpt', '=', $ticket->dept_id)->get();
+                $forwhome = $this->user->where('role', '=', 'staff')->where('primary_dpt', '=', $ticket->dept_id)->get();
                 $forwhome2 = $this->user->where('role', '=', 'admin')->get();
                 $forwhome = $forwhome->merge($forwhome2);
             }
@@ -59,7 +59,7 @@ class NotificationController extends Controller
             foreach ($forwhome as $agent) {
                 $type_message = NotificationType::where('id', '=', $type_id)->first();
                 UserNotification::create(['notification_id' => $notify->id, 'user_id' => $agent['id'], 'is_read' => 0]);
-                // $this->PushNotificationController->response($agent->fcm_token, $type_message->message . $model_id, $model_id);
+                // $this->PushNotificationController->response($staff->fcm_token, $type_message->message . $model_id, $model_id);
             }
         } catch (\Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());

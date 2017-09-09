@@ -113,7 +113,7 @@
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
         </div>
-        <!-- Email -->
+        <!-- Mailboxes -->
         @if (($email_mandatory->status == 1 || $email_mandatory->status == '1'))
           <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
             {!! Form::text('email',null,['placeholder'=>Lang::get('lang.email'),'class' => 'form-control']) !!}

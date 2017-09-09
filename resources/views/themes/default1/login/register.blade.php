@@ -20,10 +20,10 @@
 
     </div>
 
-    <!-- Email -->
+    <!-- Mailboxes -->
     <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
 
-      {!! Form::text('email',null,['placeholder'=>'Email','class' => 'form-control']) !!}
+      {!! Form::text('email',null,['placeholder'=>'Mailboxes','class' => 'form-control']) !!}
       {!! $errors->first('email', '<spam class="help-block">:message</spam>') !!}
       <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 

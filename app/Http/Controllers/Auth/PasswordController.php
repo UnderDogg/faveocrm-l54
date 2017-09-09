@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Common\PhpMailController;
 use App\Http\Controllers\Controller;
 // request
-use App\User;
+use App\Staff;
 
 // model
 // classes
@@ -54,7 +54,7 @@ class PasswordController extends Controller
             $date = date('Y-m-d H:i:s');
             $this->validate($request, ['email' => 'required']);
             \Event::fire('reset.password', []);
-            $user = User::where('email', '=', $request->only('email'))->orWhere('mobile', '=', $request->only('email'))->first();
+            $user = Staff::where('email', '=', $request->only('email'))->orWhere('mobile', '=', $request->only('email'))->first();
             if (isset($user)) {
                 $user1 = $user->email;
                 //gen new code and pass
@@ -107,15 +107,15 @@ class PasswordController extends Controller
         );
         $credentials = $this->getResetCredentials($request);
         // dd($credentials);
-        $email = $credentials['email'];
+        $mailbox = $credentials['email'];
         $password = $credentials['password'];
         $token = $credentials['token'];
         $response = 'fails';
-        $password_tokens = \DB::table('password_resets')->where('email', '=', $email)->first();
+        $password_tokens = \DB::table('password_resets')->where('email', '=', $mailbox)->first();
         if ($password_tokens) {
             if ($password_tokens->token == $token) {
-                $users = new User();
-                $user = $users->where('email', $email)->first();
+                $users = new Staff();
+                $user = $users->where('email', $mailbox)->first();
                 if ($user) {
                     $user->password = \Hash::make($password);
                     $user->save();

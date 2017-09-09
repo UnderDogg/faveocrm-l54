@@ -53,7 +53,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'roles' => \App\Http\Middleware\CheckRole::class,
-        'role.agent' => \App\Http\Middleware\CheckRoleAgent::class,
+        'role.staff' => \App\Http\Middleware\CheckRoleAgent::class,
         'role.user' => \App\Http\Middleware\CheckRoleUser::class,
         'api' => \App\Http\Middleware\ApiKey::class,
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,

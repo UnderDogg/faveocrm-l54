@@ -2,22 +2,22 @@
 namespace App\Http\Controllers\Client\helpdesk;
 
 // controllers
-use App\Http\Controllers\Agent\helpdesk\TicketWorkflowController;
+use App\Http\Controllers\Staff\helpdesk\TicketWorkflowController;
 use App\Http\Controllers\Controller;
 // requests
-use App\Model\helpdesk\Agent\Department;
+use App\Model\helpdesk\Staff\Department;
 // models
 use App\Model\helpdesk\Form\Fields;
-use App\Model\helpdesk\Manage\Help_topic;
+use App\Model\helpdesk\Manage\HelpTopic;
 use App\Model\helpdesk\Settings\CommonSettings;
 use App\Model\helpdesk\Settings\System;
 use App\Model\helpdesk\Settings\Ticket;
-use App\Model\helpdesk\Ticket\Ticket_attachments;
-use App\Model\helpdesk\Ticket\Ticket_source;
-use App\Model\helpdesk\Ticket\Ticket_Thread;
+use App\Model\helpdesk\Ticket\TicketAttachments;
+use App\Model\helpdesk\Ticket\TicketSource;
+use App\Model\helpdesk\Ticket\TicketThread;
 use App\Model\helpdesk\Ticket\Tickets;
 use App\Model\helpdesk\Utility\CountryCode;
-use App\User;
+use App\Staff;
 use Exception;
 // classes
 use Form;
@@ -50,11 +50,11 @@ class FormController extends Controller
     /**
      * getform.
      *
-     * @param type Help_topic $topic
+     * @param type HelpTopic $topic
      *
      * @return type
      */
-    public function getForm(Help_topic $topic, CountryCode $code)
+    public function getForm(HelpTopic $topic, CountryCode $code)
     {
         if (\Config::get('database.install') == '%0%') {
             return \Redirect::route('licence');
@@ -88,7 +88,7 @@ class FormController extends Controller
      *
      * @return type string
      */
-    public function postForm($id, Help_topic $topic)
+    public function postForm($id, HelpTopic $topic)
     {
         if ($id != 0) {
             $helptopic = $topic->where('id', '=', $id)->first();
@@ -138,9 +138,9 @@ class FormController extends Controller
      * Posted form.
      *
      * @param type Request $request
-     * @param type User    $user
+     * @param type Staff    $user
      */
-    public function postedForm(User $user, Request $request, Ticket $ticket_settings, Ticket_source $ticket_source, Ticket_attachments $ta, CountryCode $code)
+    public function postedForm(Staff $user, Request $request, Ticket $ticket_settings, TicketSource $ticket_source, TicketAttachments $ta, CountryCode $code)
     {
         try {
             $phone = '';
@@ -148,7 +148,7 @@ class FormController extends Controller
             $auto_response = 0;
             $team_assign = null;
             $sla = null;
-            $email = null;
+            $mailbox = null;
             $name = null;
             $mobile_number = null;
             $phonecode = null;
@@ -158,12 +158,12 @@ class FormController extends Controller
             $form_extras = $request->except($default_values);
             $requester = $request->input('Requester');
             if ($request->has('Requester')) {
-                $user = User::find($requester);
+                $user = Staff::find($requester);
             }
             if ($request->has('Requester_email')) {
-                $email = $request->input('Requester_email');
+                $mailbox = $request->input('Requester_email');
             } elseif ($user) {
-                $email = $user->email;
+                $mailbox = $user->email;
             }
             if ($request->has('Requester_name')) {
                 $name = $request->input('Requester_name');
@@ -182,9 +182,9 @@ class FormController extends Controller
             }
             if ($request->has('Group')) {
                 $helptopic = $request->input('Group');
-                $department = Help_topic::where('id', '=', $helptopic)->first()->value('department');
+                $department = HelpTopic::where('id', '=', $helptopic)->first()->value('department');
             } else {
-                $help = Help_topic::first();
+                $help = HelpTopic::first();
                 $helptopic = $help->id;
                 $department = $help->value('department');
             }
@@ -217,14 +217,14 @@ class FormController extends Controller
             if ($sla_plan) {
                 $sla = $sla_plan->id;
             }
-            $source = Ticket_source::where('name', '=', 'web')->first()->id;
+            $source = TicketSource::where('name', '=', 'web')->first()->id;
             if ($request->hasFile('attachment')) {
                 $attachments = $request->file('attachment');
             } else {
                 $attachments = null;
             }
-            \Event::fire(new \App\Events\ClientTicketFormPost($form_extras, $email, $source));
-            $response = $this->TicketWorkflowController->workflow($email, $name, $subject, $details, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source, $collaborator, $department, $assignto, $team_assign, $status, $form_extras, $auto_response, $attachments);
+            \Event::fire(new \App\Events\ClientTicketFormPost($form_extras, $mailbox, $source));
+            $response = $this->TicketWorkflowController->workflow($mailbox, $name, $subject, $details, $phone, $phonecode, $mobile_number, $helptopic, $sla, $priority, $source, $collaborator, $department, $assignto, $team_assign, $status, $form_extras, $auto_response, $attachments);
         } catch (\Exception $e) {
             $result = $e->getMessage();
             return response()->json(compact('result'), 500);
@@ -246,10 +246,10 @@ class FormController extends Controller
         try {
             if ($comment != null) {
                 $tickets = Tickets::where('id', '=', $id)->first();
-                $thread = Ticket_Thread::where('ticket_id', '=', $tickets->id)->first();
+                $thread = TicketThread::where('ticket_id', '=', $tickets->id)->first();
                 $subject = $thread->title . '[#' . $tickets->ticket_number . ']';
                 $body = $request->input('comment');
-                $user_cred = User::where('id', '=', $tickets->user_id)->first();
+                $user_cred = Staff::where('id', '=', $tickets->user_id)->first();
                 $fromaddress = $user_cred->email;
                 $fromname = $user_cred->user_name;
                 $phone = '';
@@ -280,7 +280,7 @@ class FormController extends Controller
     {
         $html = '';
         $helptopic_id = $request->input('helptopic');
-        $helptopics = new Help_topic();
+        $helptopics = new HelpTopic();
         $helptopic = $helptopics->find($helptopic_id);
         if (!$helptopic) {
             throw new Exception('We can not find your request');

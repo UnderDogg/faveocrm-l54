@@ -5,7 +5,7 @@ use App\Http\Requests\Request;
 use App\Model\helpdesk\Filters\Label;
 
 /**
- * AgentUpdate.
+ * StaffUpdate.
  *
  * @author  Ladybird <info@ladybirdweb.com>
  */

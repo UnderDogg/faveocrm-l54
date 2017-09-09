@@ -29,7 +29,7 @@ class EmailsEditRequest extends Request
     {
         return [
             'email_address' => 'email',
-            'email_name' => 'required',
+            'mailbox_name' => 'required',
             // 'department' => 'required',
             // 'priority' => 'required',
             // 'help_topic' => 'required',

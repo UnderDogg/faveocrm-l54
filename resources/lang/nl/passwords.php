@@ -4,7 +4,7 @@
  |      Dutch translation [for version 1.0.8.0]
  |-------------------------------------------------------------------------------------
  |      Author      : Rob Traanman
- |      Email       : Rob@systemedic.nl
+ |      Mailboxes       : Rob@systemedic.nl
  |  Last translated : 30-11-2016
  |********************************************************************************
  |      Details of new words added for translation

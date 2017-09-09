@@ -7,25 +7,25 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\helpdesk\HelptopicRequest;
 use App\Http\Requests\helpdesk\HelptopicUpdate;
 // models
-use App\Model\helpdesk\Agent\Agents;
-use App\Model\helpdesk\Agent\Department;
+use App\Model\helpdesk\Staff\Staff;
+use App\Model\helpdesk\Staff\Department;
 use App\Model\helpdesk\Form\Forms;
-use App\Model\helpdesk\Manage\Help_topic;
+use App\Model\helpdesk\Manage\HelpTopic;
 use App\Model\helpdesk\Manage\Sla_plan;
 use App\Model\helpdesk\Settings\Ticket;
-use App\Model\helpdesk\Ticket\Ticket_Priority;
-use App\User;
+use App\Model\helpdesk\Ticket\TicketPriority;
+
 // classes
 use DB;
 use Exception;
 use Lang;
 
 /**
- * HelptopicController.
+ * HelpTopicController.
  *
  * @author      Ladybird <info@ladybirdweb.com>
  */
-class HelptopicController extends Controller
+class HelpTopicController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -41,11 +41,11 @@ class HelptopicController extends Controller
     /**
      * Display a listing of the helptopic.
      *
-     * @param type Help_topic $topic
+     * @param type HelpTopic $topic
      *
      * @return type Response
      */
-    public function index(Help_topic $topic)
+    public function index(HelpTopic $topic)
     {
         try {
             $topics = $topic->get();
@@ -60,9 +60,9 @@ class HelptopicController extends Controller
      *
      * @param type Priority   $priority
      * @param type Department $department
-     * @param type Help_topic $topic
+     * @param type HelpTopic $topic
      * @param type Form_name  $form
-     * @param type Agents     $agent
+     * @param type Staff     $staff
      * @param type Sla_plan   $sla
      *
      * @return type Response
@@ -71,22 +71,22 @@ class HelptopicController extends Controller
       ================================================
       | Route to Create view file passing Model Values
       | 1.Department Model
-      | 2.Help_topic Model
-      | 3.Agents Model
+      | 2.HelpTopic Model
+      | 3.Staff Model
       | 4.Sla_plan Model
       | 5.Forms Model
       ================================================
      */
-    public function create(Ticket_Priority $priority, Department $department, Help_topic $topic, Forms $form, User $agent, Sla_plan $sla)
+    public function create(TicketPriority $priority, Department $department, HelpTopic $topic, Forms $form, Staff $staff, Sla_plan $sla)
     {
         try {
             $departments = $department->get();
             $topics = $topic->get();
             $forms = $form->get();
-            $agents = $agent->where('role', '!=', 'user')->where('active', '=', 1)->orderBy('first_name')->get();
+            $staff = $staff->where('role', '!=', 'user')->where('active', '=', 1)->orderBy('first_name')->get();
             $slas = $sla->get();
-            $priority = Ticket_Priority::where('status', '=', 1)->get();
-            return view('themes.default1.admin.helpdesk.manage.helptopic.create', compact('priority', 'departments', 'topics', 'forms', 'agents', 'slas'));
+            $priority = TicketPriority::where('status', '=', 1)->get();
+            return view('themes.default1.admin.helpdesk.manage.helptopic.create', compact('priority', 'departments', 'topics', 'forms', 'staff', 'slas'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -95,12 +95,12 @@ class HelptopicController extends Controller
     /**
      * Store a newly created helptpoic in storage.
      *
-     * @param type Help_topic       $topic
+     * @param type HelpTopic       $topic
      * @param type HelptopicRequest $request
      *
      * @return type Response
      */
-    public function store(Help_topic $topic, HelptopicRequest $request)
+    public function store(HelpTopic $topic, HelptopicRequest $request)
     {
         try {
             if ($request->custom_form) {
@@ -130,26 +130,26 @@ class HelptopicController extends Controller
      * @param type $id
      * @param type Priority   $priority
      * @param type Department $department
-     * @param type Help_topic $topic
+     * @param type HelpTopic $topic
      * @param type Form_name  $form
-     * @param type Agents     $agent
+     * @param type Staff     $staff
      * @param type Sla_plan   $sla
      *
      * @return type Response
      */
-    public function edit($id, Ticket_Priority $priority, Department $department, Help_topic $topic, Forms $form, Sla_plan $sla)
+    public function edit($id, TicketPriority $priority, Department $department, HelpTopic $topic, Forms $form, Sla_plan $sla)
     {
         try {
-            $agents = User::where('role', '!=', 'user')->where('active', '=', 1)->orderBy('first_name')->get();
+            $staff = Staff::where('role', '!=', 'user')->where('active', '=', 1)->orderBy('first_name')->get();
             $departments = $department->get();
             $topics = $topic->whereId($id)->first();
             $forms = $form->get();
             $slas = $sla->get();
-            $priority = Ticket_Priority::where('status', '=', 1)->get();
+            $priority = TicketPriority::where('status', '=', 1)->get();
             $sys_help_topic = \DB::table('settings_ticket')
                 ->select('help_topic')
                 ->where('id', '=', 1)->first();
-            return view('themes.default1.admin.helpdesk.manage.helptopic.edit', compact('priority', 'departments', 'topics', 'forms', 'agents', 'slas', 'sys_help_topic'));
+            return view('themes.default1.admin.helpdesk.manage.helptopic.edit', compact('priority', 'departments', 'topics', 'forms', 'staff', 'slas', 'sys_help_topic'));
         } catch (Exception $e) {
             return redirect('helptopic')->with('fails', '<li>' . $e->getMessage() . '</li>');
         }
@@ -159,12 +159,12 @@ class HelptopicController extends Controller
      * Update the specified helptopic in storage.
      *
      * @param type $id
-     * @param type Help_topic      $topic
+     * @param type HelpTopic      $topic
      * @param type HelptopicUpdate $request
      *
      * @return type Response
      */
-    public function update($id, Help_topic $topic, HelptopicUpdate $request)
+    public function update($id, HelpTopic $topic, HelptopicUpdate $request)
     {
         try {
             $topics = $topic->whereId($id)->first();
@@ -200,11 +200,11 @@ class HelptopicController extends Controller
      * Remove the specified helptopic from storage.
      *
      * @param type int        $id
-     * @param type Help_topic $topic
+     * @param type HelpTopic $topic
      *
      * @return type Response
      */
-    public function destroy($id, Help_topic $topic, Ticket $ticket_setting)
+    public function destroy($id, HelpTopic $topic, Ticket $ticket_setting)
     {
         $ticket_settings = $ticket_setting->where('id', '=', '1')->first();
         if ($ticket_settings->help_topic == $id) {
@@ -221,18 +221,18 @@ class HelptopicController extends Controller
             } else {
                 $ticket = '';
             }
-            $mailboxes = DB::table('emails')->where('help_topic', '=', $id)->update(['help_topic' => $ticket_settings->help_topic]);
+            $mailboxes = DB::table('mailboxes')->where('help_topic', '=', $id)->update(['help_topic' => $ticket_settings->help_topic]);
             if ($mailboxes > 0) {
                 if ($mailboxes > 1) {
-                    $text_emails = 'Emails';
+                    $text_emails = 'Mailboxes';
                 } else {
-                    $text_emails = 'Email';
+                    $text_emails = 'Mailboxes';
                 }
-                $email = '<li>' . $mailboxes . ' System ' . $text_emails . Lang::get('lang.have_been_moved_to_default_help_topic') . ' </li>';
+                $mailbox = '<li>' . $mailboxes . ' System ' . $text_emails . Lang::get('lang.have_been_moved_to_default_help_topic') . ' </li>';
             } else {
-                $email = '';
+                $mailbox = '';
             }
-            $message = $ticket . $email;
+            $message = $ticket . $mailbox;
             $topics = $topic->whereId($id)->first();
             /* Check whether function success or not */
             try {

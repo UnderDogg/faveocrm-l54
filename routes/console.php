@@ -16,11 +16,11 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
 Artisan::command('mac-update', function () {
-    $mailboxes = new App\Model\helpdesk\Email\Emails();
+    $mailboxes = new App\Model\helpdesk\Mailboxes\Mailboxes();
     $mailboxes->update(['password' => encrypt('')]);
 })->describe('Updating encrypted value to null');
 Artisan::command('sla-escalate', function () {
-    $noti = new \App\Http\Controllers\Agent\helpdesk\Notifications\NotificationController();
+    $noti = new \App\Http\Controllers\Staff\helpdesk\Notifications\NotificationController();
     $noti->notificationSla();
 })->describe('to send notification for sla due');
 /*

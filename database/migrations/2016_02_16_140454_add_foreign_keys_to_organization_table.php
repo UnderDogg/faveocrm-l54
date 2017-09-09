@@ -2,7 +2,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddForeignKeysToOrganizationTable extends Migration
+class AddForeignKeysToRelationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -11,8 +11,8 @@ class AddForeignKeysToOrganizationTable extends Migration
      */
     public function up()
     {
-        Schema::table('organization', function (Blueprint $table) {
-            $table->foreign('head', 'organization_ibfk_1')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+        Schema::table('relation', function (Blueprint $table) {
+            $table->foreign('head', 'relation_ibfk_1')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
@@ -23,8 +23,8 @@ class AddForeignKeysToOrganizationTable extends Migration
      */
     public function down()
     {
-        Schema::table('organization', function (Blueprint $table) {
-            $table->dropForeign('organization_ibfk_1');
+        Schema::table('relation', function (Blueprint $table) {
+            $table->dropForeign('relation_ibfk_1');
         });
     }
 }

@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Users')
   class="active"
@@ -57,7 +57,7 @@
                   <ul class="dropdown-menu role=" menu
                   ">
                   <li class="active"><a href="#" class="all">{{Lang::get('lang.all-users')}}</a></li>
-                  <li><a href="#" class="agents">{{Lang::get('lang.only-agents')}}</a></li>
+                  <li><a href="#" class="agents">{{Lang::get('staff')}}</a></li>
                   <li><a href="#" class="users">{{Lang::get('lang.only-users')}}</a></li>
                   <li><a href="#" class="active-users">{{Lang::get('lang.active-users')}}</a></li>
                   <li><a href="#" class="inactive">{{Lang::get('lang.inactive-users')}}</a></li>

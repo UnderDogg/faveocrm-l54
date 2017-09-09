@@ -9,8 +9,8 @@ use App\Http\Requests\helpdesk\DiagnosRequest;
 use App\Http\Requests\helpdesk\TemplateRequest;
 use App\Http\Requests\helpdesk\TemplateUdate;
 // models
-use App\Model\helpdesk\Email\Emails;
-use App\Model\helpdesk\Email\Template;
+use App\Model\helpdesk\Mailboxes\Mailboxes;
+use App\Model\helpdesk\Mailboxes\Template;
 use App\Model\helpdesk\Utility\Languages;
 // classes
 use Exception;
@@ -47,7 +47,7 @@ class TemplateController extends Controller
     {
         try {
             $templates = $template->get();
-            return view('themes.default1.admin.helpdesk.emails.template.index', compact('templates'));
+            return view('themes.default1.admin.helpdesk.mailboxes.template.index', compact('templates'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -66,7 +66,7 @@ class TemplateController extends Controller
         try {
             $templates = $template->get();
             $languages = $language->get();
-            return view('themes.default1.admin.helpdesk.emails.template.create', compact('languages', 'templates'));
+            return view('themes.default1.admin.helpdesk.mailboxes.template.create', compact('languages', 'templates'));
         } catch (Exception $e) {
             return view('404');
         }
@@ -120,10 +120,10 @@ class TemplateController extends Controller
      */
     public function listdirectories()
     {
-        $path = \Config::get('view.paths')[0] . '/emails/';
+        $path = \Config::get('view.paths')[0] . '/mailboxes/';
         $directories = scandir($path);
         $directory = str_replace('/', '-', $path);
-        return view('themes.default1.admin.helpdesk.emails.template.listdirectories', compact('directories', 'directory'));
+        return view('themes.default1.admin.helpdesk.mailboxes.template.listdirectories', compact('directories', 'directory'));
     }
 
     public function listtemplates($template, $path)
@@ -132,7 +132,7 @@ class TemplateController extends Controller
         $directory2 = $paths . $template;
         $templates = scandir($directory2);
         $directory = str_replace('/', '-', $directory2 . '/');
-        return view('themes.default1.admin.helpdesk.emails.template.listtemplates', compact('templates', 'directory'));
+        return view('themes.default1.admin.helpdesk.mailboxes.template.listtemplates', compact('templates', 'directory'));
     }
 
     public function readtemplate($template, $path)
@@ -141,12 +141,12 @@ class TemplateController extends Controller
         $handle = fopen($directory . $template, 'r');
         $contents = fread($handle, filesize($directory . $template));
         fclose($handle);
-        return view('themes.default1.admin.helpdesk.emails.template.readtemplates', compact('contents', 'template', 'path'));
+        return view('themes.default1.admin.helpdesk.mailboxes.template.readtemplates', compact('contents', 'template', 'path'));
     }
 
     public function createtemplate()
     {
-        $directory = '../resources/views/emails/';
+        $directory = '../resources/views/mailboxes/';
         $fname = Input::get('folder_name');
         $filename = $directory . $fname;
         // images folder creation using php
@@ -164,7 +164,7 @@ class TemplateController extends Controller
                 continue;
             }
             if (!is_dir($file)) {
-                //   $file_to_go = str_replace("code/resources/views/emails/",'code/resources/views/emails/'.$fname,$file);
+                //   $file_to_go = str_replace("code/resources/views/mailboxes/",'code/resources/views/mailboxes/'.$fname,$file);
                 $destination = $directory . $fname . '/';
                 copy($directory . 'default/' . $file, $destination . $file);
             }
@@ -184,7 +184,7 @@ class TemplateController extends Controller
     {
         $directory = str_replace('-', '/', $path);
         $dir = $directory . $template;
-        $status = \DB::table('settings_email')->first();
+        $status = \DB::table('mailboxes__settings')->first();
         if ($template == 'default' or $template == $status->template) {
             return \Redirect::back()->with('fails', 'You cannot delete a default or active directory!');
         }
@@ -204,7 +204,7 @@ class TemplateController extends Controller
 
     public function activateset($setname)
     {
-        \DB::table('settings_email')->update(['template' => $setname]);
+        \DB::table('mailboxes__settings')->update(['template' => $setname]);
         return \Redirect::back()->with('success', 'You have Successfully Activated this Set');
     }
 
@@ -213,7 +213,7 @@ class TemplateController extends Controller
         try {
             $templates = $template->whereId($id)->first();
             $languages = $language->get();
-            return view('themes.default1.admin.helpdesk.emails.template.edit', compact('templates', 'languages'));
+            return view('themes.default1.admin.helpdesk.mailboxes.template.edit', compact('templates', 'languages'));
         } catch (Exception $e) {
             return view('404');
         }
@@ -274,24 +274,24 @@ class TemplateController extends Controller
     }
 
     /**
-     * Form for Email connection checking.
+     * Form for Mailboxes connection checking.
      *
-     * @param type Emails $email
+     * @param type Mailboxes $mailbox
      *
      * @return type Response
      */
-    public function formDiagno(Emails $email)
+    public function formDiagno(Mailboxes $mailbox)
     {
         try {
-            $mailboxes = $email->get();
-            return view('themes.default1.admin.helpdesk.emails.template.formDiagno', compact('emails'));
+            $mailboxes = $mailbox->get();
+            return view('themes.default1.admin.helpdesk.mailboxes.template.formDiagno', compact('mailboxes'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
     }
 
     /**
-     * function to send  emails.
+     * function to send  mailboxes.
      *
      * @param type Request $request
      *
@@ -304,7 +304,7 @@ class TemplateController extends Controller
             $subject = $request->input('subject');
             $msg = $request->input('message');
             $from = $request->input('from');
-            $from_address = Emails::where('id', '=', $from)->first();
+            $from_address = Mailboxes::where('id', '=', $from)->first();
             if (!$from_address) {
                 throw new Exception('Sorry! We can not find your request');
             }

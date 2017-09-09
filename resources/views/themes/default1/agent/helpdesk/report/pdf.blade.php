@@ -41,7 +41,7 @@
   </h2>
 </div>
 <br/><br/>
-<?php $help_topic_name = App\Model\helpdesk\Manage\Help_topic::where('id', '=', $table_help_topic)->first(); ?>
+<?php $help_topic_name = App\Model\helpdesk\Manage\HelpTopic::where('id', '=', $table_help_topic)->first(); ?>
 <span class="lead"> Help Topic : {!! $help_topic_name->topic !!} </span>
 <br/>
 

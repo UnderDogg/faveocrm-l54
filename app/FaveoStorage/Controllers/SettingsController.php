@@ -126,7 +126,7 @@ class SettingsController extends Controller
 
     public function activate()
     {
-        if (!\Schema::hasColumn('ticket_attachment', 'driver')) {
+        if (!\Schema::hasColumn('tickets__attachments', 'driver')) {
             $path = 'app' . DIRECTORY_SEPARATOR . 'FaveoStorage' . DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations';
             Artisan::call('migrate', [
                 '--path' => $path,

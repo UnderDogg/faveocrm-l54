@@ -51,7 +51,7 @@
       </ul>
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a href="{{ url('agents') }}">Agents</a>
+          <a href="{{ url('staff') }}">Staff</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

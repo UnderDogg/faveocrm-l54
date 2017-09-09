@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.kb')
+@extends('themes.default1.staff.layout.kb')
 
 @section('article')
   active

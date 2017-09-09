@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Tickets')
   class="active"
@@ -80,7 +80,7 @@
                 <div class="input-group" style="width:85%">
                   <input type="text" class="form-control" id="requestro" style="border-radius: 0px;height: 34px"
                          ng-model="node.value" ng-required="@{{node.agentRequiredFormSubmit}}"
-                         ng-keypress="requesterEmail($event,$index)" placeholder="Requester Email">
+                         ng-keypress="requesterEmail($event,$index)" placeholder="Requester MailboxSettings">
                   <div class="input-group-btn">
                     <button class="btn btn-default" type="button" style="margin-right: 0px;border-radius: 0px;"
                             data-toggle="modal" data-target="#myModal9">Add new requester
@@ -263,13 +263,13 @@
                                           <span ng-show="addnewRequester.requsName@{{$index}}.$error.required">@{{node.label}}
                                             is required.</span>
                                 </span>
-              <label style="display: block">Email<span style="color:red">*</span></label>
+              <label style="display: block">MailboxSettings<span style="color:red">*</span></label>
               <input type="email" name="requsEmail@{{$index}}" class="form-control"
                      style="border-radius:0;margin-top:10px;width:85%" ng-model="req.email" ng-pattern="emailFormat"
-                     placeholder="Requester Email" id="requesterEmail" required/>
+                     placeholder="Requester MailboxSettings" id="requesterEmail" required/>
                                 <span style="color:red"
                                       ng-show="addnewRequester.requsEmail@{{$index}}.$dirty && addnewRequester.requsEmail@{{$index}}.$invalid">
-                                          <span ng-show="addnewRequester.requsEmail@{{$index}}.$error.required">Email is required.</span>
+                                          <span ng-show="addnewRequester.requsEmail@{{$index}}.$error.required">MailboxSettings is required.</span>
                                           <span ng-show="addnewRequester.requsEmail@{{$index}}.$error.pattern">Invalid email address.</span>
                                 </span>
               <label style="display: block">Mobile</label>

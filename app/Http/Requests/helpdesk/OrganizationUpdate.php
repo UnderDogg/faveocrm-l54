@@ -4,11 +4,11 @@ namespace App\Http\Requests\helpdesk;
 use App\Http\Requests\Request;
 
 /**
- * OrganizationUpdate.
+ * RelationUpdate.
  *
  * @author  Ladybird <info@ladybirdweb.com>
  */
-class OrganizationUpdate extends Request
+class RelationUpdate extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

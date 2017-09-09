@@ -118,7 +118,7 @@
               <?php $company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first(); ?>
               @if($companys->logo != null)
                 <div class="col-md-2 image" data-content="{{Lang::get('lang.click-delete')}}">
-                  <img src="{{asset('uploads/company')}}{{'/'}}{{$company->logo}}" alt="User Image" id="company-logo"
+                  <img src="{{asset('uploads/company')}}{{'/'}}{{$company->logo}}" alt="Staff Image" id="company-logo"
                        width="100px" style="border:1px solid #DCD1D1"/>
                 </div>
               @endif

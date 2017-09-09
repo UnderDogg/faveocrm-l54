@@ -73,9 +73,9 @@
 
             </div>
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('new_ticket_mode',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('new_ticket_alert_mode[]','email',$alerts->isValueExists('new_ticket_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('new_ticket_alert_mode[]','email',$alerts->isValueExists('new_ticket_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{--{!! Form::checkbox('new_ticket_alert_mode[]','sms',$alerts->isValueExists('new_ticket_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!}--}}
               {!! Form::checkbox('new_ticket_alert_mode[]','system',$alerts->isValueExists('new_ticket_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
@@ -86,7 +86,7 @@
                 {!! Form::checkbox('new_ticket_alert_persons[]','client',$alerts->isValueExists('new_ticket_alert_persons','client')) !!}
                 {!! Form::label('new_ticket_alert_persons',Lang::get('lang.client')) !!}
               </div>
-              <!-- Admin Email -->
+              <!-- Admin Mailboxes -->
               {!! Form::checkbox('new_ticket_alert_persons[]','admin',$alerts->isValueExists('new_ticket_alert_persons','admin')) !!}
               {!! Form::label('ticket_admin_email',Lang::get('lang.admin')) !!}
             </div>
@@ -101,11 +101,11 @@
               {!! Form::checkbox('new_ticket_alert_persons[]','department_manager',$alerts->isValueExists('new_ticket_alert_persons','department_manager')) !!}
               {!! Form::label('ticket_department_manager',Lang::get('lang.department_manager')) !!}
             </div>
-            <!-- Organization Account Manager -->
+            <!-- Relation Account Manager -->
 
             <div class="form-group">
-              {!! Form::checkbox('new_ticket_alert_persons[]','organization_manager',$alerts->isValueExists('new_ticket_alert_persons','organization_manager')) !!}
-              {!! Form::label('organization_account_manager',Lang::get('lang.organization_account_manager')) !!}
+              {!! Form::checkbox('new_ticket_alert_persons[]','relation_manager',$alerts->isValueExists('new_ticket_alert_persons','relation_manager')) !!}
+              {!! Form::label('relation_account_manager',Lang::get('lang.relation_account_manager')) !!}
             </div>
 
 
@@ -129,9 +129,9 @@
             </div>
 
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('ticket_assign_alert_mode[]',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('ticket_assign_alert_mode[]','email',$alerts->isValueExists('ticket_assign_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('ticket_assign_alert_mode[]','email',$alerts->isValueExists('ticket_assign_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{--{!! Form::checkbox('ticket_assign_alert_mode[]','sms',$alerts->isValueExists('ticket_assign_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!}--}}
               {!! Form::checkbox('ticket_assign_alert_mode[]','system',$alerts->isValueExists('ticket_assign_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
@@ -142,10 +142,10 @@
               {!! Form::label('ticket_assign_alert_admin',Lang::get('lang.admin')) !!}
             </div>
 
-            <!-- Assigned Agent / Team -->
+            <!-- Assigned Staff / Team -->
             <div class="form-group">
-              {!! Form::checkbox('ticket_assign_alert_persons[]','agent',$alerts->isValueExists('ticket_assign_alert_persons','agent')) !!}
-              {!! Form::label('ticket_assign_alert_agent',Lang::get('lang.agent')) !!}
+              {!! Form::checkbox('ticket_assign_alert_persons[]','staff',$alerts->isValueExists('ticket_assign_alert_persons','staff')) !!}
+              {!! Form::label('ticket_assign_alert_agent',Lang::get('lang.staff')) !!}
             </div>
             <div class="form-group">
               {!! Form::checkbox('ticket_assign_alert_persons[]','assigned_agent_team',$alerts->isValueExists('ticket_assign_alert_persons','assigned_agent_team')) !!}
@@ -196,9 +196,9 @@
 
             </div>
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('notification_alert_mode[]',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('notification_alert_mode[]','email',$alerts->isValueExists('notification_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('notification_alert_mode[]','email',$alerts->isValueExists('notification_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{--{!! Form::checkbox('notification_alert_mode[]','sms',$alerts->isValueExists('notification_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!}--}}
               {!! Form::checkbox('notification_alert_mode[]','system',$alerts->isValueExists('notification_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
@@ -208,10 +208,10 @@
               {!! Form::checkbox('notification_alert_persons[]','admin',$alerts->isValueExists('notification_alert_persons','admin')) !!}
               {!! Form::label('last_respondent',Lang::get('lang.admin')) !!}
             </div>
-            <!-- Assigned Agent/Team -->
+            <!-- Assigned Staff/Team -->
             <div class="form-group">
-              {!! Form::checkbox('notification_alert_persons[]','agent',$alerts->isValueExists('notification_alert_persons','agent')) !!}
-              {!! Form::label('assigned_agent_team',Lang::get('lang.agent')) !!}
+              {!! Form::checkbox('notification_alert_persons[]','staff',$alerts->isValueExists('notification_alert_persons','staff')) !!}
+              {!! Form::label('assigned_agent_team',Lang::get('lang.staff')) !!}
             </div>
 
             <!-- Department Manager -->
@@ -219,16 +219,16 @@
               {!! Form::checkbox('notification_alert_persons[]','department_manager',$alerts->isValueExists('notification_alert_persons','department_manager')) !!}
               {!! Form::label('ticket_department_manager',Lang::get('lang.department_manager')) !!}
             </div>
-            <!-- Organization Account Manager -->
+            <!-- Relation Account Manager -->
             {{--
             <div class="form-group">
-                {!! Form::checkbox('notification_alert_persons[]','organization_manager',$alerts->isValueExists('notification_alert_persons','organization_manager')) !!}
-                {!! Form::label('organization_account_manager',Lang::get('lang.organization_account_manager')) !!}
+                {!! Form::checkbox('notification_alert_persons[]','relation_manager',$alerts->isValueExists('notification_alert_persons','relation_manager')) !!}
+                {!! Form::label('relation_account_manager',Lang::get('lang.relation_account_manager')) !!}
             </div>
             --}}
             <div class="form-group">
               {!! Form::checkbox('notification_alert_persons[]','team_lead',$alerts->isValueExists('notification_alert_persons','team_lead')) !!}
-              {!! Form::label('organization_account_manager',Lang::get('lang.team_lead')) !!}
+              {!! Form::label('relation_account_manager',Lang::get('lang.team_lead')) !!}
             </div>
 
 
@@ -256,9 +256,9 @@
 
             </div>
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('new_ticket_confirmation_alert_mode',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('new_ticket_confirmation_alert_mode[]','email',$alerts->isValueExists('new_ticket_confirmation_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('new_ticket_confirmation_alert_mode[]','email',$alerts->isValueExists('new_ticket_confirmation_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{--{!! Form::checkbox('new_ticket_alert_mode[]','sms',$alerts->isValueExists('new_ticket_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!}--}}
               {!! Form::checkbox('new_ticket_confirmation_alert_mode[]','system',$alerts->isValueExists('new_ticket_confirmation_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
@@ -291,18 +291,18 @@
             </div>
 
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('internal_activity_alert_mode',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('internal_activity_alert_mode[]','email',$alerts->isValueExists('internal_activity_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('internal_activity_alert_mode[]','email',$alerts->isValueExists('internal_activity_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{-- {!! Form::checkbox('internal_activity_alert_mode[]','sms',$alerts->isValueExists('internal_activity_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!} --}}
               {!! Form::checkbox('internal_activity_alert_mode[]','system',$alerts->isValueExists('internal_activity_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
             </div>
 
-            <!-- Assigned Agent -->
+            <!-- Assigned Staff -->
             <div class="form-group">
-              {!! Form::checkbox('internal_activity_alert_persons[]','agent',$alerts->isValueExists('internal_activity_alert_persons','agent')) !!}
-              {!! Form::label('assignment_assigned_agent',Lang::get('lang.agent')) !!}
+              {!! Form::checkbox('internal_activity_alert_persons[]','staff',$alerts->isValueExists('internal_activity_alert_persons','staff')) !!}
+              {!! Form::label('assignment_assigned_agent',Lang::get('lang.staff')) !!}
             </div>
             <!-- admin -->
             <div class="form-group">
@@ -364,9 +364,9 @@
 
             </div>
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('ticket_transfer_alert_mode',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('ticket_transfer_alert_mode[]','email',$alerts->isValueExists('ticket_transfer_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('ticket_transfer_alert_mode[]','email',$alerts->isValueExists('ticket_transfer_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{-- {!! Form::checkbox('ticket_transfer_alert_mode[]','sms',$alerts->isValueExists('ticket_transfer_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!}--}}
               {!! Form::checkbox('ticket_transfer_alert_mode[]','system',$alerts->isValueExists('ticket_transfer_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
@@ -378,7 +378,7 @@
               {!! Form::label('assigned_agent_team',Lang::get('lang.admin')) !!}
             </div>
 
-            <!-- Assigned Agent/Team -->
+            <!-- Assigned Staff/Team -->
             <div class="form-group">
               {!! Form::checkbox('ticket_transfer_alert_persons[]','assigned_agent_team',$alerts->isValueExists('ticket_transfer_alert_persons','assigned_agent_team')) !!}
               {!! Form::label('assigned_agent_team',Lang::get('lang.assigned_agent')) !!}
@@ -395,11 +395,11 @@
               {!! Form::checkbox('ticket_transfer_alert_persons[]','department_manager',$alerts->isValueExists('ticket_transfer_alert_persons','department_manager')) !!}
               {!! Form::label('ticket_department_manager',Lang::get('lang.department_manager')) !!}
             </div>
-            <!-- Organization Account Manager -->
+            <!-- Relation Account Manager -->
 
             <div class="form-group">
-              {!! Form::checkbox('ticket_transfer_alert_persons[]','organization_manager',$alerts->isValueExists('ticket_transfer_alert_persons','organization_manager')) !!}
-              {!! Form::label('organization_account_manager',Lang::get('lang.organization_account_manager')) !!}
+              {!! Form::checkbox('ticket_transfer_alert_persons[]','relation_manager',$alerts->isValueExists('ticket_transfer_alert_persons','relation_manager')) !!}
+              {!! Form::label('relation_account_manager',Lang::get('lang.relation_account_manager')) !!}
             </div>
 
 
@@ -427,15 +427,15 @@
 
             </div>
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('registration_alert_mode',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('registration_alert_mode[]','email',$alerts->isValueExists('registration_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('registration_alert_mode[]','email',$alerts->isValueExists('registration_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{--{!! Form::checkbox('registration_alert_mode[]','sms',$alerts->isValueExists('registration_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!}--}}
               {!! Form::checkbox('registration_alert_mode[]','system',$alerts->isValueExists('registration_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
             </div>
 
-            <!-- Assigned Agent/Team -->
+            <!-- Assigned Staff/Team -->
             <div class="form-group">
               {!! Form::checkbox('registration_alert_persons[]','client',$alerts->isValueExists('registration_alert_persons','client')) !!}
               {!! Form::label('registration_alert_persons',Lang::get('lang.client')) !!}
@@ -443,10 +443,10 @@
 
             <!-- Department Manager -->
             <div class="form-group">
-              {!! Form::checkbox('registration_alert_persons[]','agent',$alerts->isValueExists('registration_alert_persons','agent')) !!}
-              {!! Form::label('registration_alert_persons',Lang::get('lang.agent')) !!}
+              {!! Form::checkbox('registration_alert_persons[]','staff',$alerts->isValueExists('registration_alert_persons','staff')) !!}
+              {!! Form::label('registration_alert_persons',Lang::get('lang.staff')) !!}
             </div>
-            <!-- Organization Account Manager -->
+            <!-- Relation Account Manager -->
             <!-- Department Manager -->
             <div class="form-group">
               {!! Form::checkbox('registration_alert_persons[]','admin',$alerts->isValueExists('registration_alert_persons','admin')) !!}
@@ -480,15 +480,15 @@
 
             </div>
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('new_user_alert_mode',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('new_user_alert_mode[]','email',$alerts->isValueExists('new_user_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('new_user_alert_mode[]','email',$alerts->isValueExists('new_user_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{--{!! Form::checkbox('new_user_alert_mode[]','sms',$alerts->isValueExists('new_user_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!}--}}
               {!! Form::checkbox('new_user_alert_mode[]','system',$alerts->isValueExists('new_user_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
             </div>
 
-            <!-- Assigned Agent/Team -->
+            <!-- Assigned Staff/Team -->
             <div class="form-group">
               {!! Form::checkbox('new_user_alert_persons[]','admin',$alerts->isValueExists('new_user_alert_persons','admin')) !!}
               {!! Form::label('new_user_alert_persons',Lang::get('lang.admin')) !!}
@@ -496,10 +496,10 @@
 
             <!-- Department Manager -->
             <div class="form-group">
-              {!! Form::checkbox('new_user_alert_persons[]','agent',$alerts->isValueExists('new_user_alert_persons','agent')) !!}
-              {!! Form::label('new_user_alert_persons',Lang::get('lang.agent')) !!}
+              {!! Form::checkbox('new_user_alert_persons[]','staff',$alerts->isValueExists('new_user_alert_persons','staff')) !!}
+              {!! Form::label('new_user_alert_persons',Lang::get('lang.staff')) !!}
             </div>
-            <!-- Organization Account Manager -->
+            <!-- Relation Account Manager -->
             <!-- Department Manager -->
             <div class="form-group">
               {!! Form::checkbox('new_user_alert_persons[]','all_department_manager',$alerts->isValueExists('new_user_alert_persons','all_department_manager')) !!}
@@ -510,8 +510,8 @@
               {!! Form::label('new_user_alert_persons',Lang::get('lang.all_team_lead')) !!}
             </div>
             <div class="form-group">
-              {!! Form::checkbox('new_user_alert_persons[]','organization_manager',$alerts->isValueExists('new_user_alert_persons','organization_manager')) !!}
-              {!! Form::label('new_user_alert_persons',Lang::get('lang.organization_account_manager')) !!}
+              {!! Form::checkbox('new_user_alert_persons[]','relation_manager',$alerts->isValueExists('new_user_alert_persons','relation_manager')) !!}
+              {!! Form::label('new_user_alert_persons',Lang::get('lang.relation_account_manager')) !!}
             </div>
 
           </div><!-- /.box-body -->
@@ -538,15 +538,15 @@
 
             </div>
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('reply_alert_mode',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('reply_alert_mode[]','email',$alerts->isValueExists('reply_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('reply_alert_mode[]','email',$alerts->isValueExists('reply_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{--{!! Form::checkbox('reply_alert_mode[]','sms',$alerts->isValueExists('reply_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!}--}}
               {!! Form::checkbox('reply_alert_mode[]','system',$alerts->isValueExists('reply_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
             </div>
 
-            <!-- Assigned Agent/Team -->
+            <!-- Assigned Staff/Team -->
             <div class="form-group">
               {!! Form::checkbox('reply_alert_persons[]','client',$alerts->isValueExists('reply_alert_persons','client')) !!}
               {!! Form::label('reply_alert_persons',Lang::get('lang.client')) !!}
@@ -554,10 +554,10 @@
 
             <!-- Department Manager -->
             <div class="form-group">
-              {!! Form::checkbox('reply_alert_persons[]','agent',$alerts->isValueExists('reply_alert_persons','agent')) !!}
-              {!! Form::label('reply_alert_persons',Lang::get('lang.agent')) !!}
+              {!! Form::checkbox('reply_alert_persons[]','staff',$alerts->isValueExists('reply_alert_persons','staff')) !!}
+              {!! Form::label('reply_alert_persons',Lang::get('lang.staff')) !!}
             </div>
-            <!-- Organization Account Manager -->
+            <!-- Relation Account Manager -->
             <!-- Department Manager -->
             <div class="form-group">
               {!! Form::checkbox('reply_alert_persons[]','admin',$alerts->isValueExists('reply_alert_persons','admin')) !!}
@@ -568,7 +568,7 @@
               {!! Form::checkbox('reply_alert_persons[]','assigned_agent_team',$alerts->isValueExists('reply_alert_persons','assigned_agent_team')) !!}
               {!! Form::label('reply_notification_alert_persons',Lang::get('lang.assigned_agent_team')) !!}
             </div>
-            <!-- Organization Account Manager -->
+            <!-- Relation Account Manager -->
             <!-- Department Manager -->
             <div class="form-group">
               {!! Form::checkbox('reply_alert_persons[]','all_department_manager',$alerts->isValueExists('reply_alert_persons','all_department_manager')) !!}
@@ -583,8 +583,8 @@
               {!! Form::label('reply_notification_alert_persons',Lang::get('lang.team_lead')) !!}
             </div>
             <div class="form-group">
-              {!! Form::checkbox('reply_alert_persons[]','organization_manager',$alerts->isValueExists('reply_alert_persons','organization_manager')) !!}
-              {!! Form::label('reply_notification_alert_persons',Lang::get('lang.organization_account_manager')) !!}
+              {!! Form::checkbox('reply_alert_persons[]','relation_manager',$alerts->isValueExists('reply_alert_persons','relation_manager')) !!}
+              {!! Form::label('reply_notification_alert_persons',Lang::get('lang.relation_account_manager')) !!}
             </div>
 
           </div><!-- /.box-body -->
@@ -613,15 +613,15 @@
 
             </div>
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('reply_notification_alert_mode',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('reply_notification_alert_mode[]','email',$alerts->isValueExists('reply_notification_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('reply_notification_alert_mode[]','email',$alerts->isValueExists('reply_notification_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{--{!! Form::checkbox('reply_notification_alert_mode[]','sms',$alerts->isValueExists('reply_notification_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!}--}}
               {!! Form::checkbox('reply_notification_alert_mode[]','system',$alerts->isValueExists('reply_notification_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
             </div>
 
-            <!-- Assigned Agent/Team -->
+            <!-- Assigned Staff/Team -->
             <div class="form-group">
               {!! Form::checkbox('reply_notification_alert_persons[]','admin',$alerts->isValueExists('reply_notification_alert_persons','admin')) !!}
               {!! Form::label('reply_notification_alert_persons',Lang::get('lang.admin')) !!}
@@ -629,15 +629,15 @@
 
             <!-- Department Manager -->
             <div class="form-group">
-              {!! Form::checkbox('reply_notification_alert_persons[]','agent',$alerts->isValueExists('reply_notification_alert_persons','agent')) !!}
-              {!! Form::label('reply_notification_alert_persons',Lang::get('lang.agent')) !!}
+              {!! Form::checkbox('reply_notification_alert_persons[]','staff',$alerts->isValueExists('reply_notification_alert_persons','staff')) !!}
+              {!! Form::label('reply_notification_alert_persons',Lang::get('lang.staff')) !!}
             </div>
             <!-- Department Manager -->
             <div class="form-group">
               {!! Form::checkbox('reply_notification_alert_persons[]','assigned_agent_team',$alerts->isValueExists('reply_notification_alert_persons','assigned_agent_team')) !!}
               {!! Form::label('reply_notification_alert_persons',Lang::get('lang.assigned_agent_team')) !!}
             </div>
-            <!-- Organization Account Manager -->
+            <!-- Relation Account Manager -->
             <!-- Department Manager -->
             <div class="form-group">
               {!! Form::checkbox('reply_notification_alert_persons[]','all_department_manager',$alerts->isValueExists('reply_notification_alert_persons','all_department_manager')) !!}
@@ -652,8 +652,8 @@
               {!! Form::label('reply_notification_alert_persons',Lang::get('lang.team_lead')) !!}
             </div>
             <div class="form-group">
-              {!! Form::checkbox('reply_notification_alert_persons[]','organization_manager',$alerts->isValueExists('reply_notification_alert_persons','organization_manager')) !!}
-              {!! Form::label('reply_notification_alert_persons',Lang::get('lang.organization_account_manager')) !!}
+              {!! Form::checkbox('reply_notification_alert_persons[]','relation_manager',$alerts->isValueExists('reply_notification_alert_persons','relation_manager')) !!}
+              {!! Form::label('reply_notification_alert_persons',Lang::get('lang.relation_account_manager')) !!}
             </div>
 
           </div><!-- /.box-body -->
@@ -679,15 +679,15 @@
 
             </div>
             <div class="form-group">
-              <!-- Mode :   Email    Sms -->
+              <!-- Mode :   Mailboxes    Sms -->
               {!! Form::label('sla_alert_mode',Lang::get('lang.mode').":") !!}&nbsp;&nbsp;
-              {!! Form::checkbox('sla_alert_mode[]','email',$alerts->isValueExists('sla_alert_mode','email')) !!} {!! Lang::get('lang.email') !!}
+              {!! Form::checkbox('sla_alert_mode[]','email',$alerts->isValueExists('sla_alert_mode','email')) !!} {!! Lang::get('lang.alert_email') !!}
               &nbsp;&nbsp;
               {{--{!! Form::checkbox('sla_alert_mode[]','sms',$alerts->isValueExists('sla_alert_mode','sms')) !!}  {!! Lang::get('lang.sms') !!}--}}
               {!! Form::checkbox('sla_alert_mode[]','system',$alerts->isValueExists('sla_alert_mode','system')) !!}  {!! Lang::get('lang.in_app_system') !!}
             </div>
 
-            <!-- Assigned Agent/Team -->
+            <!-- Assigned Staff/Team -->
             <div class="form-group">
               {!! Form::checkbox('sla_alert_persons[]','admin',$alerts->isValueExists('sla_alert_persons','admin')) !!}
               {!! Form::label('sla_alert_persons',Lang::get('lang.admin')) !!}
@@ -695,15 +695,15 @@
 
             <!-- Department Manager -->
             <div class="form-group">
-              {!! Form::checkbox('sla_alert_persons[]','agent',$alerts->isValueExists('sla_alert_persons','agent')) !!}
-              {!! Form::label('sla_alert_persons',Lang::get('lang.agent')) !!}
+              {!! Form::checkbox('sla_alert_persons[]','staff',$alerts->isValueExists('sla_alert_persons','staff')) !!}
+              {!! Form::label('sla_alert_persons',Lang::get('lang.staff')) !!}
             </div>
             <!-- Department Manager -->
             <div class="form-group">
               {!! Form::checkbox('sla_alert_persons[]','assigned_agent_team',$alerts->isValueExists('sla_alert_persons','assigned_agent_team')) !!}
               {!! Form::label('sla_alert_persons',Lang::get('lang.assigned_agent')) !!}
             </div>
-            <!-- Organization Account Manager -->
+            <!-- Relation Account Manager -->
             <!-- Department Manager -->
             <div class="form-group">
               {!! Form::checkbox('sla_alert_persons[]','department_manager',$alerts->isValueExists('sla_alert_persons','department_manager')) !!}
@@ -718,8 +718,8 @@
               {!! Form::label('sla_alert_persons',Lang::get('lang.team_lead')) !!}
             </div>
             <div class="form-group">
-              {!! Form::checkbox('sla_alert_persons[]','organization_manager',$alerts->isValueExists('sla_alert_persons','organization_manager')) !!}
-              {!! Form::label('sla_alert_persons',Lang::get('lang.organization_account_manager')) !!}
+              {!! Form::checkbox('sla_alert_persons[]','relation_manager',$alerts->isValueExists('sla_alert_persons','relation_manager')) !!}
+              {!! Form::label('sla_alert_persons',Lang::get('lang.relation_account_manager')) !!}
             </div>
 
           </div><!-- /.box-body -->

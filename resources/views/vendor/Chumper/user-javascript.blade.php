@@ -58,8 +58,8 @@ foreach ($segments as $seg) {
       toggleActiveClass(classname);
     });
 
-    $('.agents').on('click', function () {
-      show = 'agents';
+    $('.staff').on('click', function () {
+      show = 'staff';
       classname = '.' + show;
       filterTable(show);
       toggleActiveClass(classname);

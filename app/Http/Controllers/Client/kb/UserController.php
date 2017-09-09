@@ -187,14 +187,14 @@ class UserController extends Controller
         $contact->fill($request->input())->save();
         $name = $request->input('name');
         //echo $name;
-        $email = $request->input('email');
-        //echo $email;
+        $mailbox = $request->input('email');
+        //echo $mailbox;
         $subject = $request->input('subject');
         //echo $subject;
         $details = $request->input('message');
         //echo $message;
         //echo $contact->email;
-        $mail = Mail::send('themes.default1.client.kb.article-list.contact-details', ['name' => $name, 'email' => $email, 'subject' => $subject, 'details' => $details], function ($message) use ($contact) {
+        $mail = Mail::send('themes.default1.client.kb.article-list.contact-details', ['name' => $name, 'email' => $mailbox, 'subject' => $subject, 'details' => $details], function ($message) use ($contact) {
             $message->to($contact->email, $contact->name)->subject('Contact');
         });
         if ($mail) {

@@ -124,7 +124,7 @@
       </tr>
       <tr>
         <td>
-          <label for="box4">User Name<span style="color: red; font-size: 12px;">*</span></label>
+          <label for="box4">Staff Name<span style="color: red; font-size: 12px;">*</span></label>
         </td>
         <td>
           {!! Form::text('username', null, ['required' => true]) !!}

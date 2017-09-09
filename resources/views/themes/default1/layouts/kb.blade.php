@@ -58,26 +58,26 @@
       </a>
       <div class="collapse navbar-collapse" id="navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{{url('agents')}}">Admin Panel</a></li>
-          <!-- User Account: style can be found in dropdown.less -->
+          <li><a href="{{url('staff')}}">Admin Panel</a></li>
+          <!-- Staff Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               @if(Auth::user())
                 @if(Auth::user()->profile_pic)
                   <img src="{{asset('dist/img')}}{{'/'}}{{Auth::user()->profile_pic}}" class="user-image"
-                       alt="User Image"/>
+                       alt="Staff Image"/>
                 @endif
                 <span class="hidden-xs">{{Auth::user()->first_name}}</span>
               @endif
             </a>
             <ul class="dropdown-menu">
-              <!-- User image -->
+              <!-- Staff image -->
               <li class="user-header" style="background-color:#343F44;">
                 @if(Auth::user()->profile_pic)
                   <img src="{{asset('dist/img')}}{{'/'}}{{Auth::user()->profile_pic}}" class="img-circle"
-                       alt="User Image"/>
+                       alt="Staff Image"/>
                 @else
-                  <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="User Image">
+                  <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="Staff Image">
                 @endif
                 <p>
                   {{Auth::user()->first_name}} - {{Auth::user()->role}}
@@ -110,10 +110,10 @@
             <div class="col-xs-2" style="width:50%;">
               @if(Auth::user() && Auth::user()->profile_pic)
                 <img src="{{asset('dist/img')}}{{'/'}}{{Auth::user()->profile_pic}}" class="img-circle"
-                     alt="User Image"/>
+                     alt="Staff Image"/>
               @else
-                {{-- <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="User Image" /> --}}
-                <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="User Image">
+                {{-- <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="Staff Image" /> --}}
+                <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="Staff Image">
               @endif
             </div>
           </div>

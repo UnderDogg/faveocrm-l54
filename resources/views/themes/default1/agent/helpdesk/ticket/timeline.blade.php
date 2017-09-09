@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Tickets')
   class="active"
@@ -10,11 +10,11 @@
 
 @section('PageHeader')
   <h1>{{Lang::get('lang.ticket-details')}}</h1>
-  @include('themes.default1.agent.helpdesk.ticket.response-messages')
+  @include('themes.default1.staff.helpdesk.ticket.response-messages')
 @stop
 <?php
-$user = App\User::where('id', '=', $tickets->user_id)->first();
-$assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
+$user = App\Staff::where('id', '=', $tickets->user_id)->first();
+$assignedto = App\Staff::where('id', '=', $tickets->assigned_to)->first();
 ?>
 
 @section('sidebar')
@@ -27,7 +27,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
   </li>
   <li>
     <a href="{!! URL('user/'.$user->id) !!}">
-      <span>{!! Lang::get('lang.User') !!} </span>
+      <span>{!! Lang::get('lang.Staff') !!} </span>
       </br><i class="fa fa-user"></i> <b>{{$user->name() }}</b>
     </a>
   </li>
@@ -202,7 +202,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
         <section class="content">
           <div class="col-md-12">
             <?php
-            $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $tickets->priority_id)->first();
+            $priority = App\Model\helpdesk\Ticket\TicketPriority::where('priority_id', '=', $tickets->priority_id)->first();
             ?>
             <div class="callout callout-{{$priority->priority_color}}"
                  style='background-color:{{$priority->priority_color}}; color:#F9F9F9'>
@@ -227,7 +227,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                   ?>
                 </div>
                 <div class="col-md-3">
-                  <?php $response = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $tickets->id)->get(); ?>
+                  <?php $response = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $tickets->id)->get(); ?>
                   @foreach($response as $last)
                     <?php $ResponseDate = $last->created_at; ?>
                   @endforeach
@@ -249,21 +249,21 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                 <div id="refresh">
                   <tr>
                     <td><b>{!! Lang::get('lang.status') !!}:</b></td>
-                    <?php $status = App\Model\helpdesk\Ticket\Ticket_Status::where('id', '=', $tickets->status)->first(); ?>
+                    <?php $status = App\Model\helpdesk\Ticket\TicketStatus::where('id', '=', $tickets->status)->first(); ?>
                     @if($status)
                       <td title="{{$status->properties}}">{{$status->name}}</td>
                     @endif
                   </tr>
                   <tr>
                     <td><b>{!! Lang::get('lang.priority') !!}:</b></td>
-                    <?php $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $tickets->priority_id)->first(); ?>
+                    <?php $priority = App\Model\helpdesk\Ticket\TicketPriority::where('priority_id', '=', $tickets->priority_id)->first(); ?>
                     @if($priority)
                       <td title="{{$priority->priority_desc}}">{{$priority->priority_desc}}</td>
                     @endif
                   </tr>
                   <tr>
                     <td><b>{!! Lang::get('lang.department') !!}:</b></td>
-                    <?php $dept123 = App\Model\helpdesk\Agent\Department::where('id', '=', $tickets->dept_id)->first(); ?>
+                    <?php $dept123 = App\Model\helpdesk\Staff\Department::where('id', '=', $tickets->dept_id)->first(); ?>
                     @if($dept123)
                       <td title="{{$dept123->name}}">{{$dept123->name}}</td>
                     @endif
@@ -291,10 +291,10 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
             </div>
             <div class="col-md-6">
               <?php
-              $user_phone = App\User::where('mobile', '=', $thread->user_id)->first();
-              $TicketData = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $thread->ticket_id)->where('is_internal', '=', 0)->max('id');
-              $TicketDatarow = App\Model\helpdesk\Ticket\Ticket_Thread::where('id', '=', $TicketData)->where('is_internal', '=', 0)->first();
-              $LastResponse = App\User::where('id', '=', $TicketDatarow->user_id)->first();
+              $user_phone = App\Staff::where('mobile', '=', $thread->user_id)->first();
+              $TicketData = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $thread->ticket_id)->where('is_internal', '=', 0)->max('id');
+              $TicketDatarow = App\Model\helpdesk\Ticket\TicketThread::where('id', '=', $TicketData)->where('is_internal', '=', 0)->first();
+              $LastResponse = App\Staff::where('id', '=', $TicketDatarow->user_id)->first();
               if ($LastResponse->role == "user") {
                 $rep = "#F39C12";
                 $username = $LastResponse->first_name . " " . $LastResponse->last_name;
@@ -309,7 +309,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                 }
               }
               if ($tickets->source > 0) {
-                $ticket_source = App\Model\helpdesk\Ticket\Ticket_source::where('id', '=', $tickets->source)->first();
+                $ticket_source = App\Model\helpdesk\Ticket\TicketSource::where('id', '=', $tickets->source)->first();
                 $ticket_source = $ticket_source->value;
               } else
                 $ticket_source = $tickets->source;
@@ -333,7 +333,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                   </tr>
                   <tr>
                     <td><b>{!! Lang::get('lang.help_topic') !!}:</b>
-                    </td> <?php $help_topic = App\Model\helpdesk\Manage\Help_topic::where('id', '=', $tickets->help_topic_id)->first(); ?>
+                    </td> <?php $help_topic = App\Model\helpdesk\Manage\HelpTopic::where('id', '=', $tickets->help_topic_id)->first(); ?>
                     <td title="{{$help_topic->topic}}">{{$help_topic->topic}}</td>
                   </tr>
                   <tr>
@@ -341,7 +341,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                     <td>{{str_limit($username,30)}}</td>
                   </tr>
                   <tr>
-                    <td><b>{!! Lang::get('lang.organization') !!}:</b></td>
+                    <td><b>{!! Lang::get('lang.relation') !!}:</b></td>
                     <td>{!!$LastResponse->getOrgWithLink()!!}</td>
                   </tr>
                   <?php Event::fire(new App\Events\TicketDetailTable($TicketData)); ?>
@@ -422,7 +422,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                           <a href="#" data-toggle="modal" data-target="#addccc"> {!! Lang::get('lang.add_cc') !!} </a>
                           <div id="recepients">
                             <?php
-                            $Collaborator = App\Model\helpdesk\Ticket\Ticket_Collaborator::where('ticket_id', '=', $tickets->id)->get();
+                            $Collaborator = App\Model\helpdesk\Ticket\TicketCollaborator::where('ticket_id', '=', $tickets->id)->get();
                             $count_collaborator = count($Collaborator);
                             ?>
                             @if($count_collaborator > 0)
@@ -582,8 +582,8 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
       </div>
       <!-- ticket  conversations -->
       <?php
-      $conversations = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $tickets->id)->orderBy('id', 'DESC')->paginate(10);
-      $ij = App\Model\helpdesk\Ticket\Ticket_Thread::where('ticket_id', '=', $tickets->id)->first();
+      $conversations = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $tickets->id)->orderBy('id', 'DESC')->paginate(10);
+      $ij = App\Model\helpdesk\Ticket\TicketThread::where('ticket_id', '=', $tickets->id)->first();
       ?>
         <!-- row -->
       <div class="row">
@@ -642,7 +642,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                 <?php
                 } else {
                 if($conversation->user_id != null) {
-                if ($role->role == 'agent' || $role->role == 'admin') {
+                if ($role->role == 'staff' || $role->role == 'admin') {
                 ?>
                 <i class="fa fa-mail-reply-all bg-yellow" title="Posted by Support Team"></i>
                 <?php } elseif ($role->role == 'user') { ?>
@@ -663,7 +663,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                     $color = '#A19CFF';
                     // echo $color;
                   } else {
-                    if ($role->role == 'agent' || $role->role == 'admin') {
+                    if ($role->role == 'staff' || $role->role == 'admin') {
                       $color = '#F9B03B';
                     } elseif ($role->role == 'user') {
                       $color = '#38D8FF';
@@ -734,7 +734,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
 
                     <div class="user-block" style="margin-bottom:-5px;margin-top:-2px;">
                       @if($conversation->user_id != null)
-                        <img src="{{$role->profile_pic}}" class="img-circle img-bordered-sm" alt="User Image"/>
+                        <img src="{{$role->profile_pic}}" class="img-circle img-bordered-sm" alt="Staff Image"/>
                       @else
                         <img src="{{asset('lb-faveo/media/images/avatar_1.png')}}" class="img-circle img-bordered-sm"
                              alt="img-circle img-bordered-sm">
@@ -884,7 +884,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                 <div class="form-group">
                   <label>{!! Lang::get('lang.help_topic') !!} <span class="text-red"> *</span></label>
 
-                  <?php $help_topics = App\Model\helpdesk\Manage\Help_topic::where('status', '=', 1)->get(); ?>
+                  <?php $help_topics = App\Model\helpdesk\Manage\HelpTopic::where('status', '=', 1)->get(); ?>
                   <select class="form-control" name="help_topic">
                     @foreach($help_topics as $helptopic)
                       <option value="{!! $helptopic->id !!}" <?php
@@ -900,7 +900,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
               <div class="col-md-6">
                 <div class="form-group">
                   <label>{!! Lang::get('lang.ticket_source') !!} <span class="text-red"> *</span></label>
-                  <?php $ticket_sources = App\Model\helpdesk\Ticket\Ticket_source::all() ?>
+                  <?php $ticket_sources = App\Model\helpdesk\Ticket\TicketSource::all() ?>
                   <select class="form-control" name="ticket_source">
                     @foreach($ticket_sources as $ticketsource)
                       <option value="{!! $ticketsource->id !!}" <?php
@@ -918,8 +918,8 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
               <div class="col-md-6">
                 <div class="form-group">
                   <label>{!! Lang::get('lang.priority') !!} <span class="text-red"> *</span></label>
-                  <?php $ticket_prioritys = App\Model\helpdesk\Ticket\Ticket_Priority::where('status', '=', 1)->get(); ?>
-                  <select class="form-control" name="ticket_priority">
+                  <?php $ticket_prioritys = App\Model\helpdesk\Ticket\TicketPriority::where('status', '=', 1)->get(); ?>
+                  <select class="form-control" name="tickets_priorities">
                     @foreach($ticket_prioritys as $ticket_priority)
                       <option value="{!! $ticket_priority->priority_id !!}" <?php
                         if ($tickets->priority_id == $ticket_priority->priority_id) {
@@ -1017,7 +1017,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                     </div>
                   </div>
                   <div id="change_body">
-                    <?php $users = App\User::where('role', '=', 'user')->get(); ?>
+                    <?php $users = App\Staff::where('role', '=', 'user')->get(); ?>
                     {!! Lang::get('lang.add_another_owner') !!}
                     <input type="text" class="form-control" id="tags2" name="email"
                            placeholder="{!! Lang::get('lang.search_user') !!}" \>
@@ -1028,8 +1028,8 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                         <spam class="glyphicon glyphicon-user fa-5x"></spam>
                       </div>
                       <div id="change-refresh" class="col-md-10">
-                        <?php $user = App\User::where('id', '=', $tickets->user_id)->first(); ?>
-                          <!-- <b>{!! Lang::get('lang.user_details') !!}User Details</b><br/> -->
+                        <?php $user = App\Staff::where('id', '=', $tickets->user_id)->first(); ?>
+                          <!-- <b>{!! Lang::get('lang.user_details') !!}Staff Details</b><br/> -->
                         <b>Current owner</b><br/>
                         {!! $user->user_name !!}<br/>{!! $user->email !!}<br/>
                         @if($user->phone != null)
@@ -1120,13 +1120,13 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
               <p>{!! Lang::get('lang.whome_do_you_want_to_assign_ticket') !!}?</p>
               <select id="asssign" class="form-control" name="assign_to">
                 <?php
-                $assign = App\User::where('role', '!=', 'user')->where('active', '=', '1')->orderBy('first_name')->get();
+                $assign = App\Staff::where('role', '!=', 'user')->where('active', '=', '1')->orderBy('first_name')->get();
                 $count_assign = count($assign);
-                $teams = App\Model\helpdesk\Agent\Teams::where('status', '=', '1')->get();
+                $teams = App\Model\helpdesk\Staff\Teams::where('status', '=', '1')->get();
                 $count_teams = count($teams);
                 ?>
 
-                <optgroup label="Agents ( {!! $count_assign !!} )">
+                <optgroup label="Staff ( {!! $count_assign !!} )">
                   @foreach($assign as $user)
                     <option value="user_{{$user->id}}">{{$user->first_name." ".$user->last_name}}</option>
                   @endforeach
@@ -1247,7 +1247,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
           </div>
           {{-- <div class="modal-footer"> --}}
           {{-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="dismis9" data-dismiss="alert">Close</button> --}}
-          {{-- <button type="button" class="btn btn-warning pull-right" id="Surrender">Add User</button> --}}
+          {{-- <button type="button" class="btn btn-warning pull-right" id="Surrender">Add Staff</button> --}}
           {{-- </div> --}}
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -1262,7 +1262,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- {!! Form::open(['id'=>'form1','method' => 'PATCH'] )!!} -->
-          {!! Form::open(['action' => 'Agent\helpdesk\TicketController@ticketChangeDepartment', 'method' => 'post']) !!}
+          {!! Form::open(['action' => 'Staff', 'method' => 'post']) !!}
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                 aria-hidden="true">&times;</span></button>
@@ -1287,7 +1287,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
             <div id="change_dept">
               <p>{!! Lang::get('lang.select_another_department') !!}</p>
               <?php
-              $depts = App\Model\helpdesk\Agent\Department::all();
+              $depts = App\Model\helpdesk\Staff\Department::all();
 
               ?>
               <select id="tkt_dept_transfer" class="form-control" name="tkt_dept_transfer">
@@ -1327,14 +1327,14 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
             @foreach($Collaborator as $ccc)
               <?php
               $collab_user_id = $ccc->user_id;
-              $collab_user = App\User::where('id', '=', $collab_user_id)->first();
+              $collab_user = App\Staff::where('id', '=', $collab_user_id)->first();
               ?>
               <div id="alert11" class="alert alert-dismissable" style="background-color:#F2F2F2">
                 <meta name="_token" content="{{ csrf_token() }}"/>
                 <button id="dismiss11" type="button" class="close" data-dismiss="alert"
                         onclick="remove_collaborator({!! $ccc->id !!})" aria-hidden="true">×
                 </button>
-                @if($collab_user->role == 'agent' || $collab_user->role == 'admin')
+                @if($collab_user->role == 'staff' || $collab_user->role == 'admin')
                   <i class="icon fa fa-user"></i>{!! $collab_user->first_name . " " . $collab_user->last_name !!}
                 @elseif($collab_user->role == 'user')
                   <i class="icon fa fa-user"></i>{!! $collab_user->user_name !!}
@@ -1400,7 +1400,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                   {!! Form::open(['id'=>'merge-form','method' => 'PATCH'] )!!}
                   <label>{!! Lang::get('lang.title') !!}</label>
                   <input type="text" name='title' class="form-control" value="<?php
-                  $ticket_data = App\Model\helpdesk\Ticket\Ticket_Thread::select('title')->where('ticket_id', "=", $tickets->id)->first();
+                  $ticket_data = App\Model\helpdesk\Ticket\TicketThread::select('title')->where('ticket_id', "=", $tickets->id)->first();
                   echo $ticket_data->title;
                   ?>"/>
                 </div>
@@ -1414,7 +1414,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
                     <select class="form-control" id="select-merge-parent" name='p_id'
                             data-placeholder="{!! Lang::get('lang.select_tickets') !!}" style="width: 100%;">
                       <option value="{{$tickets->id}}"><?php
-                        $ticket_data = App\Model\helpdesk\Ticket\Ticket_Thread::select('title')->where('ticket_id', "=", $tickets->id)->first();
+                        $ticket_data = App\Model\helpdesk\Ticket\TicketThread::select('title')->where('ticket_id', "=", $tickets->id)->first();
                         echo $ticket_data->title;
                         ?></option>
                     </select>
@@ -2232,7 +2232,7 @@ $assignedto = App\User::where('id', '=', $tickets->assigned_to)->first();
         var arr = $("#select-merge-tickts").val();
         if (arr == null) {
           document.getElementById("select-merge-parent").innerHTML = "<option value='{{$tickets->id}}'><?php
-            $ticket_data = App\Model\helpdesk\Ticket\Ticket_Thread::select('title')->where('ticket_id', "=", $tickets->id)->first();
+            $ticket_data = App\Model\helpdesk\Ticket\TicketThread::select('title')->where('ticket_id', "=", $tickets->id)->first();
             echo $ticket_data->title;
             ?></option>"
         } else {

@@ -235,8 +235,8 @@ return [
         'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
         'PDF' => 'Vsmoraes\Pdf\PdfFacade',
         'Gravatar' => 'Thomaswelton\LaravelGravatar\Facades\Gravatar',
-        'UTC' => 'App\Http\Controllers\Agent\helpdesk\TicketController',
-        'Ttable' => 'App\Http\Controllers\Agent\helpdesk\TicketController', //to use getTable function.
+        'UTC' => 'App\Http\Controllers\Staff\helpdesk\TicketController',
+        'Ttable' => 'App\Http\Controllers\Staff\helpdesk\TicketController', //to use getTable function.
         'SMTPS' => 'App\Http\Controllers\HomeController',
         'Datatable' => 'Chumper\Datatable\Facades\DatatableFacade',
         'Zipper' => 'Chumper\Zipper\Zipper',

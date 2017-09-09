@@ -4,7 +4,7 @@ $date = Date('d-m-Y');
 $format = 'Y-m-d';
 $day1 = Date($format, strtotime('-1 day' . $date));
 
-$depts = App\Model\helpdesk\Agent\Department::all();
+$depts = App\Model\helpdesk\Staff\Department::all();
 foreach ($depts as $dept) {
   // echo $dept->name;
   $created = DB::table('tickets')->select('created_at')->where('dept_id', $dept->id)->where('team_id', $team_id)->where('created_at', 'LIKE', '%' . $day1 . '%')->count();
@@ -49,7 +49,7 @@ foreach ($depts as $dept) {
     .ExternalClass
     { width: 100%; }
 
-    /* Force Hotmail to display emails at full width */
+    /* Force Hotmail to display mailboxes at full width */
     .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div
     { line-height: 100%; }
 

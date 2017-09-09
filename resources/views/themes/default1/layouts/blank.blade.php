@@ -45,7 +45,7 @@
     <?php $company = App\Model\Settings\Company::where('id', '=', '1')->first();?>
 
     @if($company->logo)
-      <img src="{{asset('dist')}}{{'/'}}{{$company->logo}}" class="logo" alt="User Image"/>
+      <img src="{{asset('dist')}}{{'/'}}{{$company->logo}}" class="logo" alt="Staff Image"/>
       @endif
         <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top" role="navigation">

@@ -83,7 +83,7 @@
               }
               $TicketData = App\Model\Ticket\Ticket_Thread::where('ticket_id', '=', $ticket->id)->max('id');
               $TicketDatarow = App\Model\Ticket\Ticket_Thread::where('id', '=', $TicketData)->first();
-              $LastResponse = App\User::where('id', '=', $TicketDatarow->user_id)->first();
+              $LastResponse = App\Staff::where('id', '=', $TicketDatarow->user_id)->first();
               if ($LastResponse->role == "user") {
                 $rep = "#F39C12";
                 $username = $LastResponse->user_name;

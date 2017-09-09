@@ -54,7 +54,7 @@
         <ul class="tabs tabs-horizontal nav navbar-nav">
           <li><a data-target="#tabA" href="#">Home</a></li>
           <li @yield('Staff')><a data-target="#tabB" href="#">Staff</a></li>
-          <li @yield('Emails')><a data-target="#tabC" href="#">Emails</a></li>
+          <li @yield('Mailboxes')><a data-target="#tabC" href="#">Mailboxes</a></li>
           <li @yield('Manage')><a data-target="#tabD" href="#">Manage</a></li>
           <li @yield('Settings')><a data-target="#tabE" href="#">Settings</a></li>
           <li @yield('Themes')><a data-target="#tabF" href="#">Themes</a></li>
@@ -62,28 +62,28 @@
 
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{{url('user')}}">Agent Panel</a></li>
-          <!-- User Account: style can be found in dropdown.less -->
+          <!-- Staff Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               @if(Auth::user())
                 @if(Auth::user()->profile_pic)
                   <img src="{{asset('lb-faveo/dist/img')}}{{'/'}}{{Auth::user()->profile_pic}}" class="user-image"
-                       alt="User Image"/>
+                       alt="Staff Image"/>
                 @else
-                  <img src="{{ Gravatar::src(Auth::user()->email) }}" class="user-image" alt="User Image">
+                  <img src="{{ Gravatar::src(Auth::user()->email) }}" class="user-image" alt="Staff Image">
                 @endif
                 <span class="hidden-xs">{!! Auth::user()->first_name." ".Auth::user()->last_name !!}</span>
               @endif
             </a>
             <ul class="dropdown-menu">
-              <!-- User image -->
+              <!-- Staff image -->
               <li class="user-header" style="background-color:#343F44;">
                 @if(Auth::user())
                   @if(Auth::user()->profile_pic)
                     <img src="{{asset('lb-faveo/lb-faveo/dist/img')}}{{'/'}}{{Auth::user()->profile_pic}}"
-                         class="img-circle" alt="User Image"/>
+                         class="img-circle" alt="Staff Image"/>
                   @else
-                    <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="User Image">
+                    <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="Staff Image">
                   @endif
                   <p>
                     {!! Auth::user()->first_name !!}{!! " ". Auth::user()->last_name !!} - {{Auth::user()->role}}
@@ -117,9 +117,9 @@
           <div class="col-xs-2" style="width:50%;">
             @if(Auth::user() && Auth::user()->profile_pic)
               <img src="{{asset('lb-faveo/dist/img')}}{{'/'}}{{Auth::user()->profile_pic}}" class="img-circle"
-                   alt="User Image"/>
+                   alt="Staff Image"/>
             @else
-              <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="User Image">
+              <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="Staff Image">
             @endif
 
           </div>
@@ -206,7 +206,7 @@
           </div>
           <div class="tabs-pane @yield('staff-bar')" id="tabB">
             <ul class="nav navbar-nav">
-              <li id="bar" @yield('staff')><a href="{{ url('agents') }}">Staff</a></li>
+              <li id="bar" @yield('staff')><a href="{{ url('staff') }}">Staff</a></li>
               </a></li>
               <li id="bar" @yield('departments')><a href="{{ url('departments') }}">Departments</a></li>
               </a></li>
@@ -216,9 +216,9 @@
               </a></li>
             </ul>
           </div>
-          <div class="tabs-pane @yield('emails-bar')" id="tabC">
+          <div class="tabs-pane @yield('mailboxes')" id="tabC">
             <ul class="nav navbar-nav">
-              <li id="bar" @yield('emails')><a href="{{ url('emails') }}">Emails</a></li>
+              <li id="bar" @yield('mailboxes')><a href="{{ url('mailboxes') }}">Mailboxes</a></li>
               </a></li>
               <li id="bar" @yield('ban')><a href="{{ url('banlist') }}">Ban List</a></li>
               <li id="bar" @yield('template')><a href="{{ url('template') }}">Template</a></li>
@@ -237,7 +237,7 @@
             <ul class="nav navbar-nav">
               <li id="bar" @yield('company')><a href="{{url('getcompany')}}">Company</a></li>
               <li id="bar" @yield('system')><a href="{{url('getsystem')}}">System</a></li>
-              <li id="bar" @yield('email')><a href="{{url('getemail')}}">Email</a></li>
+              <li id="bar" @yield('email')><a href="{{url('getemail')}}">MailboxSettings</a></li>
               <li id="bar" @yield('tickets')><a href="{{url('getticket')}}">Tickets</a></li>
               <li id="bar" @yield('access')><a href="{{url('getaccess')}}">Access</a></li>
               <li id="bar" @yield('auto-response')><a href="{{url('getresponder')}}">Auto-Responce</a></li>

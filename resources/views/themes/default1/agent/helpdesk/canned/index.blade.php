@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Tools')
   class="active"
@@ -45,7 +45,7 @@
           {{Session::get('fails')}}
         </div>
         @endif
-          <!-- Agent table -->
+          <!-- Staff table -->
         <table class="table table-bordered table-hover" id="example1">
           <tr>
             <th width="100px">{{Lang::get('lang.name')}}</th>

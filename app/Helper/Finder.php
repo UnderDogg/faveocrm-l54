@@ -1,9 +1,9 @@
 <?php
 namespace App\Helper;
 
-use App\Model\helpdesk\Agent\Department;
-use App\Model\helpdesk\Agent\Groups;
-use App\Model\helpdesk\Ticket\Ticket_Status;
+use App\Model\helpdesk\Staff\Department;
+use App\Model\helpdesk\Staff\Groups;
+use App\Model\helpdesk\Ticket\TicketStatus;
 use App\Model\helpdesk\Ticket\TicketStatusType;
 
 /**
@@ -86,9 +86,9 @@ class Finder
     public static function status($id, $custom = null)
     {
         if ($custom == null) {
-            $status = Ticket_Status::whereId($id)->first();
+            $status = TicketStatus::whereId($id)->first();
         } elseif (isset($custom)) {
-            $status = Ticket_Status::whereId($id)->select($custom);
+            $status = TicketStatus::whereId($id)->select($custom);
         }
         return $status;
     }
@@ -97,12 +97,12 @@ class Finder
      * USER ROLES IN A GROUP FOR STATUS LIST
      * This function is used to return roles of users from a given value.
      * If the value is 1 the response is client
-     * If the value is 2 the response is agent
+     * If the value is 2 the response is staff
      * If the value is 4 the response is admin
-     * If the value is 1+2 = 3 the response is client, agent
+     * If the value is 1+2 = 3 the response is client, staff
      * If the value is 1+4 = 5 the response is client, admin
-     * If the value is 2+4 = 6 the response is agent, admin
-     * If the value is 1+2+4 = 7 the response is client, agent, admin.
+     * If the value is 2+4 = 6 the response is staff, admin
+     * If the value is 1+2+4 = 7 the response is client, staff, admin.
      *
      * @param $id type int
      *
@@ -116,17 +116,17 @@ class Finder
             case 1:
                 return 'Client';
             case 2:
-                return 'Agent';
+                return 'Staff';
             case 4:
                 return 'Admin';
             case 3:
-                return 'Client,Agent';
+                return 'Client,Staff';
             case 5:
                 return 'Client,Admin';
             case 6:
-                return 'Agent,Admin';
+                return 'Staff,Admin';
             case 7:
-                return 'Client,Agent,Admin';
+                return 'Client,Staff,Admin';
             default:
                 return 'Undefined!';
         }
@@ -142,7 +142,7 @@ class Finder
      */
     public static function anyTypeStatus($id)
     {
-        $status_group = Ticket_Status::where('purpose_of_status', '=', $id)->select(['id'])->get();
+        $status_group = TicketStatus::where('purpose_of_status', '=', $id)->select(['id'])->get();
         foreach ($status_group as $status) {
             $status_group2[] = $status->id;
         }
@@ -157,7 +157,7 @@ class Finder
      */
     public static function getAllStatus()
     {
-        $status = Ticket_Status::where('purpose_of_status', '!=', 3)->orwhere('purpose_of_status', '!=', 4)->get();
+        $status = TicketStatus::where('purpose_of_status', '!=', 3)->orwhere('purpose_of_status', '!=', 4)->get();
         return $status;
     }
 
@@ -182,7 +182,7 @@ class Finder
      */
     public static function getCustomedStatus()
     {
-        $status = Ticket_Status::select('id', 'name', 'icon_class')->get();
+        $status = TicketStatus::select('id', 'name', 'icon_class')->get();
         return $status;
     }
 }

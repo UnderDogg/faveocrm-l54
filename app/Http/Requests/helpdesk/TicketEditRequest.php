@@ -4,7 +4,7 @@ namespace App\Http\Requests\helpdesk;
 use App\Http\Requests\Request;
 
 /**
- * AgentRequest.
+ * StaffRequest.
  *
  * @author  Ladybird <info@ladybirdweb.com>
  */
@@ -31,8 +31,8 @@ class TicketEditRequest extends Request
             // 'subject' => 'required',
             // 'sla_paln' => 'required',
             // 'help_topic' => 'required',
-            // 'ticket_source' => 'required',
-            // 'ticket_priority' => 'required',
+            // 'tickets_sources' => 'required',
+            // 'tickets_priorities' => 'required',
         ];
     }
 }

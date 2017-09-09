@@ -5,7 +5,7 @@ use App\BaseModel;
 
 class Email extends BaseModel
 {
-    /* Using Email table  */
+    /* Using Mailboxes table  */
     protected $table = 'email';
     /* Set fillable fields in table */
     protected $fillable = [

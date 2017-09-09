@@ -1,6 +1,6 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
-@extends('themes.default1.agent.layout.sidebar')
+@extends('themes.default1.staff.layout.sidebar')
 
 @section('pages')
   active
@@ -15,7 +15,7 @@
 @stop
 
 @section('content')
-  {!! Form::open(array('action' => 'Agent\kb\PageController@store' , 'method' => 'post') )!!}
+  {!! Form::open(array('action' => 'Staff' , 'method' => 'post') )!!}
   <div class="box-body">
     <div class="row">
       @if(Session::has('errors'))

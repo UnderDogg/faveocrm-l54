@@ -1,7 +1,7 @@
 <?php
 namespace App\Policies;
 
-use App\User;
+use App\Staff;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TicketPolicy

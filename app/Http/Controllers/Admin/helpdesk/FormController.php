@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 // Model
 use App\Model\helpdesk\Form\Fields;
 use App\Model\helpdesk\Form\Forms;
-use App\Model\helpdesk\Manage\Help_topic;
+use App\Model\helpdesk\Manage\HelpTopic;
 // Request
 use Exception;
 // Class
@@ -139,7 +139,7 @@ class FormController extends Controller
      *
      * @return type redirect
      */
-    public function delete($id, Forms $forms, Fields $field, Help_topic $help_topic)
+    public function delete($id, Forms $forms, Fields $field, HelpTopic $help_topic)
     {
         $fields = $field->where('forms_id', $id)->get();
         $help_topics = $help_topic->where('custom_form', '=', $id)->get();

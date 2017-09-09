@@ -1,7 +1,7 @@
 {!!$name!!}<br>
 <br>
 <br>
-{!!$email!!}
+{!!$mailbox!!}
 <br>
 <br>
 {!!$subject!!}

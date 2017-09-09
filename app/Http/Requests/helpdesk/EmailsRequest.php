@@ -28,8 +28,8 @@ class EmailsRequest extends Request
     public function rules()
     {
         return [
-            'email_address' => 'required|email|unique:emails',
-            'email_name' => 'required',
+            'email_address' => 'required|email|unique:mailboxes',
+            'mailbox_name' => 'required',
             // 'department' => 'required',
             // 'priority' => 'required',
             // 'help_topic' => 'required',

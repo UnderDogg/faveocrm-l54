@@ -243,7 +243,7 @@
                     <li class="list-group-item row" style="margin-left: 0px;margin-right: 0px"
                         ng-show="node.value=='Status'">
                       <div class="col-sm-5">
-                        <label>For Agents</label>
+                        <label>For Staff</label>
                       </div>
                       <div class="col-sm-5">
                         <label>For Customers</label>

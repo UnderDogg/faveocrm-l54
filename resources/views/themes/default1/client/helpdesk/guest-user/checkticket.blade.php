@@ -1,5 +1,5 @@
 @extends('themes.default1.client.layout.client')
-<?php $user = App\User::where('id', '=', $tickets->user_id)->first();?>
+<?php $user = App\Staff::where('id', '=', $tickets->user_id)->first();?>
 
 @section('nav1')
   class="active"

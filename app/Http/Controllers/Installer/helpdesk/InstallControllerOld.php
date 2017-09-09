@@ -10,7 +10,7 @@ use App\Model\helpdesk\Settings\System;
 // models
 use App\Model\helpdesk\Utility\Date_time_format;
 use App\Model\helpdesk\Utility\Timezones;
-use App\User;
+use App\Staff;
 use Artisan;
 // classes
 use Cache;
@@ -280,7 +280,7 @@ class InstallControllerOld extends Controller
         // create user
         $firstname = $request->input('firstname');
         $lastname = $request->input('Lastname');
-        $email = $request->input('email');
+        $mailbox = $request->input('email');
         $username = $request->input('username');
         $password = $request->input('password');
         $language = $request->input('language');
@@ -317,10 +317,10 @@ class InstallControllerOld extends Controller
         $system->version = $version;
         $system->save();
         // creating an user
-        $user = User::create([
+        $user = Staff::create([
             'first_name' => $firstname,
             'last_name' => $lastname,
-            'email' => $email,
+            'email' => $mailbox,
             'user_name' => $username,
             'password' => Hash::make($password),
             'assign_group' => 1,

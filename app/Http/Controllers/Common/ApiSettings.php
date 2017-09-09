@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
 use App\Model\Api\ApiSetting;
-use App\Model\helpdesk\Ticket\Ticket_Thread;
+use App\Model\helpdesk\Ticket\TicketThread;
 use App\Model\helpdesk\Ticket\Tickets;
 use DB;
 use Exception;

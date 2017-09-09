@@ -11,7 +11,7 @@ class AddForeignKeysToTicketAttachmentTable extends Migration
      */
     public function up()
     {
-        Schema::table('ticket_attachment', function (Blueprint $table) {
+        Schema::table('tickets__attachments', function (Blueprint $table) {
             $table->foreign('thread_id', 'ticket_attachment_ibfk_1')->references('id')->on('ticket_thread')->onUpdate('NO ACTION')->onDelete('RESTRICT');
         });
     }
@@ -23,7 +23,7 @@ class AddForeignKeysToTicketAttachmentTable extends Migration
      */
     public function down()
     {
-        Schema::table('ticket_attachment', function (Blueprint $table) {
+        Schema::table('tickets__attachments', function (Blueprint $table) {
             $table->dropForeign('ticket_attachment_ibfk_1');
         });
     }

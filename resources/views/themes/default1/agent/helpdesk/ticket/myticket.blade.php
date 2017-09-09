@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Tickets')
   class="active"
@@ -45,8 +45,8 @@
   @section('content')
   <?php
   $date_time_format = UTC::getDateTimeFormat();
-  if (Auth::user()->role == 'agent') {
-    $dept = App\Model\helpdesk\Agent\Department::where('id', '=', Auth::user()->primary_dpt)->first();
+  if (Auth::user()->role == 'staff') {
+    $dept = App\Model\helpdesk\Staff\Department::where('id', '=', Auth::user()->primary_dpt)->first();
     $tickets = App\Model\helpdesk\Ticket\Tickets::where('status', '=', 1)->where('assigned_to', '=', Auth::user()->id)->orderBy('id', 'ASC')->count();
   } else {
     $tickets = App\Model\helpdesk\Ticket\Tickets::where('status', '=', 1)->where('assigned_to', '=', Auth::user()->id)->orderBy('id', 'ASC')->count();
@@ -196,7 +196,7 @@
               <div class="col-md-12">
                 {!! Form::open(['id'=>'assign-form','method' => 'PATCH'] )!!}
                 <label>{!! Lang::get('lang.whome_do_you_want_to_assign_ticket') !!}</label>
-                <select class="form-control" id="select-assign-agent" name="assign_to"
+                <select class="form-control" id="select-assign-staff" name="assign_to"
                         data-placeholder="{!! Lang::get('lang.select_agent') !!}" style="width: 100%;">
                   <option value=""></option>
                 </select>
@@ -467,7 +467,7 @@
       $('#AssignTickets').on('show.bs.modal', function () {
         $.ajax({
           type: "POST",
-          url: "{{route('get-agents')}}",
+          url: "{{route('staff')}}",
           dataType: "html",
           beforeSend: function () {
             $("#assign_body").hide();
@@ -476,7 +476,7 @@
           success: function (data) {
             $("#assign_loader").hide();
             $("#assign_body").show();
-            $('#select-assign-agent').html(data);
+            $('#select-assign-staff').html(data);
           }
         });
       });

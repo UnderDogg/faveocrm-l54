@@ -105,7 +105,7 @@
             <label class="col-sm-2 control-label">{!! Lang::get('lang.target_channel') !!} <span
                 class="text-red"> *</span></label>
             <div class="col-sm-6">
-              {!! Form::select('target_channel', [''=> '-- '.Lang::get('lang.select_a_channel').' --', 'A-0' => 'Any', 'A-1' => 'Web Forms', 'A-4' => 'API Calls', 'A-2' => 'Emails'], null,['class' => 'form-control', 'id' => 'execution_order']) !!}
+              {!! Form::select('target_channel', [''=> '-- '.Lang::get('lang.select_a_channel').' --', 'A-0' => 'Any', 'A-1' => 'Web Forms', 'A-4' => 'API Calls', 'A-2' => 'Mailboxes'], null,['class' => 'form-control', 'id' => 'execution_order']) !!}
             </div>
           </div>
       </div>
@@ -144,7 +144,7 @@
                           <select class="form-control" name="rule[0][a]" required>
                             <option value="">-- {!! Lang::get('lang.select_one') !!} --</option>
                             <option value="email">{!! Lang::get('lang.email') !!}</option>
-                            <option value="email_name">{!! Lang::get('lang.email_name') !!}</option>
+                            <option value="mailbox_name">{!! Lang::get('lang.mailbox_name') !!}</option>
                             <option value="subject">{!! Lang::get('lang.subject') !!}</option>
                             <option value="message">{!! Lang::get('lang.message') !!}
                               /{!! Lang::get('lang.body') !!}</option>
@@ -216,7 +216,7 @@
                             <option value="priority">{!! Lang::get('lang.set_priority') !!}</option>
                             <option value="sla">{!! Lang::get('lang.set_sla_plan') !!}</option>
                             <option value="team">{!! Lang::get('lang.assign_team') !!}</option>
-                            <option value="agent">{!! Lang::get('lang.assign_agent') !!}</option>
+                            <option value="staff">{!! Lang::get('lang.assign_agent') !!}</option>
                             <option value="helptopic">{!! Lang::get('lang.set_help_topic') !!}</option>
                             <option value="status">{!! Lang::get('lang.set_ticket_status') !!}</option>
                           </optgroup>
@@ -309,7 +309,7 @@
           '<option value="priority">{!! Lang::get("lang.set_priority") !!} </option>' +
           '<option value="sla">{!! Lang::get("lang.set_sla_plan") !!}  </option>' +
           '<option value="team">{!! Lang::get("lang.assign_team") !!} </option>' +
-          '<option value="agent">{!! Lang::get("lang.assign_agent") !!} </option>' +
+          '<option value="staff">{!! Lang::get("lang.assign_agent") !!} </option>' +
           '<option value="helptopic">{!! Lang::get("lang.set_help_topic") !!}  </option>' +
           '<option value="status">{!! Lang::get("lang.set_ticket_status") !!}  </option>' +
           '</select>' +
@@ -344,7 +344,7 @@
           '<select class="form-control" name="rule[' + n + '][a]" required>' +
           '<option>-- {!! Lang::get("lang.select_one") !!} --</option>' +
           '<option value="email">{!! Lang::get("lang.email") !!}</option>' +
-          '<option value="email_name">{!! Lang::get("lang.email_name") !!}</option>' +
+          '<option value="mailbox_name">{!! Lang::get("lang.mailbox_name") !!}</option>' +
           '<option value="subject">{!! Lang::get("lang.subject") !!}</option>' +
           '<option value="message">{!! Lang::get("lang.message") !!}/{!! Lang::get("lang.body") !!}</option>' +
           '</select>' +

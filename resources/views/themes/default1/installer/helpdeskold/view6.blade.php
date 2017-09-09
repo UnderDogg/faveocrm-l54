@@ -56,7 +56,7 @@
             Base</a>
         </li>
 
-        <li class="newsletter"><a href="mailto:support@ladybirdweb.com">Email Support</a>
+        <li class="newsletter"><a href="mailto:support@ladybirdweb.com">MailboxSettings Support</a>
         </li>
         <br>
         <br>

@@ -1,10 +1,10 @@
 @extends('themes.default1.admin.layout.admin')
 
-@section('Emails')
+@section('Mailboxes')
   active
 @stop
 
-@section('emails-bar')
+@section('mailboxes')
   active
 @stop
 

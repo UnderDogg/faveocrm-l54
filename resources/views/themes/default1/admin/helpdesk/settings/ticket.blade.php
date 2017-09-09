@@ -110,7 +110,7 @@
                     {!!Form::select('help_topic', $topics->pluck('topic','id'),null,['class' => 'form-control']) !!}
                 </div>
             </div>
-            --><!-- Agent Collision Avoidance Duration: text-number   -minutes  -->
+            --><!-- Staff Collision Avoidance Duration: text-number   -minutes  -->
             <div class="col-md-6">
               <div class="form-group {{ $errors->has('collision_avoid') ? 'has-error' : '' }}">
                 {!! Form::label('collision_avoid',Lang::get('lang.agent_collision_avoidance_duration')) !!}

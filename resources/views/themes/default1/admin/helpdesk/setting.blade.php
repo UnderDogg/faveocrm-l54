@@ -32,13 +32,13 @@
           <div class="col-md-2 col-sm-6">
             <div class="settingiconblue">
               <div class="settingdivblue">
-                <a href="{{ url('agents') }}">
+                <a href="{{ url('staff') }}">
                                 <span class="fa-stack fa-2x">
                                     <i class="fa fa-user fa-stack-1x"></i>
                                 </span>
                 </a>
               </div>
-              <p class="box-title">{!! Lang::get('lang.agents') !!}</p>
+              <p class="box-title">{!! Lang::get('lang.staff') !!}</p>
             </div>
           </div>
           <!--/.col-md-2-->
@@ -104,13 +104,13 @@
           <div class="col-md-2 col-sm-6">
             <div class="settingiconblue">
               <div class="settingdivblue">
-                <a href="{{ url('emails') }}">
+                <a href="{{ url('mailboxes') }}">
                                 <span class="fa-stack fa-2x">
                                     <i class="fa fa-envelope-o fa-stack-1x"></i>
                                 </span>
                 </a>
               </div>
-              <p class="box-title">{!! Lang::get('lang.emails') !!}</p>
+              <p class="box-title">{!! Lang::get('lang.mailboxes') !!}</p>
             </div>
           </div>
           <!--/.col-md-2-->

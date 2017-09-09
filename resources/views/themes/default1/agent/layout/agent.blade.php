@@ -83,7 +83,7 @@
     <a href="http://www.faveohelpdesk.com" class="logo"><img src="{{ asset('lb-faveo/media/images/logo.png')}}"
                                                              width="100px;"></a>
     <?php
-    $replacetop = \Event::fire('service.desk.agent.topbar.replace', array());
+    $replacetop = \Event::fire('service.desk.staff.topbar.replace', array());
 
     if (count($replacetop) == 0) {
       $replacetop = 0;
@@ -91,7 +91,7 @@
       $replacetop = $replacetop[0];
     }
 
-    $replaceside = \Event::fire('service.desk.agent.sidebar.replace', array());
+    $replaceside = \Event::fire('service.desk.staff.sidebar.replace', array());
 
     if (count($replaceside) == 0) {
       $replaceside = 0;
@@ -124,7 +124,7 @@
             <?php \Event::fire('calendar.topbar', array()); ?>
           </ul>
         @else
-          <?php \Event::fire('service.desk.agent.topbar', array()); ?>
+          <?php \Event::fire('service.desk.staff.topbar', array()); ?>
         @endif
 
         <ul class="nav navbar-nav navbar-right">
@@ -296,7 +296,7 @@
           @endforeach
         @else
 
-          <?php \Event::fire('service.desk.agent.sidebar', array()); ?>
+          <?php \Event::fire('service.desk.staff.sidebar', array()); ?>
         @endif
       </ul>
     </section>
@@ -320,8 +320,8 @@
               <ul class="nav navbar-nav">
                 <li id="bar" @yield('user')><a href="{{ url('user')}}">{!! Lang::get('lang.user_directory') !!}</a></li>
                 </a></li>
-                <li id="bar" @yield('organizations')><a
-                    href="{{ url('organizations')}}">{!! Lang::get('lang.organizations') !!}</a></li>
+                <li id="bar" @yield('relations')><a
+                    href="{{ url('relations')}}">{!! Lang::get('lang.organizations') !!}</a></li>
                 </a></li>
 
               </ul>
@@ -357,7 +357,7 @@
               </div>
             @endif
           @endif
-          <?php \Event::fire('service.desk.agent.topsubbar', array()); ?>
+          <?php \Event::fire('service.desk.staff.topsubbar', array()); ?>
         </div>
       </div>
     </div>
@@ -380,9 +380,9 @@
               <p style="font-size:0.8em">
                 @if (\Auth::user()->role == 'admin')
                   {{Lang::get('lang.system-outgoing-incoming-mail-not-configured')}}&nbsp;<a
-                    href="{{URL::route('emails.create')}}">{{Lang::get('lang.confihure-the-mail-now')}}</a>
+                    href="{{URL::route('mailboxes')}}">{{Lang::get('lang.confihure-the-mail-now')}}</a>
                 @else
-                  {{Lang::get('lang.system-mail-not-configured-agent-message')}}
+                  {{Lang::get('lang.system-mail-not-configured-staff-message')}}
                 @endif
               </p>
             </div>

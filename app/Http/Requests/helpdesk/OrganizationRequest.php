@@ -4,11 +4,11 @@ namespace App\Http\Requests\helpdesk;
 use App\Http\Requests\Request;
 
 /**
- * OrganizationRequest.
+ * RelationRequest.
  *
  * @author  Ladybird <info@ladybirdweb.com>
  */
-class OrganizationRequest extends Request
+class RelationRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class OrganizationRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|unique:organization',
+            'name' => 'required|unique:relation',
             'website' => 'url',
             // 'phone' => 'size:10',
         ];

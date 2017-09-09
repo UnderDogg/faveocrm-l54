@@ -324,10 +324,10 @@
               } ?> > {{Lang::get('lang.client')}}
             </div>
             <div class="col-xs-3">
-              <input name="agent" type="checkbox"
+              <input name="staff" type="checkbox"
                      value="2" <?php if ($status->send_email == 2 || $status->send_email == 3 || $status->send_email == 6 || $status->send_email == 7) {
                 echo "checked";
-              } ?> > {{Lang::get('lang.agent')}}
+              } ?> > {{Lang::get('lang.staff')}}
             </div>
             <div class="col-xs-3">
               <input name="admin" type="checkbox"

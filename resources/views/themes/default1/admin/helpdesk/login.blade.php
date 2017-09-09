@@ -5,7 +5,7 @@
     <form action="../../index2.html" method="post">
       <div class="form-group has-feedback">
         <!-- email -->
-        <input type="text" class="form-control" placeholder="Email"/>
+        <input type="text" class="form-control" placeholder="MailboxSettings"/>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

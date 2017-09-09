@@ -1,4 +1,4 @@
-@extends('themes.default1.agent.layout.agent')
+@extends('themes.default1.staff.layout.staff')
 
 @section('Dashboard')
   class="active"
@@ -45,15 +45,15 @@
       $unassigned = App\Model\helpdesk\Ticket\Tickets::where('assigned_to', '=', null)->where('status', '=', '1')->get();
       $tickets = App\Model\helpdesk\Ticket\Tickets::where('status', '1')->get();
       $deleted = App\Model\helpdesk\Ticket\Tickets::where('status', '5')->get();
-    } elseif (Auth::user()->role == 'agent') {
+    } elseif (Auth::user()->role == 'staff') {
       //$inbox = App\Model\helpdesk\Ticket\Tickets::where('dept_id','',Auth::user()->primary_dpt)->get();
       $myticket = App\Model\helpdesk\Ticket\Tickets::where('assigned_to', Auth::user()->id)->where('status', '1')->get();
       $unassigned = App\Model\helpdesk\Ticket\Tickets::where('assigned_to', '=', null)->where('status', '=', '1')->where('dept_id', '=', Auth::user()->primary_dpt)->get();
       $tickets = App\Model\helpdesk\Ticket\Tickets::where('status', '1')->where('dept_id', '=', Auth::user()->primary_dpt)->get();
       $deleted = App\Model\helpdesk\Ticket\Tickets::where('status', '5')->where('dept_id', '=', Auth::user())->get();
     }
-    if (Auth::user()->role == 'agent') {
-      $dept = App\Model\helpdesk\Agent\Department::where('id', '=', Auth::user()->primary_dpt)->first();
+    if (Auth::user()->role == 'staff') {
+      $dept = App\Model\helpdesk\Staff\Department::where('id', '=', Auth::user()->primary_dpt)->first();
       $overdues = App\Model\helpdesk\Ticket\Tickets::where('status', '=', 1)->where('isanswered', '=', 0)->where('dept_id', '=', $dept->id)->orderBy('id', 'DESC')->get();
     } else {
       $overdues = App\Model\helpdesk\Ticket\Tickets::where('status', '=', 1)->where('isanswered', '=', 0)->orderBy('id', 'DESC')->get();
@@ -82,10 +82,10 @@
     }
     ?>
     <?php
-    if (Auth::user()->role == 'admin' || Auth::user()->role == 'agent') {
+    if (Auth::user()->role == 'admin' || Auth::user()->role == 'staff') {
       $todaytickets = count(App\Model\helpdesk\Ticket\Tickets::where('status', '=', 1)->whereRaw('date(duedate) = ?', [date('Y-m-d')])->get());
     } else {
-      $dept = App\Model\helpdesk\Agent\Department::where('id', '=', Auth::user()->primary_dpt)->first();
+      $dept = App\Model\helpdesk\Staff\Department::where('id', '=', Auth::user()->primary_dpt)->first();
       $todaytickets = count(App\Model\helpdesk\Ticket\Tickets::where('status', '=', 1)->whereRaw('date(duedate) = ?', [date('Y-m-d')])->where('dept_id', '=', $dept->id)->get());
     }
     ?>
@@ -261,7 +261,7 @@
           <th>{!! Lang::get('lang.deleted') !!}</th>
         </tr>
 
-        <?php $departments = App\Model\helpdesk\Agent\Department::all(); ?>
+        <?php $departments = App\Model\helpdesk\Staff\Department::all(); ?>
         @foreach($departments as $department)
           <?php
           $open = App\Model\helpdesk\Ticket\Tickets::where('dept_id', '=', $department->id)->where('status', '=', 1)->count();

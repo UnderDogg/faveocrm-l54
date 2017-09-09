@@ -36,10 +36,10 @@ class UpdateEncryption extends Command
      */
     public function handle()
     {
-        $mailboxes = \App\Model\helpdesk\Email\Emails::get();
-        foreach ($mailboxes as $email) {
-            $email->password = encrypt('password');
-            $email->save();
+        $mailboxes = \App\Model\helpdesk\Mailboxes\Mailboxes::get();
+        foreach ($mailboxes as $mailbox) {
+            $mailbox->password = encrypt('password');
+            $mailbox->save();
         }
     }
 }

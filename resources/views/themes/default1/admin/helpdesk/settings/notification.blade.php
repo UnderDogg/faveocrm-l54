@@ -53,7 +53,7 @@
               </div>
             @endif
             <div class="row">
-              <!-- Default System Email:	DROPDOWN value from emails table : Required -->
+              <!-- Default System Mailboxes:	DROPDOWN value from mailboxes table : Required -->
               <div class="col-md-12">
                 <div class="col-md-3 no-padding">
                   <div class="form-group">

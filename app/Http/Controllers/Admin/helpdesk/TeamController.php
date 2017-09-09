@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\helpdesk\TeamRequest;
 use App\Http\Requests\helpdesk\TeamUpdate;
 // models
-use App\Model\helpdesk\Agent\Assign_team_agent;
-use App\Model\helpdesk\Agent\Department;
-use App\Model\helpdesk\Agent\Groups;
-use App\Model\helpdesk\Agent\Teams;
-use App\User;
+use App\Model\helpdesk\Staff\Assign_team_Staff;
+use App\Model\helpdesk\Staff\Department;
+use App\Model\helpdesk\Staff\Groups;
+use App\Model\helpdesk\Staff\Teams;
+use App\Staff;
 // classes
 use DB;
 use Exception;
@@ -39,18 +39,18 @@ class TeamController extends Controller
      * get Index page.
      *
      * @param type Teams             $team
-     * @param type Assign_team_agent $assign_team_agent
+     * @param type Assign_team_Staff $assign_team_agent
      *
      * @return type Response
      */
-    public function index(Teams $team, Assign_team_agent $assign_team_agent)
+    public function index(Teams $team, Assign_team_Staff $assign_team_agent)
     {
         try {
             $teams = $team->get();
             /*  find out the Number of Members in the Team */
             $id = $teams->pluck('id');
             $assign_team_agent = $assign_team_agent->get();
-            return view('themes.default1.admin.helpdesk.agent.teams.index', compact('assign_team_agent', 'teams'));
+            return view('themes.default1.admin.helpdesk.staff.teams.index', compact('assign_team_agent', 'teams'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -59,15 +59,15 @@ class TeamController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param type User $user
+     * @param type Staff $user
      *
      * @return type Response
      */
-    public function create(User $user)
+    public function create(Staff $user)
     {
         try {
             $user = $user->where('role', '<>', 'user')->where('active', '=', 1)->orderBy('first_name')->get();
-            return view('themes.default1.admin.helpdesk.agent.teams.create', compact('user'));
+            return view('themes.default1.admin.helpdesk.staff.teams.create', compact('user'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -92,9 +92,9 @@ class TeamController extends Controller
                 $team_update->update([
                     'team_lead' => $team_lead,
                 ]);
-                Assign_team_agent::create([
+                Assign_team_Staff::create([
                     'team_id' => $team_update->id,
-                    'agent_id' => $team_lead,
+                    'staff_id' => $team_lead,
                 ]);
             } else {
                 $team_lead = null;
@@ -111,13 +111,13 @@ class TeamController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param type $id
-     * @param type User              $user
-     * @param type Assign_team_agent $assign_team_agent
+     * @param type Staff              $user
+     * @param type Assign_team_Staff $assign_team_agent
      * @param type Teams             $team
      *
      * @return type Response
      */
-    public function show($id, User $user, Assign_team_agent $assign_team_agent, Teams $team)
+    public function show($id, Staff $user, Assign_team_Staff $assign_team_agent, Teams $team)
     {
         try {
             $user = $user->whereId($id)->first();
@@ -125,7 +125,7 @@ class TeamController extends Controller
             // $team_lead_name=User::whereId($teams->team_lead)->first();
             // $team_lead = $team_lead_name->first_name . " " . $team_lead_name->last_name;
             // $total_members = $assign_team_agent->where('team_id',$id)->count();
-            return view('themes.default1.admin.helpdesk.agent.teams.show', compact('user', 'teams', 'id'));
+            return view('themes.default1.admin.helpdesk.staff.teams.show', compact('user', 'teams', 'id'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -150,7 +150,7 @@ class TeamController extends Controller
             ->addColumn('active', function ($model) {
                 if ($model->active == '1') {
                     $role = "<a class='btn btn-success btn-xs'>" . 'Active' . '</a>';
-                } elseif ($model->active == 'agent') {
+                } elseif ($model->active == 'staff') {
                     $role = "<a class='btn btn-primary btn-xs'>" . 'Inactive' . '</a>';
                 }
                 return $role;
@@ -166,7 +166,7 @@ class TeamController extends Controller
             ->addColumn('role', function ($model) {
                 if ($model->role == 'admin') {
                     $role = "<a class='btn btn-success btn-xs'>" . $model->role . '</a>';
-                } elseif ($model->role == 'agent') {
+                } elseif ($model->role == 'staff') {
                     $role = "<a class='btn btn-primary btn-xs'>" . $model->role . '</a>';
                 }
                 return $role;
@@ -181,26 +181,26 @@ class TeamController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param type $id
-     * @param type User              $user
-     * @param type Assign_team_agent $assign_team_agent
+     * @param type Staff              $user
+     * @param type Assign_team_Staff $assign_team_agent
      * @param type Teams             $team
      *
      * @return type Response
      */
-    public function edit($id, User $user, Assign_team_agent $assign_team_agent, Teams $team)
+    public function edit($id, Staff $user, Assign_team_Staff $assign_team_agent, Teams $team)
     {
         try {
             $a_id = [];
             $teams = $team->whereId($id)->first();
             $agent_team = $assign_team_agent->where('team_id', $id)->get();
-            $agent_id = $agent_team->pluck('agent_id', 'agent_id');
+            $agent_id = $agent_team->pluck('staff_id', 'staff_id');
             foreach ($agent_id as $value) {
                 array_push($a_id, $value);
             }
             // dd($a_id);
             $user = $user->whereIn('id', $a_id)->where('active', '=', 1)->orderBy('first_name')->get();
             // dd($user);
-            return view('themes.default1.admin.helpdesk.agent.teams.edit', compact('agent_id', 'user', 'teams', 'allagents'));
+            return view('themes.default1.admin.helpdesk.staff.teams.edit', compact('staff_id', 'user', 'teams', 'allagents'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', $e->getMessage());
         }
@@ -246,11 +246,11 @@ class TeamController extends Controller
      *
      * @param type int               $id
      * @param type Teams             $team
-     * @param type Assign_team_agent $assign_team_agent
+     * @param type Assign_team_Staff $assign_team_agent
      *
      * @return type Response
      */
-    public function destroy($id, Teams $team, Assign_team_agent $assign_team_agent)
+    public function destroy($id, Teams $team, Assign_team_Staff $assign_team_agent)
     {
         try {
             $assign_team_agent->where('team_id', $id)->delete();

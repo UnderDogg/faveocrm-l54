@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 // requests
 use App\Http\Requests\helpdesk\GroupRequest;
 use App\Http\Requests\helpdesk\GroupUpdateRequest;
-use App\Model\helpdesk\Agent\Department;
+use App\Model\helpdesk\Staff\Department;
 // models
-use App\Model\helpdesk\Agent\Group_assign_department;
-use App\Model\helpdesk\Agent\Groups;
-use App\User;
+use App\Model\helpdesk\Staff\Group_assign_department;
+use App\Model\helpdesk\Staff\Groups;
+use App\Staff;
 use Exception;
 // classes
 use Illuminate\Http\Request;
@@ -48,7 +48,7 @@ class GroupController extends Controller
         try {
             $groups = $group->get();
             $departments = $department->pluck('id');
-            return view('themes.default1.admin.helpdesk.agent.groups.index', compact('departments', 'group_assign_department', 'groups'));
+            return view('themes.default1.admin.helpdesk.staff.groups.index', compact('departments', 'group_assign_department', 'groups'));
         } catch (Exception $e) {
             return redirect()->back()->with('fails', Lang::get('lang.failed_to_load_the_page'));
         }
@@ -62,7 +62,7 @@ class GroupController extends Controller
     public function create()
     {
         try {
-            return view('themes.default1.admin.helpdesk.agent.groups.create');
+            return view('themes.default1.admin.helpdesk.staff.groups.create');
         } catch (Exception $e) {
             return redirect()->back()->with('fails', Lang::get('lang.failed_to_load_the_page'));
         }
@@ -100,7 +100,7 @@ class GroupController extends Controller
     {
         try {
             $groups = $group->whereId($id)->first();
-            return view('themes.default1.admin.helpdesk.agent.groups.edit', compact('groups'));
+            return view('themes.default1.admin.helpdesk.staff.groups.edit', compact('groups'));
         } catch (Exception $e) {
             return redirect('groups')->with('fails', Lang::get('lang.group_can_not_update') . '<li>' . $e->getMessage() . '</li>');
         }
@@ -119,7 +119,7 @@ class GroupController extends Controller
     {
         // Database instannce to the current id
         $var = $group->whereId($id)->first();
-        $is_group_assigned = User::select('id')->where('assign_group', '=', $id)->count();
+        $is_group_assigned = Staff::select('id')->where('assign_group', '=', $id)->count();
         if ($is_group_assigned >= 1 && $request->input('group_status') == '0') {
             return redirect('groups')->with('fails', Lang::get('lang.group_can_not_update') . '<li>' . Lang::get('lang.can-not-inactive-group') . '</li>');
         }
@@ -186,7 +186,7 @@ class GroupController extends Controller
      */
     public function destroy($id, Groups $group, Group_assign_department $group_assign_department)
     {
-        $users = User::where('assign_group', '=', $id)->first();
+        $users = Staff::where('assign_group', '=', $id)->first();
         if ($users) {
             $user = '<li>' . Lang::get('lang.there_are_agents_assigned_to_this_group_please_unassign_them_from_this_group_to_delete') . '</li>';
             return redirect('groups')->with('fails', Lang::get('lang.group_cannot_delete') . $user);

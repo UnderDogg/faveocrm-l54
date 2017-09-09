@@ -87,14 +87,14 @@
                   </div>
                 </div>
 
-                <!-- Agent Excessive Logins:	TEXT failed login attempt(s) allowed before a lock-out is enforced
+                <!-- Staff Excessive Logins:	TEXT failed login attempt(s) allowed before a lock-out is enforced
 
                                  TEXT minutes locked out -->
 
                 <!-- *************************    TODO    ************************** -->
 
 
-                <!-- Agent Session Timeout: TEXT - minutes (0 to disable).  -->
+                <!-- Staff Session Timeout: TEXT - minutes (0 to disable).  -->
 
 
                 <div class="col-md-4">
@@ -128,14 +128,14 @@
                 </div>
 
 
-                <!-- User Excessive Logins:	TEXT failed login attempt(s) allowed before a lock-out is enforced
+                <!-- Staff Excessive Logins:	TEXT failed login attempt(s) allowed before a lock-out is enforced
 
                             TEXT	minutes locked out -->
 
                 <!--*************************************    TODO   ******************************************  -->
 
 
-                <!-- User Session Timeout:	TEXT  -->
+                <!-- Staff Session Timeout:	TEXT  -->
 
 
                 <div class="col-md-6">
@@ -146,7 +146,7 @@
                   </div>
                 </div>
               </div>
-              <!-- Bind Agent Session to IP:	CHECKBOX  -->
+              <!-- Bind Staff Session to IP:	CHECKBOX  -->
 
               <div class="row">
                 <div class="col-md-4">

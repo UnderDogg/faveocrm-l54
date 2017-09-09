@@ -9,7 +9,7 @@ use App\Http\Requests\helpdesk\InstallerRequest;
 use App\Model\helpdesk\Settings\System;
 // models
 use App\Model\helpdesk\Utility\Date_time_format;
-use App\User;
+use App\Staff;
 use Artisan;
 // classes
 use Cache;
@@ -229,7 +229,7 @@ class InstallController extends Controller
         // Set variables fetched from input request
         $firstname = $request->input('firstname');
         $lastname = $request->input('Lastname');
-        $email = $request->input('email');
+        $mailbox = $request->input('email');
         $username = $request->input('username');
         $password = $request->input('password');
         $language = $request->input('language');
@@ -258,10 +258,10 @@ class InstallController extends Controller
             'version' => $version,
         ]);
         // creating an user
-        $user = User::updateOrCreate(['id' => 1], [
+        $user = Staff::updateOrCreate(['id' => 1], [
             'first_name' => $firstname,
             'last_name' => $lastname,
-            'email' => $email,
+            'email' => $mailbox,
             'user_name' => $username,
             'password' => Hash::make($password),
             'assign_group' => 1,

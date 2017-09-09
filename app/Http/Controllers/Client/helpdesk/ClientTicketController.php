@@ -2,13 +2,13 @@
 namespace App\Http\Controllers\Client\helpdesk;
 
 // controllers
-use App\Http\Controllers\Agent\helpdesk\TicketWorkflowController;
+use App\Http\Controllers\Staff\helpdesk\TicketWorkflowController;
 use App\Http\Controllers\Controller;
 // requests
-use App\Model\helpdesk\Ticket\Ticket_Thread;
+use App\Model\helpdesk\Ticket\TicketThread;
 // models
 use App\Model\helpdesk\Ticket\Tickets;
-use App\User;
+use App\Staff;
 use Auth;
 // classes
 use Illuminate\Http\Request;
@@ -38,11 +38,11 @@ class ClientTicketController extends Controller
      * Get Checked ticket.
      *
      * @param type Tickets $ticket
-     * @param type User    $user
+     * @param type Staff    $user
      *
      * @return type response
      */
-    public function getCheckTicket(Tickets $ticket, User $user)
+    public function getCheckTicket(Tickets $ticket, Staff $user)
     {
         return view('themes.default1.client.helpdesk.guest-user.newticket', compact('ticket'));
     }
@@ -57,10 +57,10 @@ class ClientTicketController extends Controller
     public function reply($id, Request $request)
     {
         $tickets = Tickets::where('id', '=', $id)->first();
-        $thread = Ticket_Thread::where('ticket_id', '=', $tickets->id)->first();
+        $thread = TicketThread::where('ticket_id', '=', $tickets->id)->first();
         $subject = $thread->title . '[#' . $tickets->ticket_number . ']';
         $body = $request->input('comment');
-        $user_cred = User::where('id', '=', $tickets->user_id)->first();
+        $user_cred = Staff::where('id', '=', $tickets->user_id)->first();
         $fromaddress = $user_cred->email;
         $fromname = $user_cred->user_name;
         $phone = '';

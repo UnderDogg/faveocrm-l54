@@ -11,10 +11,10 @@ class CreateEmailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('emails', function (Blueprint $table) {
+        Schema::create('mailboxes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email_address');
-            $table->string('email_name');
+            $table->string('mailbox_name');
             $table->integer('department')->unsigned()->nullable();
             $table->integer('priority')->unsigned()->nullable()->index('priority');
             $table->integer('help_topic')->unsigned()->nullable()->index('help_topic');
@@ -55,6 +55,6 @@ class CreateEmailsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('emails');
+        Schema::drop('mailboxes');
     }
 }

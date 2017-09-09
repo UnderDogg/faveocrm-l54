@@ -52,7 +52,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($statuss as $status)
+        @foreach($statuses as $status)
           <?php if ($status->name == 'Deleted')
             continue; ?>
           <tr>

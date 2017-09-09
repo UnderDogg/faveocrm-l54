@@ -16,7 +16,7 @@
   @stop
     <!-- header -->
 @section('PageHeader')
-  <h1>{!! Lang::get('lang.ticket_priority') !!}</h1>
+  <h1>{!! Lang::get('lang.tickets_priorities') !!}</h1>
   @stop
     <!-- /header -->
   <!-- breadcrumbs -->
@@ -100,9 +100,9 @@
       function confirmDelete(priority_id) {
         var r = confirm('Are you sure?');
         if (r == true) {
-          // alert('{!! url("ticket_priority") !!}/' + priority_id + '/destroy');
+          // alert('{!! url("tickets_priorities") !!}/' + priority_id + '/destroy');
           window.location = '{!! url("ticket/priority") !!}/' + priority_id + '/destroy';
-          //    $url('ticket_priority/' . $model->priority_id . '/destroy')
+          //    $url('tickets_priorities/' . $model->priority_id . '/destroy')
         } else {
           return false;
         }

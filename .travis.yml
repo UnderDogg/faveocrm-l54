@@ -23,7 +23,7 @@ matrix:
     - php: hhvm
   fast_finish: true
 
-# Customize when the notification emails are sent.
+# Customize when the notification mailboxes are sent.
 notifications:
     on_success: never
     on_failure: always

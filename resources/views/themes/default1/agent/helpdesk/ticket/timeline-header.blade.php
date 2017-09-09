@@ -7,7 +7,7 @@ $array = [
   Lang::get('lang.source') => $ticket_source,
   Lang::get('lang.help_topic') => $help_topic->topic,
   Lang::get('lang.last_message') => str_limit($username, 30),
-  Lang::get('lang.organization') => $LastResponse->getOrgWithLink(),
+  Lang::get('lang.relation') => $LastResponse->getOrgWithLink(),
 ];
 
 if ($user->ban > 0) {
@@ -33,6 +33,6 @@ $collection = collect($array);
     </table>
   </div>
 @endforeach
-@include('themes.default1.agent.helpdesk.filters.tags')
+@include('themes.default1.staff.helpdesk.filters.tags')
 <?php Event::fire(new App\Events\TicketDetailTable($TicketData)); ?>
         

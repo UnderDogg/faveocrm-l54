@@ -1,5 +1,5 @@
-@extends('themes.default1.agent.layout.agent')
-@extends('themes.default1.agent.layout.sidebar')
+@extends('themes.default1.staff.layout.staff')
+@extends('themes.default1.staff.layout.sidebar')
 
 @section('category')
   active
@@ -14,7 +14,7 @@
 @stop
 
 @section('content')
-  {!! Form::open(array('action' => 'Agent\kb\CategoryController@store' , 'method' => 'post') )!!}
+  {!! Form::open(array('action' => 'Staff' , 'method' => 'post') )!!}
   <div class="box box-primary">
     <div class="box-header with-border">
       <h4 class="box-title">{!! Lang::get('lang.addcategory') !!}</h4>
